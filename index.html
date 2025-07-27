@@ -1,0 +1,113 @@
+<!--
+Rymentz
+Version : v1.0.0
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaspa Book - Choose Language</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column; /* Allow content to stack vertically */
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f8f9fa;
+            color: #333;
+            padding: 20px; /* Add some padding for smaller screens */
+            box-sizing: border-box; /* Include padding in element's total width and height */
+        }
+        .main-content {
+            text-align: center;
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 800px; /* Limit width for readability */
+            width: 100%; /* Ensure it takes full width on smaller screens */
+        }
+        .main-content h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+        }
+        .main-content p {
+            margin-bottom: 30px;
+            line-height: 1.7;
+            font-size: 1.1em;
+            color: #555;
+            text-align: justify; /* Justify text for better appearance */
+        }
+        .language-links {
+            margin-top: 30px;
+        }
+        .language-links a {
+            display: inline-block;
+            margin: 15px;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            color: #ffffff;
+            background-color: #3498db;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .language-links a:hover {
+            background-color: #2980b9;
+        }
+        .language-note {
+            margin-top: 40px;
+            font-style: italic;
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+        .language-note a {
+            color: #3498db; /* Link color for the GitHub repo */
+            text-decoration: none;
+        }
+        .language-note a:hover {
+            text-decoration: underline;
+        }
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .main-content {
+                padding: 20px;
+            }
+            .main-content h1 {
+                font-size: 2em;
+            }
+            .main-content p {
+                font-size: 1em;
+            }
+            .language-links a {
+                display: block; /* Stack links vertically on small screens */
+                margin: 10px auto;
+                width: calc(100% - 60px); /* Adjust width for padding */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-content">
+        <h1>Kaspa: The Next Generation Protocol</h1>
+        <p>
+            This comprehensive guide delves into Kaspa, a groundbreaking cryptocurrency that fundamentally redefines the principles of distributed ledger technology. Unlike traditional blockchains, Kaspa leverages a Directed Acyclic Graph (DAG) structure and the GHOSTDAG protocol to achieve unparalleled scalability, speed, and decentralization without compromise. Explore how Kaspa solves the "blockchain trilemma," its innovative pruning system, and its vision for future Layer 2 solutions. This book aims to demystify complex concepts, offering insights for developers, investors, and crypto enthusiasts alike.
+        </p>
+
+        <div class="language-links">
+            <a href="kaspa-book-en.html">English Version</a>
+            <a href="kaspa-book-fr.html">Version Française</a>
+        </div>
+
+        <p class="language-note">
+            Interested in contributing? You can help translate this book into other languages! Find the project on <a href="https://github.com/Macmachi/kaspa-book" target="_blank">GitHub</a> and submit your contributions.
+        </p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="content-type">
+<title>Kaspa : Le Protocole de la Prochaine Génération</title>
+<style type="text/css">
+  body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+  }
+  .container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+  h1, h2, h3, h4 {
+    color: #2c3e50;
+    line-height: 1.3;
+    page-break-after: avoid;
+  }
+  h1.book-title {
+    font-size: 2.5em;
+    text-align: center;
+    margin-bottom: 0.5em;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+  }
+  h2.chapter-title {
+    font-size: 2em;
+    margin-top: 1.5em;
+    border-bottom: 1px solid #bdc3c7;
+    padding-bottom: 5px;
+  }
+  h3.section-title {
+    font-size: 1.5em;
+    margin-top: 1.2em;
+    color: #34495e;
+  }
+  h4.subsection-title {
+    font-size: 1.2em;
+    margin-top: 1em;
+    color: #7f8c8d;
+  }
+  p {
+    text-align: justify;
+    margin-bottom: 1em;
+  }
+  .img-container {
+    display: block;
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    margin: 20px auto;
+    text-align: center;
+    box-sizing: border-box;
+  }
+  .img-container img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+  .author-date {
+    text-align: right;
+    font-style: italic;
+    color: #7f8c8d;
+    margin-bottom: 2em;
+  }
+  .simplified-def {
+    background-color: #ecf0f1;
+    border-left: 5px solid #3498db;
+    padding: 15px;
+    margin: 1.5em 0;
+  }
+  .simplified-def b {
+    color: #2980b9;
+  }
+  ul {
+    list-style-type: disc;
+    margin-left: 20px;
+    padding-left: 20px;
+  }
+  li {
+    margin-bottom: 0.5em;
+  }
+  blockquote {
+    border-left: 4px solid #bdc3c7;
+    padding-left: 15px;
+    margin-left: 0;
+    font-style: italic;
+    color: #7f8c8d;
+  }
+  hr.chapter-break {
+    page-break-before: always;
+    border: 0;
+  }
+  .cover-page {
+    text-align: center;
+    padding: 100px 20px;
+    border: 2px solid #2c3e50;
+    margin-bottom: 50px;
+  }
+  .cover-page .title {
+    font-size: 3em;
+    color: #2c3e50;
+  }
+  .cover-page .subtitle {
+    font-size: 1.5em;
+    color: #7f8c8d;
+  }
+  .cover-page .author {
+    margin-top: 50px;
+    font-size: 1.2em;
+  }
+  .conclusion, .introduction {
+      padding: 20px;
+      background-color: #eaf2f8;
+      border-radius: 5px;
+  }
+  /* Styles pour la Table des Matières */
+.table-of-contents {
+  background-color: #f0f8ff; /* Light blue background */
+  border: 1px solid #cceeff; /* Light blue border */
+  padding: 20px;
+  margin: 20px auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+.table-of-contents .chapter-title {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #2c3e50;
+  border-bottom: 1px solid #aaddff;
+  padding-bottom: 10px;
+}
+
+.table-of-contents ul {
+  list-style: none; /* Remove default bullet points */
+  padding-left: 0;
+}
+
+.table-of-contents ul ul {
+  padding-left: 20px; /* Indent for subsections */
+  margin-top: 5px;
+}
+
+.table-of-contents li {
+  margin-bottom: 8px;
+}
+
+.table-of-contents li a {
+  text-decoration: none;
+  color: #3498db; /* Blue link color */
+  font-weight: bold;
+  transition: color 0.2s ease;
+}
+
+.table-of-contents li a:hover {
+  color: #2980b9; /* Darker blue on hover */
+}
+
+.table-of-contents ul ul li a {
+  font-weight: normal; /* Normal font for subsections */
+  font-size: 0.95em;
+  color: #555; /* Slightly darker color for subsections */
+}
+
+.table-of-contents ul ul li a:hover {
+  color: #333;
+}
+
+.table-of-contents .no-id-link {
+    color: #7f8c8d; /* Grey out unlinked items */
+    font-style: italic;
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="cover-page">
+    <h1 class="title">Kaspa : Le Protocole de la Prochaine Génération</h1>
+    <p class="subtitle">Un Guide Complet sur le BlockDAG, le Consensus et l'Avenir de la Monnaie Numérique</p>
+    <p class="author">Compilé et enrichi par la Communauté (27.07.2025)</p>
+  </div>
+
+  <hr class="chapter-break">
+
+  <div class="introduction">
+    <h2 class="chapter-title">Introduction</h2>
+    <p>Bienvenue dans ce guide complet dédié à Kaspa, une cryptomonnaie qui ne se contente pas d'itérer sur les technologies existantes, mais qui les réinvente fondamentalement. Dans un écosystème où des milliers de projets se disputent l'attention, Kaspa se distingue par une approche rigoureuse et des innovations profondes qui visent à résoudre les problèmes les plus fondamentaux des blockchains traditionnelles : la scalabilité, la vitesse et la décentralisation, sans compromis.</p>
+    <p>Ce livre a pour ambition de démystifier les concepts complexes qui sous-tendent Kaspa. Nous commencerons par les bases, en expliquant ce qu'est un Graphe Orienté Acyclique (DAG) et comment le protocole GHOSTDAG de Kaspa l'utilise pour créer un système de consensus à la fois rapide, sécurisé et entièrement décentralisé. Que vous soyez un développeur curieux, un investisseur cherchant à comprendre la technologie sous-jacente, ou simplement un passionné de cryptomonnaies, ce livre est conçu pour vous guider pas à pas.</p>
+    <p>Nous explorerons comment Kaspa a résolu le "trilemme de la blockchain", comment son architecture unique permet des confirmations quasi-instantanées, et comment il gère le stockage des données de manière durable grâce à un système d'élagage sophistiqué. Nous aborderons également des sujets plus avancés tels que sa résistance au MEV (Maximal Extractable Value), sa vision pour les solutions de couche 2 (Layer 2) avec les ZK-Rollups, et les dynamiques économiques de son marché des frais.</p>
+    <p>Cet ouvrage est le fruit d'un effort collectif. Je tiens à exprimer ma profonde gratitude aux contributeurs de la communauté Kaspa, dont les articles, les recherches et les discussions ont formé la colonne vertébrale de ce livre. Une grande partie du contenu a été adaptée et traduite à partir des ressources inestimables disponibles sur le site officiel <strong><a href="https://kaspa.com/learn-kaspa">Kaspa.com/learn-kaspa</a></strong> et des écrits de ses chercheurs et développeurs principaux. Un remerciement tout particulier est également adressé à <strong>Cihan0x.ETH (<a href="https://x.com/cihan0xeth/status/1949361083883380833">@cihan0xeth</a>)</strong>, dont le travail est en partie basé sur les analyses originales de <strong>@AbiKaspa</strong>, et à <strong>BankQuote_DAG</strong> pour leurs analyses perspicaces qui ont grandement enrichi ce travail.</p>
+    <p>Préparez-vous à plonger dans l'une des architectures les plus innovantes du monde des cryptomonnaies. Préparez-vous à comprendre Kaspa.</p>
+  </div>
+
+  <hr class="chapter-break">
+
+
+  <div class="table-of-contents">
+      <h2 class="chapter-title">Table des Matières</h2>
+      <ul>
+          <li><a href="#h.sbugt7p65zq6">Chapitre 1 : Le BlockDAG de Kaspa</a>
+              <ul>
+                  <li><a href="#h.52y7zpxatzmc">DAG - Graphe orienté acyclique</a></li>
+                  <li><a href="#h.r0onrjvzaye8">Bitcoin et Kaspa</a></li>
+              </ul>
+          </li>
+          <li><a href="#h.q9lxzgpefpuh">Chapitre 2 : Kaspa - Lier le corps à l'en-tête</a>
+              <ul>
+                  <li><a href="#h.3ezesbjpkjql">Sécuriser le corps du bloc à l'en-tête - Racine de Merkle</a></li>
+                  <li><a href="#h.emrhhaf2640n">Bitcoin et Kaspa</a></li>
+              </ul>
+          </li>
+          <li><a href="#h.y0ik307h70q9">Chapitre 3 : Kaspa et le "Problème de Scalabilité de Bitcoin"</a>
+              <ul>
+                  <li><a href="#h.2jy3kmwufuue">Kaspa a résolu le "Problème de Scalabilité de Bitcoin" - Qu'est-ce que c'est ?</a></li>
+                  <li><a href="#h.v4bl36mx6e0u">Bitcoin et Kaspa</a></li>
+              </ul>
+          </li>
+          <li><a href="#h.1tq8u5wwr5up">Chapitre 4 : MuHash</a>
+              <ul>
+                  <li><a href="#h.ny65anmiz0s">Qu'est-ce que MuHash et comment Kaspa l'utilise-t-il ?</a></li>
+                  <li><a href="#h.focbph7aurgq">Bitcoin et Kaspa</a></li>
+              </ul>
+          </li>
+          <li><a href="#h.oy0kgniero14">Chapitre 5 : Modèle UTXO de Kaspa</a>
+              <ul>
+                  <li><a href="#h.8nqvw067oam1">Qu'est-ce qu'un UTXO et comment Kaspa l'utilise-t-il ?</a></li>
+                  <li><a href="#h.5v09d76siagw">Bitcoin et Kaspa</a></li>
+              </ul>
+          </li>
+          <li><a href="#h.6x07cz5zmxim">Chapitre 6 : Parents vs Mergeset</a>
+              <ul>
+                  <li><a href="#h.34xcaoqpznos">Que sont les Parents et le Mergeset et comment Kaspa les utilise-t-il ?</a></li>
+                  <li><a href="#h.tsab66lazd4a">Bitcoin vs Kaspa</a></li>
+              </ul>
+          </li>
+          <li><a href="#h.x0nj4tecoh66">Chapitre 7 : Élément de Second Ordre</a>
+              <ul>
+                  <li><a href="#h.1wbq42gt63wc">Qu'est-ce que l'élagage de second ordre et comment Kaspa l'utilise-t-il ?</a></li>
+              </ul>
+          </li>
+          <li><a href="#h.mz2dlkhrvwd2">Chapitre 8 : Kaspa GHOSTDAG simplifié</a>
+              <ul>
+                  <li><a href="#h.hwkbrs8egi6p">Qu'est-ce que GHOSTDAG et comment Kaspa l'utilise-t-il ?</a></li>
+              </ul>
+          </li>
+          <li><a href="#h.drxg3f8wwuwc">Chapitre 9 : Terminologie DAG</a>
+              <!-- Note: Certaines sous-sections du Chapitre 9 n'ont pas d'ID dans le code HTML original et ne peuvent donc pas être liées directement. -->
+          </li>
+          <li><a href="#h.1uals18cttyl">Chapitre 10 : Élément de Premier Ordre</a>
+              <ul>
+                  <li><a href="#h.3i8fyh1jrh8m">Qu'est-ce que l'élagage de premier ordre et comment Kaspa l'utilise-t-il ?</a></li>
+              </ul>
+          </li>
+          <li><a href="#h.juf0jn9hl1ev">Chapitre 11 : Nœuds d'Archivage vs Nœuds Complets</a>
+              <ul>
+                  <li><a href="#h.knim47a94vo6">Nœuds d'Archivage de Kaspa vs Nœuds d'Élagage</a></li>
+              </ul>
+          </li>
+          <li><a href="#h.xoj5wjv6tg4b">Chapitre 12 : Kaspa : Une Évolution dans l'Architecture Décentralisée Économe en Énergie</a>
+              <ul>
+                  <li><a href="#h.pfav0qmvzt92">Introduction : La Physique de l'Argent et de l'Efficacité</a></li>
+                  <!-- Note: Certaines sous-sections du Chapitre 12 n'ont pas d'ID dans le code HTML original et ne peuvent donc pas être liées directement. -->
+                  <li><a href="#h.y2juit6511i3">Le BlockDAG de Kaspa : Parallélisme sans Travail Gaspillé</a></li>
+                  <li><a href="#h.ttddfh4xlbpu">Atteindre le Débit à la Vitesse de la Lumière</a></li>
+                  <li><a href="#h.uttpgy92hgk">Moins de Friction, Meilleure Rétention de Valeur</a></li>
+              </ul>
+          </li>
+          <li><a href="#h.e01avawvoirc">Chapitre 13 : Ordonnancement Kaspa vs Bitcoin</a>
+              <!-- Note: Certaines sous-sections du Chapitre 13 n'ont pas d'ID dans le code HTML original et ne peuvent donc pas être liées directement. -->
+          </li>
+          <li><a href="#chapter14">Chapitre 14 : La Vision de Kaspa pour la Couche 2 : ZK Rollups et Pontage</a></li>
+          <li><a href="#chapter15">Chapitre 15 : Le Réseau Igra : Un Cas d'Étude du Rollup ZK Compatible EVM de Kaspa</a></li>
+          <li><a href="#chapter16">Chapitre 16 : Débit des Transactions et Collisions dans le BlockDAG de Kaspa</a></li>
+          <li><a href="#chapter17">Chapitre 17 : Le Marché des Frais de Kaspa : Une Perspective Théorique des Jeux</a></li>
+          <li><a href="#conclusion">Conclusion</a></li>
+          <li><a href="#appendixA">Annexe A : Ressources Supplémentaires</a></li>
+          <li><a href="#appendixB">Annexe B : Analyse Mathématique des Collisions de Transactions (Simplifiée)</a></li>
+          <li><a href="#appendixC">Annexe C : Analyse Mathématique du Marché des Frais (Simplifiée)</a></li>
+      </ul>
+  </div>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="h.sbugt7p65zq6">Chapitre 1 : Le BlockDAG de Kaspa</h2>
+  <div class="img-container"><img alt="Le BlockDAG de Kaspa" src="images/image1.png"></div>
+  <h3 class="section-title" id="h.52y7zpxatzmc">DAG - Graphe orienté acyclique</h3>
+  <p>Vous avez probablement déjà entendu dire que Kaspa est un BlockDAG, mais qu'est-ce que cela signifie ? Cet article est conçu de manière à ne présupposer aucune connaissance préalable, nous commencerons donc par la théorie des graphes. Nous verrons d'abord ce qu'est un Graphe, puis ce qu'est un Graphe Orienté, puis nous arriverons au Graphe Orienté Acyclique, et enfin comment cela s'applique à la fois à Bitcoin et à Kaspa.</p>
+  <p><b>Graphe</b> - La théorie des graphes, un domaine des mathématiques et de l'informatique, se concentre sur l'étude des graphes, qui sont des structures représentant les relations entre des paires d'entités. Ces graphes sont constitués de sommets (également appelés nœuds ou points) connectés par des arêtes (parfois appelées liens ou lignes). Les graphes sont classés en graphes non orientés, où les connexions entre les sommets sont mutuelles, et en graphes orientés, où les connexions ont une direction spécifique. En tant que domaine clé des mathématiques discrètes, la théorie des graphes explore ces structures de manière approfondie. L'image suivante illustre un graphe non orienté simple où les connexions n'ont pas de direction.</p>
+  <div class="img-container"><img alt="Graphe non orienté" src="images/image63.png"></div>
+  <p><b>Graphe Orienté</b> - Un graphe orienté, souvent appelé digraphe, est une structure utilisée pour montrer des relations où les connexions entre les points ont une direction spécifique. Contrairement aux graphes réguliers où les connexions vont dans les deux sens, dans un graphe orienté, chaque arête pointe d'un sommet vers un autre. Dans sa forme la plus simple, un graphe orienté se compose de deux parties principales : une collection de sommets et un ensemble d'arêtes, où chaque arête est une paire de sommets avec une direction claire (d'un sommet à un autre, mais pas l'inverse). Par exemple, si vous avez une arête du sommet X au sommet Y, X est le point de départ et Y est le point d'arrivée. Cette arête connecte X à Y. Une arête différente pourrait aller de Y à X, mais ce serait une connexion distincte. Dans cette configuration de base, appelée graphe simple orienté, vous ne pouvez pas avoir plusieurs arêtes avec la même direction entre les mêmes deux sommets, ni avoir une arête qui commence et se termine au même sommet (appelée boucle). L'image suivante illustre un graphe orienté où les arêtes ont une direction ; notez que l'arête avec deux pointeurs représente deux arêtes, chacune avec une direction.</p>
+  <div class="img-container"><img alt="Graphe orienté" src="images/image70.png"></div>
+  <p><b>Graphe Orienté Acyclique</b> - est un graphe orienté qui ne contient aucun cycle. Il est composé de sommets et d'arêtes, où chaque arête a une direction d'un sommet à un autre, garantissant que suivre les directions des arêtes ne conduit jamais à une boucle fermée. Un graphe orienté est qualifié de DAG si ses sommets peuvent être arrangés dans une séquence linéaire qui respecte la direction de toutes les arêtes, connue sous le nom d'ordre topologique. L'image suivante illustre un graphe orienté acyclique où aucun cycle (ou boucle) ne peut être trouvé.</p>
+  <div class="img-container"><img alt="Graphe Orienté Acyclique (DAG)" src="images/image7.png"></div>
+
+  <div class="simplified-def">
+    <h3 class="section-title">Définitions Simplifiées</h3>
+    <p><b>Graphe</b> - se compose de sommets et d'arêtes qui connectent des paires de sommets, où les sommets représentent tout type d'objet et les arêtes représentent les connexions entre eux.</p>
+    <p><b>Graphe Orienté</b> - chaque arête a une direction spécifique, pointant d'un sommet à un autre. Un chemin dans un graphe orienté est une séquence d'arêtes où le sommet d'arrivée d'une arête est le sommet de départ de l'arête suivante dans la séquence.</p>
+    <p><b>Graphe Orienté Acyclique</b> - un graphe orienté où aucun sommet ne peut s'atteindre lui-même via un chemin qui inclut une ou plusieurs arêtes, garantissant l'absence de cycles.</p>
+    <p>Il y a beaucoup plus à apprendre sur les graphes, mais pour notre propos, nous avons seulement besoin de savoir que le BlockDAG de Kaspa est juste une structure, composée d'arêtes et de sommets, connectés dans une seule direction, et que nous ne finissons jamais dans un cycle, il est acyclique, ou un Graphe Orienté Acyclique.</p>
+  </div>
+
+  <h3 class="section-title" id="h.r0onrjvzaye8">Bitcoin et Kaspa</h3>
+  <p><b>Bitcoin</b> - est un DAG, même s'il est toujours appelé une Blockchain, Bitcoin utilise la structure DAG. Les blocs sont des sommets, et leur relation est celle des arêtes. Chaque bloc est connecté dans une seule direction et en suivant chaque connexion, vous ne ferez jamais de cycle, et vous reviendrez toujours à la Genèse.</p>
+  <div class="img-container"><img alt="Structure de la blockchain Bitcoin en tant que DAG linéaire" src="images/image25.png"></div>
+  <p><b>Kaspa</b> - est un DAG, Kaspa utilise la structure DAG. Les blocs sont des sommets, et leur relation est celle des arêtes. Chaque bloc est connecté dans une seule direction et en suivant chaque connexion, vous ne ferez jamais de cycle, et vous reviendrez toujours à la Genèse.</p>
+  <div class="img-container"><img alt="Structure du BlockDAG de Kaspa" src="images/image30.png"></div>
+  <p>Alors, quelle est la différence si Bitcoin et Kaspa utilisent tous deux un DAG ? Bitcoin permet aux blocs de pointer vers un seul bloc précédent. Kaspa permet aux blocs de pointer vers plusieurs blocs précédents. C'est la seule différence dans la structure.</p>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="h.q9lxzgpefpuh">Chapitre 2 : Kaspa - Lier le corps à l'en-tête</h2>
+  <div class="img-container"><img alt="En-tête de bloc lié au corps du bloc" src="images/image66.png"></div>
+  <h3 class="section-title" id="h.3ezesbjpkjql">Sécuriser le corps du bloc à l'en-tête - Racine de Merkle</h3>
+  <p>Qu'est-ce qui sécurise le corps du bloc à l'en-tête ? La Racine de Merkle des transactions dans le corps.</p>
+  <p>Qu'est-ce que cela signifie ? Cet article est conçu de manière à ne présupposer aucune connaissance préalable, nous commencerons donc par un Arbre de Merkle. Qu'est-ce qu'un arbre de Merkle, comment il est construit et comment il empêche la falsification. Ensuite, comment il s'applique à la fois à Bitcoin et à Kaspa.</p>
+  <p><b>Arbre de Merkle</b> - En cryptographie et en informatique, un Arbre de Merkle, également connu sous le nom d'Arbre de Hachage, est une structure arborescente où chaque nœud "feuille" contient le hachage cryptographique d'un bloc de données. Les nœuds non-feuilles, souvent appelés branches ou nœuds internes, contiennent le hachage cryptographique des étiquettes de leurs nœuds enfants. Cette structure permet une validation efficace et sécurisée du contenu de grands ensembles de données.</p>
+  <div class="img-container"><img alt="Structure d'un arbre de Merkle" src="images/image13.png"></div>
+  <p><b>Bloc de Données</b> - Dans un arbre de Merkle, un bloc de données est un segment de données brutes, tel qu'une transaction, qui constitue la base de la structure de l'arbre. Chaque bloc de données est haché individuellement pour produire un hachage de nœud feuille.</p>
+  <div class="img-container"><img alt="Blocs de données (transactions)" src="images/image9.png"></div>
+  <p><b>Feuille</b> - Un nœud dans un arbre de Merkle qui stocke le hachage cryptographique d'un seul bloc de données. Le nœud feuille, en stockant ce hachage, agit comme une empreinte numérique du bloc de données.</p>
+  <div class="img-container"><img alt="Hachage des transactions pour créer les feuilles" src="images/image23.png"></div>
+  <p><b>Nœud Interne</b> - Un nœud parent qui agrège les hachages de ses nœuds enfants. Ces hachages enfants sont concaténés et hachés pour produire une seule valeur de hachage qui étiquette le nœud interne.</p>
+  <div class="img-container"><img alt="Hachage des feuilles pour créer les nœuds internes" src="images/image58.png"></div>
+  <p><b>Racine de Hachage</b> - La valeur de hachage singulière au nœud le plus élevé, encapsulant toutes les données de l'arbre. Elle sert de résumé compact et unique de tous les blocs de données sous-jacents. Toute modification d'un seul nœud feuille altère la racine de hachage.</p>
+  <div class="img-container"><img alt="Racine de Merkle, le hachage final" src="images/image5.png"></div>
+
+  <div class="simplified-def">
+    <h3 class="section-title">Définitions Simplifiées</h3>
+    <p><b>Arbre de Merkle</b> - Une structure arborescente utilisée pour vérifier efficacement l'intégrité des données en organisant les blocs de données dans une structure de hachages cryptographiques.</p>
+    <p><b>Bloc de Données</b> - Une unité d'information, telle qu'une transaction, qui est hachée pour créer un nœud feuille.</p>
+    <p><b>Feuille</b> - Un nœud qui stocke le hachage d'un seul bloc de données.</p>
+    <p><b>Nœud Interne</b> - Un nœud parent qui contient le hachage de ses nœuds enfants.</p>
+    <p><b>Racine de Hachage</b> - Le nœud le plus élevé contenant un seul hachage qui représente l'intégrité de l'ensemble des données.</p>
+  </div>
+
+  <h3 class="section-title" id="h.emrhhaf2640n">Bitcoin et Kaspa</h3>
+  <p><b>Bitcoin</b> - un Arbre de Merkle organise les données de transaction dans chaque bloc. Les transactions sont hachées en nœuds feuilles, appariées et hachées en nœuds internes, et combinées en une seule racine de hachage stockée dans l'en-tête du bloc. Cette structure permet une vérification efficace de l'intégrité des transactions.</p>
+  <div class="img-container"><img alt="Arbre de Merkle dans Bitcoin" src="images/image18.png"></div>
+  <p><b>Kaspa</b> - un Arbre de Merkle organise les données de transaction dans chaque bloc de la même manière que Bitcoin. Cependant, Kaspa permet la coexistence de blocs parallèles, où l'ordre entre ces blocs dans le DAG ne peut être connu. Un Arbre de Merkle dépend de l'ordre. Comment Kaspa résout-il cela ? En ajoutant un Arbre de Merkle supplémentaire.</p>
+  <div class="img-container"><img alt="Arbre de Merkle dans Kaspa" src="images/image69.png"></div>
+  <p>Qu'est-ce qui sécurise le corps du bloc à l'en-tête ? La Racine de Merkle des transactions dans le corps (<code>hash_merkle_root</code>).</p>
+  <p>Qu'est-ce qui sécurise les transactions du mergeset à l'en-tête ? La Racine de Merkle des transactions dans le mergeset (<code>accepted_id_merkle_root</code>). Cette deuxième racine permet de valider les transactions des blocs parallèles qui sont fusionnés, résolvant ainsi le problème de l'ordre dans un environnement DAG.</p>
+  <div class="img-container"><img alt="Les deux racines de Merkle dans un en-tête de bloc Kaspa" src="images/image65.png"></div>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="h.y0ik307h70q9">Chapitre 3 : Kaspa et le "Problème de Scalabilité de Bitcoin"</h2>
+  <div class="img-container"><img alt="Illustration du problème de scalabilité" src="images/image53.png"></div>
+  <h3 class="section-title" id="h.2jy3kmwufuue">Kaspa a résolu le "Problème de Scalabilité de Bitcoin" - Qu'est-ce que c'est ?</h3>
+  <p>Qu'est-ce que le Problème de Scalabilité de Bitcoin et comment Kaspa l'a-t-il résolu ? Par l'inclusion.</p>
+  <p>Qu'est-ce que cela signifie ? Cet article est conçu de manière à ne présupposer aucune connaissance préalable, nous commencerons donc par un Modèle Client-Serveur, puis le réseau Pair à Pair. Qu'est-ce qu'un réseau P2P, à quoi il ressemble, et comment les messages s'y propagent. Ensuite, comment cela s'applique à la fois à Bitcoin et à Kaspa.</p>
+  <p><b>Modèle Client-Serveur</b> - Dans un réseau client-serveur, une architecture centralisée organise la communication et le partage des ressources via un seul ordinateur puissant appelé serveur, qui se connecte à plusieurs appareils utilisateurs appelés clients. Cette structure assure une gestion efficace mais dépend fortement du serveur, le rendant vulnérable.</p>
+  <div class="img-container"><img alt="Modèle Client-Serveur" src="images/image67.png"></div>
+  <p><b>Réseau Pair à Pair (P2P)</b> - Une architecture décentralisée qui permet la communication directe et le partage de ressources entre des nœuds interconnectés. Chaque pair fonctionne à la fois comme client et comme serveur, contribuant à la résilience et à la scalabilité du réseau sans dépendre d'une autorité centrale.</p>
+  <div class="img-container"><img alt="Réseau Pair à Pair" src="images/image12.png"></div>
+  <p><b>Temps de Propagation</b> - Dans un réseau P2P, le temps de propagation est la durée qu'il faut pour que les données (comme un nouveau bloc) voyagent d'un nœud à d'autres à travers le réseau. Pendant ce temps, différents nœuds peuvent avoir des vues différentes de l'état du réseau.</p>
+  <div class="img-container"><img alt="Propagation d'un message dans un réseau P2P" src="images/image37.png"></div>
+  
+  <div class="simplified-def">
+    <h3 class="section-title">Définitions Simplifiées</h3>
+    <p><b>Modèle Client-Serveur</b> - Un ordinateur central gère les données pour plusieurs clients.</p>
+    <p><b>Pair à Pair (P2P)</b> - Plusieurs ordinateurs partagent des données directement entre eux sans autorité centrale.</p>
+    <p><b>Nœud</b> - Un seul ordinateur participant à un réseau P2P.</p>
+    <p><b>Temps de Propagation</b> - Le temps nécessaire pour que les données se propagent à travers le réseau.</p>
+  </div>
+
+  <h3 class="section-title" id="h.v4bl36mx6e0u">Bitcoin et Kaspa</h3>
+  <p><b>Bitcoin</b> - Utilise un réseau P2P. Cependant, sa sécurité dépend du fait que le taux de création de blocs (10 minutes) est beaucoup plus lent que le temps de propagation. Si les blocs sont créés trop rapidement, de nombreux blocs sont "orphelins" (rejetés), ce qui gaspille du travail et compromet la sécurité. C'est le "problème de scalabilité".</p>
+  <div class="img-container"><img alt="Blocs orphelins dans Bitcoin en raison de la latence du réseau" src="images/image45.png"></div>
+  <p><b>Kaspa</b> - Utilise un protocole inclusif (GHOSTDAG) qui permet aux blocs de pointer vers plusieurs blocs précédents. Si des blocs parallèles sont créés pendant le temps de propagation, ils sont tous inclus dans le DAG. Il n'y a pas de blocs orphelins. Cela permet au taux de création de blocs d'être plus rapide que le temps de propagation, résolvant ainsi le problème de scalabilité tout en maintenant la sécurité.</p>
+  <div class="img-container"><img alt="Inclusion de blocs parallèles dans Kaspa" src="images/image14.png"></div>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="h.1tq8u5wwr5up">Chapitre 4 : MuHash</h2>
+  <div class="img-container"><img alt="Illustration du concept MuHash" src="images/image35.png"></div>
+  <h3 class="section-title" id="h.ny65anmiz0s">Qu'est-ce que MuHash et comment Kaspa l'utilise-t-il ?</h3>
+  <p>Une structure pour suivre les UTXO et élaguer les anciennes données de corps de bloc.</p>
+  <p>Qu'est-ce que cela signifie ? Cet article est conçu de manière à ne présupposer aucune connaissance préalable, nous commencerons donc par MuHash. Qu'est-ce qu'une structure MuHash, comment elle est calculée, et comment elle conserve les propriétés de la Multiplication. Ensuite, comment elle s'applique à la fois à Bitcoin et à Kaspa.</p>
+  <p><b>MuHash</b> - Dans les systèmes cryptographiques, MuHash (Multiplicative Hash) est un algorithme de hachage spécialisé conçu pour calculer efficacement une seule valeur de hachage à partir d'un ensemble d'éléments. Il permet des mises à jour incrémentielles, ce qui signifie que des éléments peuvent être ajoutés ou supprimés sans recalculer l'intégralité du hachage, ce qui améliore les performances dans les ensembles de données dynamiques.</p>
+  <div class="img-container"><img alt="Ajout et suppression d'éléments dans un MuHash" src="images/image57.png"></div>
+  <p><b>Numérateur et Dénominateur</b> - MuHash utilise deux compteurs : un numérateur qui multiplie les éléments ajoutés et un dénominateur qui multiplie les éléments supprimés. L'état final est obtenu en "divisant" le numérateur par le dénominateur (via une multiplication par l'inverse modulaire). L'ordre des opérations n'a pas d'importance, ce qui est crucial pour le traitement parallèle.</p>
+  <div class="img-container"><img alt="Calcul du MuHash avec numérateur et dénominateur" src="images/image2.png"></div>
+  <div class="img-container"><img alt="Calcul du MuHash avec numérateur et dénominateur" src="images/image64.png"></div>
+  <p><b>Contrainte Modulo Premier</b> - Le nombre premier modulaire agit comme une limite mathématique qui maintient à la fois le numérateur et le dénominateur dans une plage gérable pendant toutes les opérations arithmétiques. Chaque multiplication est effectuée modulo un nombre premier, ce qui signifie que peu importe le nombre d'éléments ajoutés ou supprimés, les résultats "bouclent" toujours pour rester dans le corps fini.</p>
+  <div class="img-container"><img alt="Contrainte Modulo Premier" src="images/image16.png"></div>
+  <p><b>Inverse Modulaire</b> - L'inverse modulaire est l'opération mathématique qui rend la division possible dans le corps fini utilisé par MuHash. Lorsque vous devez "diviser" le numérateur par le dénominateur pour obtenir le résultat de hachage final, vous multipliez en fait le numérateur par l'inverse modulaire du dénominateur.</p>
+
+  <div class="simplified-def">
+    <h3 class="section-title">Définitions Simplifiées</h3>
+    <p><b>MuHash</b> - Une structure pour hacher rapidement des éléments dans un ensemble, où l'ordre n'a pas d'importance.</p>
+    <p><b>Numérateur</b> - Le champ où les éléments sont multipliés lorsqu'ils sont ajoutés.</p>
+    <p><b>Dénominateur</b> - Le champ où les éléments sont multipliés lorsqu'ils sont retirés.</p>
+    <p><b>Contrainte Modulo Premier</b> - Un nombre premier qui définit le champ mathématique où toutes les op&eacute;rations ont lieu.</p>
+    <p><b>Inverse Modulaire</b> - L'opération qui permet la "division" dans un corps fini.</p>
+    <p>MuHash est juste une structure, composée d'un numérateur et d'un dénominateur, qui permet le hachage rapide des éléments d'un ensemble dans n'importe quel ordre sans recalculer à partir de zéro.</p>
+  </div>
+
+  <h3 class="section-title" id="h.focbph7aurgq">Bitcoin et Kaspa</h3>
+  <p><b>Bitcoin</b> - Les nœuds complets conservent toutes les transactions, y compris les anciennes transactions dépensées. L'élagage est difficile car il n'y a pas de mécanisme efficace pour résumer l'état des transactions (l'ensemble UTXO) de manière compacte et vérifiable sans conserver les données historiques.</p>
+  <div class="img-container"><img alt="Stockage complet de la blockchain Bitcoin" src="images/image42.png"></div>
+  <p><b>Kaspa</b> - Les nœuds complets élaguent les anciennes données. Cette capacité d'élaguer les anciennes données nécessite un moyen de supprimer toutes les données de transaction de chaque bloc ET de les sécuriser cryptographiquement à chaque en-tête. Kaspa utilise MuHash pour supprimer les données de transaction des blocs (de sorte que seuls les en-têtes du DAG restent après le point d'élagage) et les sécuriser à chaque en-tête. C'est une étape essentielle pour l'élagage. Kaspa sépare les Données de Transaction (UTXO) des Données de Consensus (En-têtes), ce qui fait que Kaspa ne stocke que les Transactions Non Dépensées, au lieu de toutes les transactions jamais effectuées. Cela réduit les exigences de stockage par rapport à Bitcoin.</p>
+  <div class="img-container"><img alt="Stockage élagué de Kaspa avec MuHash" src="images/image51.png"></div>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="h.oy0kgniero14">Chapitre 5 : Modèle UTXO de Kaspa</h2>
+  <div class="img-container"><img alt="Illustration du modèle UTXO" src="images/image74.png"></div>
+  <h3 class="section-title" id="h.8nqvw067oam1">Qu'est-ce qu'un UTXO et comment Kaspa l'utilise-t-il ?</h3>
+  <p>Une structure pour suivre qui peut dépenser quel Kaspa.</p>
+  <p>Qu'est-ce que cela signifie ? Cet article est conçu de manière à ne présupposer aucune connaissance préalable, nous commencerons donc par le Modèle de Compte et le modèle UTXO, puis ce qu'est un UTXO, ce qu'il contient et comment il est dépensé. Ensuite, comment cela s'applique à la fois à Bitcoin et à Kaspa.</p>
+  <p><b>Modèle de Compte</b> - Le Modèle de Compte se comporte comme un compte bancaire traditionnel en maintenant un solde et en offrant des opérations familières. Tout comme la vérification de votre solde bancaire, vous pouvez interroger les avoirs actuels du compte, et de manière similaire à la façon dont les banques suivent votre historique de transactions, le Compte gère votre état financier. Le système fournit des opérations de compte standard telles que la réception de dépôts et l'exécution de virements, chaque compte ayant son propre identifiant unique et son nom pour une gestion facile. Plusieurs types de comptes sont disponibles pour répondre à différents besoins, tout comme les banques offrent divers types de comptes à des fins différentes.</p>
+  <div class="img-container"><img alt="Modèle de Compte" src="images/image52.png"></div>
+  <p><b>Modèle UTXO</b> - Le Modèle UTXO se comporte comme de l'argent physique ou des pièces dans votre portefeuille, où chaque pièce a une valeur spécifique et ne peut être dépensée qu'une seule fois. Tout comme vous pourriez avoir plusieurs billets et pièces de différentes dénominations dans votre portefeuille physique, un portefeuille numérique contient plusieurs UTXO de montants variables qui représentent votre solde dépensable. Lorsque vous effectuez une transaction, des UTXO spécifiques sont consommés en tant qu'entrées (comme dépenser des billets exacts), et de nouveaux UTXO sont créés en tant que sorties pour le destinataire et toute monnaie qui vous est rendue, de manière similaire à la façon dont un caissier vous rend la monnaie lorsque vous payez avec un billet plus grand. Le système suit ces "pièces" individuelles à travers toutes les transactions, en maintenant un enregistrement complet des UTXO qui existent et peuvent être dépensés, tout comme l'argent physique se déplace de personne en personne tout en conservant son identité individuelle.</p>
+  <div class="img-container"><img alt="Modèle UTXO" src="images/image22.png"></div>
+  <p><b>Structure UTXO</b> - Un UTXO (Unspent Transaction Output) est structuré comme un reçu numérique qui contient toutes les informations essentielles nécessaires pour le dépenser, de manière similaire à la façon dont un chèque contient le montant, les détails du destinataire et les informations d'autorisation. Chaque UTXO contient le montant de la valeur qu'il détient et définit les conditions de dépense. Tout comme une pièce physique a sa dénomination estampillée et peut être vérifiée comme authentique, chaque UTXO porte sa valeur et une preuve cryptographique de propriété, ce qui en fait une unité de valeur autonome qui peut être vérifiée et dépensée indépendamment. Le système traite chaque UTXO comme un objet discret avec son propre identifiant unique, permettant un suivi précis des unités de valeur individuelles à mesure qu'elles se déplacent à travers le réseau.</p>
+  <div class="img-container"><img alt="Structure d'un UTXO" src="images/image17.png"></div>
+  <p><b>Dépenser un UTXO</b> - Dépenser un UTXO se comporte comme l'utilisation d'argent liquide physique, où vous devez présenter le billet ou la pièce exacte pour effectuer un achat, et une fois dépensé, il ne peut plus être utilisé. Le processus commence par la localisation de l'UTXO spécifique que vous souhaitez dépenser et la vérification de son existence dans l'ensemble UTXO, de manière similaire à la vérification qu'un billet dans votre portefeuille est authentique et non dépensé. Lors de la création d'une transaction, vous référencez l'UTXO par son identifiant unique et fournissez un script de signature qui prouve que vous avez le droit de le dépenser. Le système valide que l'UTXO n'a pas déjà été dépensé (empêchant la double dépense), vérifie que vous remplissez les conditions de dépense, puis supprime l'UTXO de l'ensemble dépensable tout en créant de nouveaux UTXO en tant que sorties, complétant le transfert de valeur d'une partie à l'autre.</p>
+  <div class="img-container"><img alt="Processus de dépense d'un UTXO" src="images/image31.png"></div>
+
+  <div class="simplified-def">
+    <h3 class="section-title">Définitions Simplifiées</h3>
+    <p><b>Modèle de Compte</b> - Un système qui maintient un solde unique par compte.</p>
+    <p><b>Modèle UTXO</b> - Un système qui suit des "pièces" individuelles de valeur.</p>
+    <p><b>UTXO</b> - Une sortie de transaction non dépensée, représentant une somme d'argent spécifique.</p>
+    <p><b>Dépenser un UTXO</b> - Le processus de consommation d'un UTXO pour créer de nouveaux UTXO.</p>
+    <p>Un UTXO est juste une structure pour suivre qui peut dépenser quoi.</p>
+  </div>
+
+  <h3 class="section-title" id="h.5v09d76siagw">Bitcoin et Kaspa</h3>
+  <p><b>Bitcoin</b> - Utilise le modèle UTXO. Les transactions sont des collections d'UTXO consommés et créés, stockées dans le corps de chaque bloc.</p>
+  <div class="img-container"><img alt="Modèle UTXO dans Bitcoin" src="images/image27.png"></div>
+  <p><b>Kaspa</b> - Utilise également le modèle UTXO. La principale différence réside dans la manière dont ces UTXO sont gérés et validés dans un environnement BlockDAG, ce qui permet un traitement parallèle et des confirmations plus rapides.</p>
+  <div class="img-container"><img alt="Modèle UTXO dans Kaspa" src="images/image44.png"></div>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="h.6x07cz5zmxim">Chapitre 6 : Parents vs Mergeset</h2>
+  <div class="img-container"><img alt="Relations entre les blocs dans le DAG" src="images/image4.png"></div>
+  <h3 class="section-title" id="h.34xcaoqpznos">Que sont les Parents et le Mergeset et comment Kaspa les utilise-t-il ?</h3>
+  <p>Deux façons différentes de décrire les relations entre les blocs dans la structure BlockDAG de Kaspa.</p>
+  <p><b>Parents de Blockchain Traditionnels</b> - Dans une blockchain linéaire comme Bitcoin, chaque bloc a exactement un parent (sauf la Genèse), créant une structure de chaîne simple. La relation parentale est simple : chaque nouveau bloc référence le hachage du bloc précédent, formant une séquence ininterrompue de la Genèse jusqu'à la pointe actuelle.</p>
+  <div class="img-container"><img alt="Relation parentale dans Bitcoin" src="images/image34.png"></div>
+  <p><b>Complexité des Parents DAG</b> - Le BlockDAG de Kaspa permet aux blocs d'avoir plusieurs parents, créant un réseau de relations plus complexe. Lorsqu'un bloc est créé, il peut référencer plusieurs blocs existants en tant que parents, permettant la création de blocs parallèles et un débit plus élevé.</p>
+  <div class="img-container"><img alt="Relations parentales multiples dans Kaspa" src="images/image36.png"></div>
+  <p><b>Parents</b> - Les parents sont les blocs qu'un nouveau bloc référence directement dans son en-tête. Ce sont des relations explicites déclarées par le créateur du bloc - ce sont les blocs sur lesquels ce nouveau bloc se construit directement. Lorsque vous visualisez un Visualiseur DAG de Kaspa, ces flèches représentent la relation parentale.</p>
+  <div class="img-container"><img alt="Un nouveau bloc pointant vers ses parents" src="images/image11.png"></div>
+  <p><b>Comment fonctionnent les Parents</b> - Lors de la création d'un bloc, les mineurs sélectionnent les blocs existants à référencer comme parents en fonction de ce qu'ils considèrent comme les "tips" actuels du DAG. Le système valide ces relations parentales et les utilise pour déterminer la position du bloc dans la structure du DAG. Ici, vous pouvez voir un nouveau bloc en cours de création, référençant les "tips" du DAG, les blocs trouvés sans qu'un autre bloc ne les pointe.</p>
+  <div class="img-container"><img alt="Création d'un nouveau bloc et sélection des tips" src="images/image56.png"></div>
+  <p><b>Mergeset</b> - Le mergeset est l'ensemble des blocs qui se trouvent dans l'anticône du parent sélectionné d'un bloc mais qui sont toujours considérés comme faisant partie du contexte de consensus du bloc. Ici, le bloc C est dans l'anticône de B, et le bloc B est dans l'anticône de C.</p>
+  <div class="img-container"><img alt="Illustration du mergeset d'un bloc" src="images/image29.png"></div>
+  <p><b>Comment le Mergeset est calculé</b> - Le mergeset est calculé en trouvant tous les blocs qui ne sont pas des ancêtres du parent sélectionné mais qui sont toujours atteignables via l'ensemble des parents du bloc. Cela crée un contexte plus large de blocs qui doivent être pris en compte pour les décisions de consensus. Dans cet exemple, si le bloc B est le parent sélectionné, le mergeset du bloc en cours de création inclurait à la fois le bloc C et le bloc D.</p>
+  <div class="img-container"><img alt="Calcul du mergeset" src="images/image47.png"></div>
+  <p><b>Mergeset dans GHOSTDAG</b> - Le protocole GHOSTDAG traite le mergeset pour déterminer quels blocs doivent être colorés "bleu" (contribuant au consensus) ou "rouge" (valides mais ne contribuant pas). Ce processus de coloration est essentiel pour maintenir le consensus dans l'environnement de blocs parallèles.</p>
+
+  <h3 class="section-title">Comment les Parents et le Mergeset fonctionnent ensemble</h3>
+  <p><b>Sélection du Parent Sélectionné</b> - Parmi tous les parents, le système en sélectionne un comme "parent sélectionné" - celui qui a le plus grand "blue work". Cela crée une colonne vertébrale de chaîne principale à travers le DAG tout en reconnaissant les autres relations parentales. Ici, la chaîne parentale est mise en évidence.</p>
+  <div class="img-container"><img alt="Sélection du parent sélectionné et chaîne principale" src="images/image75.png"></div>
+  <p><b>Traitement du Mergeset</b> - Une fois le parent sélectionné choisi, le mergeset est calculé et traité pour déterminer les données GHOSTDAG finales. Le mergeset exclut le parent sélectionné puisqu'il est déjà pris en compte dans la chaîne principale. Ici, le mergeset inclut le bloc C, car il est dans l'anticône du bloc B (le parent sélectionné) même s'il n'est pas un parent du nouveau bloc (les parents incluent seulement le bloc B et le bloc D).</p>
+  <div class="img-container"><img alt="Traitement du mergeset" src="images/image26.png"></div>
+  <p><b>Sélection du Parent Virtuel</b> - Lors de la création de l'état virtuel, le système utilise les deux concepts : il choisit les parents virtuels parmi les blocs candidats tout en s'assurant que le mergeset résultant ne dépasse pas les limites de taille. Cela équilibre l'inclusion de nombreux blocs parallèles tout en maintenant une complexité de consensus gérable.</p>
+
+  <h3 class="section-title">Différences Pratiques</h3>
+  <p><b>Stockage et Itération</b> - Les parents sont stockés directement dans les en-têtes de bloc, tandis que les données du mergeset sont calculées et stockées séparément dans les structures de données GHOSTDAG. Le système fournit différents itérateurs pour accéder aux blocs du mergeset dans divers ordres (ordre de consensus, ordre de "blue work", etc.).</p>
+  <p><b>Impact sur le Consensus</b> - Les parents déterminent la structure de base du DAG, mais le mergeset détermine quels blocs contribuent réellement aux calculs de consensus comme le "blue score" et le "blue work". Un bloc pourrait être un parent mais finir par être coloré en rouge dans le mergeset, ce qui signifie qu'il ne contribue pas à la chaîne de consensus principale.</p>
+
+  <div class="simplified-def">
+    <h3 class="section-title">Définitions Simplifiées</h3>
+    <p><b>Parents</b> - Les blocs qu'un nouveau bloc référence directement dans son en-tête, établissant des relations explicites dans le DAG.</p>
+    <p><b>Mergeset</b> - L'ensemble des blocs dans l'anticône d'un bloc qui sont considérés pour le traitement du consensus, à l'exclusion du parent sélectionné.</p>
+    <p><b>Parent Sélectionné</b> - Le parent avec le plus grand "blue work", formant la colonne vertébrale de la chaîne principale.</p>
+    <p><b>Mergeset Bleus/Rouges</b> - Blocs dans le mergeset qui contribuent au consensus (bleu) ou non (rouge).</p>
+    <p>Les parents définissent la structure du DAG, tandis que le mergeset détermine la participation au consensus.</p>
+  </div>
+
+  <h3 class="section-title" id="h.tsab66lazd4a">Bitcoin vs Kaspa</h3>
+  <p><b>Bitcoin</b> - N'a qu'un seul parent par bloc (sauf la Genèse), il n'y a donc pas de distinction entre les parents et le mergeset. Le parent unique est à la fois la relation structurelle et la relation de consensus.</p>
+  <div class="img-container"><img alt="Structure simple de Bitcoin" src="images/image55.png"></div>
+  <p><b>Kaspa</b> - Sépare les relations structurelles (parents) des relations de consensus (mergeset). Plusieurs parents créent la structure du DAG, mais le traitement du mergeset détermine quels blocs contribuent réellement à l'état de consensus.</p>
+  <div class="img-container"><img alt="Structure complexe de Kaspa avec parents et mergeset" src="images/image24.png"></div>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="h.x0nj4tecoh66">Chapitre 7 : Élément de Second Ordre</h2>
+  <div class="img-container"><img alt="Illustration de l'élagage de second ordre" src="images/image48.png"></div>
+  <h3 class="section-title" id="h.1wbq42gt63wc">Qu'est-ce que l'élagage de second ordre et comment Kaspa l'utilise-t-il ?</h3>
+  <p>L'élagage de second ordre est l'étape avancée de l'optimisation du stockage de Kaspa qui supprime les données liées au consensus tout en maintenant la capacité de valider de nouveaux blocs et de participer au consensus du réseau. Il va au-delà de l'élagage de premier ordre en supprimant sélectivement les données de structure du DAG, les relations et certains en-têtes eux-mêmes.</p>
+  <p>Pourquoi "Second Ordre" ? - Cette terminologie souligne qu'après la suppression des corps de blocs (Premier Ordre), Kaspa peut supprimer des données de consensus supplémentaires tout en conservant les capacités de validation. L'élagage de second ordre permet une efficacité de stockage maximale en supprimant les informations de consensus redondantes qui ne sont pas essentielles pour la validation continue.</p>
+  <p>Qu'est-ce que cela signifie ? - Cet article suppose une connaissance de l'élagage de premier ordre, nous commencerons donc par les données de consensus qui existent après l'élagage de premier ordre, puis nous expliquerons comment l'élagage de second ordre supprime sélectivement les structures de consensus, ce qui est conservé par rapport à ce qui est supprimé, et comment la validation continue de fonctionner avec des données de consensus réduites.</p>
+
+  <h3 class="section-title">Élagage de Premier Ordre vs Élément de Second Ordre</h3>
+  <p><b>Fondation de l'élagage de Premier Ordre</b> - Après l'élagage de premier ordre, les nœuds conservent tous les en-têtes de bloc, les données GHOSTDAG, les relations d'accessibilité et les informations sur la structure du DAG. Cela permet une validation complète du consensus mais nécessite toujours un stockage important pour les relations complexes du DAG que Kaspa maintient.</p>
+  <p><b>Défi de l'élagage de Second Ordre</b> - Le défi est de déterminer quelles données de consensus peuvent être supprimées en toute sécurité sans compromettre la capacité du nœud à valider de nouveaux blocs. Le système doit préserver suffisamment d'informations structurelles pour maintenir le consensus tout en supprimant les données redondantes.</p>
+
+  <h3 class="section-title">Système de Preuve Multi-Niveaux</h3>
+  <p><b>Classification du Niveau de Preuve</b> - Le système d'élagage de Kaspa classe les blocs en fonction de leur importance pour différents niveaux de preuve. Les blocs affiliés à des niveaux de preuve plus élevés conservent plus de données de consensus que ceux qui ne sont nécessaires que pour des niveaux inférieurs.</p>
+  <p><b>Rétention des Données Basée sur le Niveau</b> - Le système détermine quelles données de consensus conserver en fonction du niveau de preuve auquel chaque bloc appartient. Les blocs de niveau supérieur conservent plus de relations et d'informations de consensus, tandis que les blocs de niveau inférieur peuvent voir leurs données de consensus supprimées en toute sécurité.</p>
+  <p><b>Zones DAG Contiguës</b> - L'élagage garantit que pour chaque niveau, les relations restantes représentent une zone DAG contiguë, maintenant l'intégrité structurelle nécessaire à la validation du consensus.</p>
+
+  <h3 class="section-title">Ce qui est supprimé dans l'élagage de Second Ordre</h3>
+  <p><b>Suppression des Données de Relations</b> - L'élagage de second ordre supprime les données de relations spécifiques au niveau pour les blocs qui n'appartiennent qu'à des niveaux de preuve supérieurs. Cela préserve la sémantique selon laquelle les relations représentent des zones DAG contiguës tout en supprimant les données de niveau inférieur inutiles.</p>
+  <p><b>Suppression Sélective des Données GHOSTDAG</b> - Le système supprime les données GHOSTDAG pour certains blocs tout en les préservant pour la validation essentielle du consensus. Les données GHOSTDAG sont supprimées au niveau 0 pour les blocs en cours d'élagage partiel.</p>
+  <p><b>Suppression des En-têtes</b> - Dans la forme la plus agressive de l'élagage de second ordre, certains en-têtes de bloc eux-mêmes peuvent être supprimés tout en préservant les points d'élagage passés. Seuls les en-têtes non essentiels pour les requêtes de points d'élagage sont supprimés.</p>
+
+  <h3 class="section-title">Ce qui est conservé dans l'élagage de Second Ordre</h3>
+  <p><b>Structures de Consensus Essentielles</b> - Les données de consensus critiques comme l'anticône du point d'élagage, les blocs de la fenêtre DAA et les blocs GHOSTDAG pour la validation essentielle sont toujours conservées. Cela garantit que les opérations de consensus peuvent continuer même avec un stockage de données réduit.</p>
+  <p><b>Affiliations au Niveau de Preuve</b> - Les blocs maintiennent leur classification en fonction de l'importance du niveau de preuve, déterminant quelles données sont conservées. Le système préserve le minimum de données nécessaires à la validation du consensus en fonction de ces affiliations.</p>
+  <p><b>Points d'Élagage Passés</b> - Les en-têtes pour les points d'élagage passés sont toujours conservés pour maintenir la capacité de répondre aux requêtes de points d'élagage et de prendre en charge le système de preuve d'élagage.</p>
+
+  <h3 class="section-title">Comment la Validation du Consensus se Poursuit</h3>
+  <p><b>Transitions de Statut</b> - Les blocs subissant l'élagage de second ordre passent au statut "en-tête seulement" lorsqu'ils avaient un statut valide et appartiennent à un niveau de preuve. Cela préserve la sémantique selon laquelle un statut valide implique l'existence de données de consensus essentielles.</p>
+  <p><b>Validation des Données Réduites</b> - Même avec l'élagage de second ordre, les nœuds peuvent valider de nouveaux blocs en utilisant les structures de données de consensus préservées et les relations restantes. Le système maintient suffisamment d'informations pour vérifier les règles GHOSTDAG et les relations entre les blocs.</p>
+  <p><b>Validation Basée sur la Preuve</b> - Les données de niveau de preuve préservées permettent aux nœuds de valider les blocs en utilisant des preuves cryptographiques plutôt que des données de consensus historiques complètes, permettant la participation au consensus avec un stockage considérablement réduit.</p>
+
+  <h3 class="section-title">Avantages en matière de Stockage et de Performance</h3>
+  <p><b>Réduction des Données de Consensus</b> - L'élagage de second ordre réduit considérablement les exigences de stockage pour les données liées au consensus tout en maintenant la participation au consensus du réseau. Cela va au-delà des économies de données de transaction de l'élagage de premier ordre.</p>
+  <p><b>Efficacité de la Validation</b> - En supprimant les données de consensus redondantes tout en préservant les structures essentielles, l'élagage de second ordre peut améliorer les performances de validation en réduisant le traitement des données pendant les opérations de consensus.</p>
+  <p><b>Participation au Réseau</b> - Les nœuds utilisant l'élagage de second ordre peuvent participer pleinement au réseau, valider de nouveaux blocs et contribuer au consensus sans nécessiter des ensembles de données de consensus historiques complets.</p>
+
+  <h3 class="section-title">Nœuds d'Archivage vs Nœuds d'Élagage</h3>
+  <p><b>Comportement du Nœud d'Archivage</b> - Les nœuds configurés comme archivage ignorent entièrement l'élagage de premier et de second ordre, préservant toutes les données de consensus. Ces nœuds servent de registre de consensus complet du réseau mais nécessitent un stockage maximal.</p>
+  <p><b>Efficacité du Nœud d'Élagage</b> - Les nœuds d'élagage réguliers utilisent l'élagage de second ordre pour atteindre une efficacité de stockage maximale tout en maintenant des capacités de validation de consensus complètes grâce au système de preuve multi-niveaux.</p>
+  <p>Note : Pour une explication détaillée de la façon dont les nœuds d'élagage restent des nœuds complets et pourquoi les nœuds d'archivage sont facultatifs pour le fonctionnement du réseau (maintenant le modèle sans confiance de Bitcoin), voir l'article étendu "Nœud d'Archivage vs Nœud Complet" qui couvre les capacités de validation, les preuves cryptographiques et la durabilité du réseau.</p>
+
+  <div class="simplified-def">
+    <h3 class="section-title">Définitions Simplifiées</h3>
+    <p><b>Élément de Second Ordre</b> - Suppression des données liées au consensus tout en préservant suffisamment d'informations pour valider les règles de consensus.</p>
+    <p><b>Affiliation au Niveau de Preuve</b> - Classification des blocs en fonction des niveaux de preuve auxquels ils appartiennent, déterminant quelles données de consensus sont conservées.</p>
+    <p><b>Statut "En-tête Seulement"</b> - Blocs dont les données de consensus ont été élaguées mais qui conservent les informations de validation essentielles.</p>
+    <p><b>Zones DAG Contiguës</b> - Maintien de l'intégrité structurelle dans les données de consensus restantes après l'élagage.</p>
+    <p>L'élagage de second ordre permet une efficacité de stockage maximale tout en préservant les capacités de validation du consensus grâce à une classification intelligente des données.</p>
+  </div>
+
+  <h3 class="section-title">Bitcoin vs Kaspa : Élément des Données de Consensus</h3>
+  <p><b>Bitcoin</b> - Les informations de consensus sont essentielles pour la validation et ne peuvent pas être supprimées en toute sécurité.</p>
+  <p><b>Kaspa</b> - La structure DAG complexe et le système de preuve multi-niveaux permettent un élagage de second ordre sophistiqué où différents niveaux de données de consensus peuvent être supprimés sélectivement en fonction de leur importance pour la validation. Cela permet une optimisation du stockage beaucoup plus agressive tout en maintenant les capacités de consensus.</p>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="h.mz2dlkhrvwd2">Chapitre 8 : Kaspa GHOSTDAG simplifié</h2>
+  <div class="img-container"><img alt="Illustration du GHOSTDAG" src="images/image43.png"></div>
+  <h3 class="section-title" id="h.hwkbrs8egi6p">Qu'est-ce que GHOSTDAG et comment Kaspa l'utilise-t-il ?</h3>
+  <p>Un protocole de consensus qui ordonne les blocs dans une structure DAG tout en maintenant les propriétés de sécurité.</p>
+  <p>Qu'est-ce que cela signifie ? Cet article explique GHOSTDAG en commençant par le consensus traditionnel, puis l'approche de GHOSTDAG, comment il classe les blocs, et comment il diffère entre Bitcoin et Kaspa.</p>
+
+  <h3 class="section-title">Consensus Traditionnel - Ordre de Chaîne Linéaire</h3>
+  <p>Le consensus traditionnel de la blockchain fonctionne sur une chaîne linéaire où les blocs forment une séquence unique. Chaque bloc a exactement un parent (sauf la Genèse), créant un mécanisme d'ordonnancement simple. Lorsque des conflits surviennent (plusieurs blocs à la même hauteur), le réseau sélectionne un bloc et rejette les autres comme orphelins. Cette approche assure un ordonnancement clair mais limite le débit car un seul bloc peut être accepté à chaque niveau.</p>
+  <div class="img-container"><img alt="Consensus traditionnel" src="images/image32.png"></div>
+
+  <h3 class="section-title">Protocole GHOSTDAG - Consensus DAG</h3>
+  <p>GHOSTDAG étend le consensus pour fonctionner avec des structures de graphes acycliques dirigés (DAG) où les blocs peuvent avoir plusieurs parents. Le protocole traite les blocs en sélectionnant d'abord un parent avec le "Blue Work" le plus élevé, puis en examinant tous les blocs du Mergeset pour les classer comme "bleus" (honnêtes) ou "rouges" (potentiellement conflictuels). Cette classification est basée sur des contraintes mathématiques impliquant le paramètre de sécurité K, qui limite la taille des Anticones pour maintenir les propriétés de sécurité.</p>
+  <div class="img-container"><img alt="Protocole GHOSTDAG" src="images/image40.png"></div>
+
+  <h3 class="section-title">Règles de Classification des Blocs</h3>
+  <p>GHOSTDAG classe les blocs en utilisant deux contraintes clés liées au paramètre de sécurité K. Premièrement, le nombre de blocs bleus dans l'Anticône d'un bloc candidat ne doit pas dépasser K blocs. Deuxièmement, pour chaque bloc bleu existant, l'ajout du candidat ne doit pas faire en sorte que l'Anticône d'un bloc bleu dépasse K blocs. L'algorithme maintient un suivi de la taille de l'Anticône pour valider efficacement ces contraintes pendant le traitement des blocs. Le bloc gris ici est actuellement validé par le réseau, le bloc C est son Parent Sélectionné. Si k=0, alors le bloc de chaîne C est déjà 1 bloc bleu, ce qui entraîne la classification du bloc B comme Rouge. Si k = 1 (ou plus), le bloc B est classé comme bleu, car il n'a qu'1 bloc bleu (bloc C) dans son Anticône.</p>
+  <div class="img-container"><img alt="Règles de classification des blocs" src="images/image28.png"></div>
+
+  <h3 class="section-title">Accumulation de Blue Work</h3>
+  <p>Le protocole accumule la preuve de travail uniquement à partir des blocs bleus, créant la métrique "Blue Work". Les blocs bleus contribuent leur travail de calcul au score de sécurité cumulatif, tandis que les blocs rouges sont exclus de ce calcul. Cette accumulation sélective garantit que seuls les blocs valides par consensus contribuent à la sécurité du réseau, empêchant les blocs malveillants ou conflictuels de saper le syst&egrave;me. Dans cet exemple, supposons que le bloc B est rouge (k=0), le "Blue Work" de notre bloc gris serait calculé comme le "Blue Work" hérité du bloc C, plus le "Blue Work" du bloc C. Si le bloc B est bleu, le "Blue Work" de notre nouveau bloc hériterait du "Blue Work" de son Parent Sélectionné (bloc C), puis ajouterait le "Blue Work" de son Parent Sélectionné (C) et le "Blue Work" des blocs bleus de son Mergeset (bloc B).</p>
+  <div class="img-container"><img alt="Accumulation de Blue Work" src="images/image62.png"></div>
+
+  <h3 class="section-title">Sélection et Ordonnancement des Parents</h3>
+  <p>GHOSTDAG détermine l'ordonnancement des blocs par la sélection des parents basée sur les valeurs de "Blue Work". Le protocole sélectionne le parent avec le "Blue Work" accumulé le plus élevé comme "Parent Sélectionné", créant une chaîne dorsale au sein de la structure DAG. L'ordonnancement des blocs utilise le "Blue Work" comme critère principal, le hachage de l'en-tête des blocs fournissant un ordonnancement déterministe en cas d'égalité. Dans notre exemple, nous supposons que le bloc C est le Parent Sélectionné et que le bloc B est bleu. L'ordonnancement pour le traitement des transactions est 1. Parent Sélectionné (C) 2. Mergeset Ordonné (B)</p>
+  <div class="img-container"><img alt="Sélection et ordonnancement des parents" src="images/image6.png"></div>
+
+  <h3 class="section-title">Stockage et Gestion des Données</h3>
+  <p>Le protocole stocke les résultats de classification dans des données structurées contenant des listes de blocs bleus et rouges. Les blocs bleus sont ajoutés avec un suivi de la taille de l'Anticône pour les décisions de classification futures, tandis que les blocs rouges sont simplement ajoutés à la liste rouge. Cette organisation maintient des informations DAG complètes tout en distinguant clairement les rôles de consensus.</p>
+
+  <div class="simplified-def">
+    <h3 class="section-title">Définitions Simplifiées</h3>
+    <p><b>Consensus Traditionnel</b> - Un système d'ordonnancement de chaîne linéaire où les blocs forment une séquence unique avec un parent par bloc.</p>
+    <p><b>Protocole GHOSTDAG</b> - Un mécanisme de consensus DAG qui classe les blocs comme bleus ou rouges en fonction des contraintes de taille de l'Anticône.</p>
+    <p><b>Classification des Blocs</b> - Le processus de détermination si les blocs sont bleus (valides par consensus) ou rouges (potentiellement conflictuels).</p>
+    <p><b>Accumulation de Blue Work</b> - Un comptage sélectif de la preuve de travail qui n'inclut que le travail des blocs bleus.</p>
+    <p>GHOSTDAG est un protocole de consensus qui permet les structures DAG tout en maintenant les propriétés de sécurité de la blockchain.</p>
+  </div>
+
+  <h3 class="section-title">Bitcoin et Kaspa</h3>
+  <p><b>Bitcoin</b> - Utilise le consensus de chaîne linéaire traditionnel où les blocs forment une séquence unique. Les blocs conflictuels sont orphelins et ne contribuent à aucune sécurité. La chaîne la plus longue (le travail le plus accumulé) détermine le consensus par un mécanisme de comparaison simple.</p>
+  <div class="img-container"><img alt="Bitcoin et GHOSTDAG" src="images/image71.png"></div>
+  <p><b>Kaspa</b> - Utilise le protocole GHOSTDAG pour gérer les structures DAG avec plusieurs blocs concurrents. Les blocs bleus contribuent à la sécurité grâce à l'accumulation de "Blue Work", tandis que les blocs rouges restent dans le DAG mais sont exclus des décisions de consensus. Le protocole maintient les deux types de blocs pour un suivi complet de l'état du réseau.</p>
+  <div class="img-container"><img alt="Kaspa et GHOSTDAG" src="images/image19.png"></div>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="h.drxg3f8wwuwc">Chapitre 9 : Terminologie DAG</h2>
+  <div class="img-container"><img alt="Terminologie DAG" src="images/image8.png"></div>
+  <h3 class="section-title">Passé, Futur, Anticône, Mergeset, paramètre K, qu'est-ce que tout cela signifie ?</h3>
+  <p>Passé, Futur et Anticône sont des termes DAG, tandis que Mergeset et K sont utilisés dans GHOSTDAG.</p>
+  <p>La terminologie DAG est un vocabulaire spécialisé pour décrire les relations dans une structure BlockDAG. Nous commencerons par la chaîne linéaire, le DAG, puis une touche de GHOSTDAG.</p>
+
+  <h3 class="section-title">Terminologie de la Chaîne Linéaire - Blockchain Traditionnelle</h3>
+  <p>La terminologie de la chaîne linéaire utilise des concepts simples où les blocs forment une séquence unique. Chaque bloc a un parent et potentiellement un enfant, créant des relations ascendant-descendant simples. Des termes comme "hauteur", "bloc précédent" et "bloc suivant" décrivent la progression linéaire. Lorsque des conflits surviennent, les blocs sont soit "acceptés" dans la chaîne principale, soit "orphelins" et écartés.</p>
+  <div class="img-container"><img alt="Terminologie de la chaîne linéaire" src="images/image15.png"></div>
+
+  <h3 class="section-title">Terminologie DAG</h3>
+  <p>Permettre aux blocs d'avoir plusieurs parents crée de nouvelles relations au sein du DAG.</p>
+  <div class="img-container"><img alt="Terminologie DAG" src="images/image50.png"></div>
+
+  <h3 class="section-title">Relations Passé et Futur - DAG</h3>
+  <p>La relation Passé définit tous les blocs accessibles en suivant les liens parents en arrière à partir d'un bloc donné. Un bloc est dans le passé d'un autre s'il existe un chemin dirigé les connectant. La relation Futur fonctionne inversement - si le bloc A est dans le passé du bloc B, alors B est dans le futur de A.</p>
+  <div class="img-container"><img alt="Relations Passé et Futur - DAG" src="images/image73.png"></div>
+
+  <h3 class="section-title">Relation Anticône - DAG</h3>
+  <p>L'Anticône décrit les blocs qui ne sont ni des ancêtres ni des descendants les uns des autres - ils existent concurremment dans le DAG. Deux blocs sont dans l'Anticône l'un de l'autre si aucun ne peut atteindre l'autre par un chemin dirigé. Cette relation est cruciale pour le paramètre de sécurité K de GHOSTDAG, qui limite la taille des Anticônes pour maintenir la sécurité du consensus. Ici, le bloc B et le bloc C sont dans l'Anticône l'un de l'autre, le bloc B n'est pas atteignable depuis le bloc C, et le bloc C n'est pas atteignable depuis le bloc B.</p>
+  <div class="img-container"><img alt="Relation Anticône - DAG" src="images/image59.png"></div>
+
+  <h3 class="section-title">Mergeset et Classification Bleu/Rouge - GHOSTDAG</h3>
+  <p>Le Mergeset fait référence à la collection de blocs qui sont fusionnés lors de la création d'un nouveau bloc. Le Mergeset contient les parents directs d'un bloc, mais peut également contenir des blocs qui ne sont pas des parents directs. GHOSTDAG classe les blocs du Mergeset comme "Bleus" (honnêtes) ou "Rouges" (potentiellement conflictuels) en fonction des contraintes de taille de l'Anticône. Cette classification détermine quels blocs contribuent à la sécurité du réseau grâce à l'accumulation de "Blue Work". Voici un exemple du bloc B classant son Mergeset en Bleu et Rouge lorsque la contrainte de taille de l'Anticône = 0.</p>
+  <div class="img-container"><img alt="Mergeset et Classification Bleu/Rouge - GHOSTDAG" src="images/image46.png"></div>
+
+  <h3 class="section-title">Paramètre K - GHOSTDAG</h3>
+  <p>Le paramètre K contrôle la taille maximale autorisée de l'Anticône pour les blocs bleus. Ce paramètre est calculé en fonction du délai du réseau, du taux de production de blocs et des garanties de sécurité souhaitées. Dans cet exemple, au lieu de k = 0 comme dans l'exemple ci-dessus, k = 1, de sorte que chaque bloc bleu a 1 autre bloc bleu dans son Anticône.</p>
+  <div class="img-container"><img alt="Paramètre K - GHOSTDAG" src="images/image61.png"></div>
+
+  <div class="simplified-def">
+    <h3 class="section-title">Définitions Simplifiées</h3>
+    <p><b>Relation Passé</b> - Tous les blocs accessibles en suivant les liens parents en arrière à partir d'un bloc donné.</p>
+    <p><b>Relation Futur</b> - Tous les blocs qui peuvent atteindre un bloc donné en suivant les liens parents en avant.</p>
+    <p><b>Relation Anticône</b> - Blocs qui ne sont ni des ancêtres ni des descendants les uns des autres.</p>
+    <p><b>Mergeset</b> - Collection de blocs de GHOSTDAG fusionnés lors de la création d'un nouveau bloc.</p>
+    <p><b>Classification Bleu/Rouge</b> - Catégorisation des blocs par GHOSTDAG comme honnêtes (bleus) ou potentiellement conflictuels (rouges).</p>
+    <p><b>Paramètre de Sécurité K</b> - Taille maximale autorisée de l'anticône de GHOSTDAG pour maintenir la sécurité du consensus.</p>
+  </div>
+
+  <h3 class="section-title">Bitcoin et Kaspa</h3>
+  <p><b>Bitcoin</b> - Utilise une terminologie linéaire simple : "bloc précédent", "bloc suivant", "hauteur de la chaîne" et "chaîne la plus longue". Les relations sont des connexions ascendant-descendant simples. Les blocs concurrents sont "orphelins" sans états intermédiaires.</p>
+  <div class="img-container"><img alt="Bitcoin et terminologie" src="images/image54.png"></div>
+  <p><b>Kaspa</b> - Utilise une terminologie supplémentaire, y compris les relations Passé/Futur/Anticône du DAG, le Mergeset de GHOSTDAG et la classification Bleu/Rouge du Mergeset. Kaspa maintient plusieurs blocs concurrents, gère leurs relations et fournit un ordonnancement cohérent.</p>
+  <div class="img-container"><img alt="Kaspa et terminologie" src="images/image49.png"></div>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="h.1uals18cttyl">Chapitre 10 : Élément de Premier Ordre</h2>
+  <div class="img-container"><img alt="Illustration de l'élagage de premier ordre" src="images/image41.png"></div>
+  <h3 class="section-title" id="h.3i8fyh1jrh8m">Qu'est-ce que l'élagage de premier ordre et comment Kaspa l'utilise-t-il ?</h3>
+  <p>L'élagage de premier ordre est la première étape de l'optimisation du stockage multi-phases de Kaspa. Il supprime les anciennes données de transaction des blocs tout en maintenant un ensemble UTXO au point d'élagage pour la validation de l'état - mais surtout, il préserve tous les en-têtes de bloc pour maintenir l'intégrité de la blockchain.</p>
+  <p>Pourquoi "Premier Ordre" ? - Cette terminologie souligne que la suppression des corps de blocs n'est qu'un début. Bien que l'élagage de premier ordre réduise considérablement les besoins de stockage et abaisse les barrières à l'exécution d'un nœud (augmentant la décentralisation), il est suivi d'étapes d'élagage supplémentaires qui peuvent supprimer encore plus de données (élagage de second ordre). Cet article se concentre spécifiquement sur la suppression du corps de bloc - la fondation qui rend toutes les optimisations ultérieures possibles.</p>
+  <p>Qu'est-ce que cela signifie ? - Cet article ne présuppose aucune connaissance préalable, nous commencerons donc par les défis de stockage traditionnels de la blockchain, puis nous expliquerons comment l'élagage de premier ordre fonctionne en maintenant des ensembles UTXO, ce qui est supprimé par rapport à ce qui est préservé, comment l'ensemble UTXO du point d'élagage permet la validation, et comment cela crée la fondation pour le modèle de stockage évolutif de Kaspa qui permet une participation plus large au réseau.</p>
+
+  <h3 class="section-title">Stockage Traditionnel vs Élément de Premier Ordre</h3>
+  <p><b>Stockage Complet Traditionnel</b> - Dans les implémentations de blockchain traditionnelles, les nœuds stockent des données de bloc complètes, y compris tous les détails de transaction de la Genèse à la pointe actuelle. Cela signifie que chaque entrée, sortie, signature et script de transaction est préservé pour toujours, ce qui entraîne des besoins de stockage toujours croissants qui peuvent devenir prohibitifs pour de nombreux utilisateurs.</p>
+  <p><b>Défi de l'élagage de Premier Ordre</b> - Le défi est de supprimer les anciennes données de transaction tout en étant capable de valider de nouvelles transactions. Les nouvelles transactions doivent référencer des sorties précédentes (UTXO), de sorte que le système doit maintenir suffisamment d'informations pour valider ces références même après l'élagage des anciens corps de blocs.</p>
+
+  <h3 class="section-title">L'ensemble UTXO comme fondation</h3>
+  <p><b>Définition de l'ensemble UTXO</b> - L'ensemble UTXO représente toutes les sorties de transaction non dépensées à un point spécifique de la blockchain. Un instantané de toutes les "pièces" qui existent et peuvent être dépensées à ce moment-là, similaire à un inventaire de tout l'argent en circulation.</p>
+  <p><b>Ensemble UTXO du Point d'Élagage</b> - Kaspa maintient un ensemble UTXO spécial au Point d'Élagage, qui sert d'état de base pour la validation. Cet ensemble UTXO est mis à jour à mesure que le Point d'Élagage avance, garantissant qu'il reflète toujours l'état dépensable correct à ce point de contrôle.</p>
+  <p><b>Avancement de l'UTXO Set</b> - Lorsque le Point d'Élagage avance, le système applique les différences UTXO des blocs de la chaîne pour mettre à jour l'ensemble UTXO du point d'élagage. Ce processus garantit que l'ensemble UTXO reste précis à mesure que les anciennes données sont élaguées.</p>
+
+  <h3 class="section-title">Ce qui est élagué dans l'élagage de Premier Ordre</h3>
+  <p><b>Suppression des Données du Corps de Bloc</b> - L'élagage de premier ordre supprime les données de transaction réelles des anciens blocs, y compris les entrées, sorties, signatures et scripts de transaction. Cela inclut les multisets UTXO, les différences UTXO, les données d'acceptation et le magasin complet des transactions de bloc.</p>
+  <p><b>Préservation de l'En-tête</b> - Bien que les données de transaction soient supprimées, les en-têtes de bloc sont préservés pour maintenir l'intégrité structurelle de la blockchain. Les blocs passent au statut "en-tête seulement", indiquant que l'en-tête existe mais que le corps a été élagué.</p>
+  <p><b>Rétention des Données Essentielles</b> - Le système préserve les données critiques nécessaires à la validation du consensus, y compris l'anticône du point d'élagage, les blocs de la fenêtre DAA et les blocs GHOSTDAG. Cela garantit que les opérations de consensus peuvent continuer même après l'élagage.</p>
+
+  <h3 class="section-title">Comment l'ensemble UTXO permet la validation</h3>
+  <p><b>Processus de Validation des Transactions</b> - Les nouvelles transactions peuvent être validées par rapport à l'ensemble UTXO du point d'élagage plus toutes les modifications UTXO ultérieures. Le système valide que les UTXO référencés existent et n'ont pas été double-dépensés, même sans les données de transaction originales.</p>
+  <p><b>Reconstruction de l'État</b> - L'ensemble UTXO au point d'élagage, combiné aux différences UTXO des blocs ultérieurs, permet la reconstruction de l'état dépensable actuel. Cela permet des capacités de validation complètes sans nécessiter de données de transaction historiques complètes.</p>
+  <p><b>Vérification de l'Engagement</b> - Le système peut vérifier l'intégrité de l'ensemble UTXO en utilisant des engagements cryptographiques dans les en-têtes de bloc. Cela garantit que l'ensemble UTXO élagué correspond à ce que les en-têtes de la blockchain prétendent qu'il devrait être.</p>
+
+  <h3 class="section-title">Nœuds d'Archivage vs Nœuds d'Élagage</h3>
+  <p><b>Comportement du Nœud d'Archivage</b> - Les nœuds configurés comme archivage ignorent entièrement l'élagage de premier ordre, préservant toutes les données de transaction. Ces nœuds servent de registre historique complet du réseau mais nécessitent un stockage nettement plus important.</p>
+  <p><b>Efficacité du Nœud d'Élagage</b> - Les nœuds d'élagage réguliers utilisent l'élagage de premier ordre pour maintenir un stockage gérable tout en participant pleinement à la validation du consensus. L'ensemble UTXO fournit suffisamment d'informations pour valider de nouvelles transactions sans nécessiter de données historiques complètes.</p>
+
+  <h4 class="subsection-title">Répondre aux préoccupations concernant l'élagage et la preuve de genèse</h4>
+  <p>Une préoccupation récurrente est que les lacunes dans l'historique du registre dues à l'élagage pourraient compromettre la vérifiabilité de la chaîne depuis sa création (le bloc de genèse), et notamment la preuve qu'il n'y a pas eu de pré-minage.</p>
+  <p>Cette inquiétude est infondée. Voici pourquoi :</p>
+  <ol>
+      <li><strong>Le bloc de genèse est intégré au code :</strong> Le bloc de genèse lui-même est "hardcodé" dans le logiciel du nœud Kaspa. Ce bloc de genèse contient un ensemble UTXO vide, ce qui prouve qu'il n'y a eu aucun pré-minage. Tout utilisateur peut vérifier cela dans le code source public.</li>
+      <li><strong>La preuve de genèse :</strong> Chaque nœud conserve une "preuve de genèse". Il s'agit d'une chaîne de données courte qui prouve cryptographiquement que l'état actuel du registre a bien évolué à partir du bloc de genèse intégré. Forger une telle preuve nécessiterait autant de travail que celui qui a été investi pour créer l'ensemble du registre. En d'autres termes, cette preuve est aussi solide que de posséder l'historique complet.</li>
+      <li><strong>L'intégrité de l'historique reconstitué :</strong> Bien que des efforts soient faits pour reconstituer l'historique complet à des fins de recherche et de commodité, le processus est décentralisé. Les données sont collectées auprès de nombreux utilisateurs. Aucun acteur unique n'a le contrôle sur les "lacunes" restantes, ce qui rend impossible de "cacher" sélectivement une partie de l'historique.</li>
+  </ol>
+  <p>En résumé, le mécanisme d'élagage de Kaspa est conçu pour que le réseau reste sûr, sécurisé et transparent, même sans aucun nœud d'archivage. La vérifiabilité de la chaîne depuis sa genèse est garantie par des preuves cryptographiques robustes, et non par la nécessité de stocker un historique complet et de plus en plus lourd.</p>
+  
+  <div class="simplified-def">
+    <h3 class="section-title">Définitions Simplifiées</h3>
+    <p><b>Élément de Premier Ordre</b> - Suppression des anciennes données de transaction de bloc tout en maintenant un ensemble UTXO pour la validation.</p>
+    <p><b>Ensemble UTXO du Point d'Élagage</b> - Un instantané de toutes les sorties dépensables au point d'élagage, utilisé comme base pour la validation.</p>
+    <p><b>Statut "En-tête Seulement"</b> - Blocs dont les données de transaction ont été élaguées mais qui conservent leurs en-têtes.</p>
+    <p><b>Avancement UTXO</b> - Le processus de mise à jour de l'ensemble UTXO du point d'élagage à mesure que le point d'élagage avance.</p>
+    <p>L'élagage de premier ordre permet l'efficacité du stockage tout en préservant les capacités de validation grâce aux ensembles UTXO.</p>
+  </div>
+
+  <h3 class="section-title">Bitcoin vs Kaspa : Amorçage du Nœud Complet</h3>
+  <p><b>Bitcoin</b> - Les nœuds complets doivent télécharger et valider toutes les données de bloc de la genèse pour s'amorcer, nécessitant des données de transaction historiques complètes. Bien que Bitcoin prenne en charge un élagage simple après la synchronisation initiale, les nouveaux nœuds ont toujours besoin de l'historique complet de la blockchain pour établir l'état initial. La structure de la chaîne linéaire rend ce processus simple mais gourmand en stockage.</p>
+  <p><b>Kaspa</b> - Les nœuds complets peuvent s'amorcer en utilisant des preuves d'élagage sans télécharger de données historiques complètes, grâce à l'intégration de l'élagage de premier ordre avec le protocole de consensus. Le système valide les preuves d'élagage et applique des données vérifiables cryptographiquement ("données fiables") pour établir l'état initial. Ces "données fiables" ne nécessitent aucune confiance en aucune partie - elles sont vérifiées mathématiquement par des preuves cryptographiques qui garantissent que les données correspondent aux règles de consensus. Le processus de validation prouve cryptographiquement que la preuve du point d'élagage représente un état de consensus valide, tandis que les données fiables subissent une vérification rigoureuse pour s'assurer qu'elles correspondent à l'état attendu de la blockchain. Cela permet aux nouveaux nœuds de se synchroniser efficacement tout en maintenant des capacités de validation complètes sans faire confiance à une partie externe.</p>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="h.juf0jn9hl1ev">Chapitre 11 : Nœuds d'Archivage vs Nœuds Complets</h2>
+  <div class="img-container"><img alt="Nœuds d'Archivage vs Nœuds Complets" src="images/image76.png"></div>
+  <h3 class="section-title" id="h.knim47a94vo6">Nœuds d'Archivage de Kaspa vs Nœuds d'Élagage</h3>
+  <p><b>Les Nœuds d'Élagage Sont des Nœuds Complets</b> - Les nœuds d'élagage qui utilisent l'élagage de premier ordre et l'élagage de second ordre sont toujours considérés comme des Nœuds Complets car ils maintiennent des capacités de validation complètes. Ils peuvent valider tous les nouveaux blocs, participer au consensus et servir le réseau sans nécessiter de confiance en des parties externes. Le système de preuve de point d'élagage garantit que même avec des données élaguées, ces nœuds maintiennent une vérification cryptographique de l'état complet de la blockchain.</p>
+  <p><b>Les Nœuds d'Archivage Sont Facultatifs</b> - Les nœuds d'archivage qui conservent toutes les données historiques ne sont pas nécessaires pour que le réseau Kaspa fonctionne indéfiniment. Le réseau peut fonctionner entièrement avec des nœuds d'élagage car les preuves de point d'élagage fournissent des garanties mathématiquement vérifiables concernant l'état élagué. Ceci est en contraste avec Bitcoin, où le réseau nécessite des Nœuds d'Archivage (qui stockent l'historique complet des transactions depuis la genèse) pour amorcer un nouveau nœud.</p>
+  <p><b>Aucune Exigence de Confiance Supplémentaire</b> - Le système d'élagage maintient le modèle sans confiance de Bitcoin en utilisant des preuves cryptographiques plutôt que des parties de confiance. Les nouveaux nœuds peuvent s'amorcer à partir de preuves d'élagage et vérifier l'état complet de la blockchain sans télécharger l'intégralité des données historiques, tout en maintenant les mêmes garanties de sécurité que les nœuds qui stockent tout depuis la Genèse.</p>
+  <p><b>Durabilité du Réseau</b> - Cette conception garantit que le réseau Kaspa peut évoluer de manière durable sans exiger un stockage toujours croissant de la part des participants. Les nœuds d'élagage offrent la même sécurité de consensus que les nœuds d'archivage tout en permettant une participation plus large au réseau grâce à des exigences matérielles réduites.</p>
+  <p><b>Comportement du Nœud d'Archivage</b> - Les nœuds configurés comme archivage ignorent entièrement l'élagage de premier ordre et l'élagage de second ordre, préservant toutes les données de consensus (et les données d'application historiques). Ces nœuds servent de registre de consensus complet du réseau mais nécessitent un stockage maximal et sont purement facultatifs pour le fonctionnement du réseau.</p>
+  <p><b>Efficacité du Nœud d'Élagage</b> - Les nœuds d'élagage réguliers (Nœuds Complets) utilisent l'élagage pour atteindre une efficacité de stockage maximale tout en maintenant des capacités de validation de consensus complètes grâce au système de preuve multi-niveaux. Ces nœuds sont indiscernables des nœuds d'archivage en termes de sécurité et de capacités de validation.</p>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="h.xoj5wjv6tg4b">Chapitre 12 : Kaspa : Une Évolution dans l'Architecture Décentralisée Économe en Énergie</h2>
+  <h3 class="section-title" id="h.pfav0qmvzt92">Introduction : La Physique de l'Argent et de l'Efficacité</h3>
+  <p>Dans le monde des réseaux décentralisés, l'efficacité n'est pas seulement un luxe, c'est un trait de survie. Les cryptomonnaies fonctionnent comme des systèmes d'énergie monétaire, où l'énergie du monde réel est convertie en enregistrements de valeur sécurisés et immuables. Tout comme les systèmes physiques s'efforcent de minimiser l'énergie gaspillée et l'entropie, un réseau crypto bien conçu devrait minimiser le gaspillage et la friction. Bitcoin a été le pionnier de ce concept en liant la valeur monétaire à la dépense d'énergie de la preuve de travail, créant une forme d'"or numérique" sécurisée par le coût thermodynamique. Mais l'architecture de Bitcoin, bien que révolutionnaire, comporte des inefficacités structurelles qui limitent son débit et gaspillent une partie de l'énergie que les mineurs y consacrent.</p>
+  <p>Voici Kaspa - un réseau de preuve de travail de nouvelle génération qui redéfinit l'architecture du consensus décentralisé. Kaspa est construit sur un blockDAG (Directed Acyclic Graph) plutôt que sur une seule chaîne, permettant à plusieurs blocs d'être créés et traités en parallèle. Cette conception vise à minimiser l'entropie et l'inefficacité du système, faisant de Kaspa une sorte de "moteur efficace" pour stocker et déplacer la valeur économique.</p>
+  
+  <h3 class="section-title">Entropie, Énergie et Systèmes Monétaires</h3>
+  <p>Pour comprendre l'importance de Kaspa, nous devons d'abord saisir comment l'énergie et l'entropie se rapportent aux systèmes monétaires. En physique, créer de l'ordre (faible entropie) à un endroit nécessite de dépenser de l'énergie et d'augmenter l'entropie ailleurs - un principe qui s'applique également à l'argent. L'argent fort comme l'or a historiquement tiré sa valeur de l'immense énergie et du travail nécessaires pour l'obtenir. Bitcoin a appliqué ce même principe numériquement, en exigeant des mineurs qu'ils effectuent des calculs coûteux (hachage) pour ajouter des blocs, garantissant ainsi que chaque pièce et chaque bloc portent une preuve d'énergie dépensée. Cependant, si une partie significative du travail est gaspillée ou si la conception du système cause des frictions inutiles, alors le "moteur monétaire" perd de l'énergie sous forme de chaleur.</p>
+
+  <h3 class="section-title">Friction dans les Systèmes Économiques</h3>
+  <p>En économie, la friction fait référence à tout ce qui cause une perte ou une inefficacité dans le mouvement de la valeur. Bitcoin a introduit une certaine friction par nécessité : sa conception échange la vitesse contre la sécurité. Les transactions attendent environ 10 minutes en moyenne pour un nouveau bloc, et la convention est d'attendre 6 confirmations (environ 1 heure) pour une assurance élevée contre l'inversion. Cette latence et ce faible débit créent une friction économique. De plus, le processus de minage de Bitcoin produit parfois un travail gaspillé sous forme de blocs orphelins (lorsque deux mineurs trouvent un bloc valide presque au même moment, un seul bloc fait partie de la chaîne principale et l'autre est écarté). Ces blocs orphelins représentent une énergie réelle dépensée par les mineurs qui ne contribue pas durablement au registre.</p>
+
+  <h3 class="section-title">Le Goulot d'Étranglement de la Chaîne Unique de Bitcoin</h3>
+  <p>La blockchain de Bitcoin peut être visualisée comme une route à une seule voie pour les transactions. Un seul bloc peut être accepté à la fois, et chaque bloc doit s'aligner séquentiellement. Si deux blocs arrivent en même temps, l'un sera forcé de céder et sera effectivement écarté comme un orphelin. Cette conception a été choisie délibérément pour maintenir le système en ordre, mais au prix de graves limitations de performances. Les limitations de cette architecture à chaîne unique sont bien connues : manque d'évolutivité, susceptibilité aux attaques de minage égoïste si les temps de bloc étaient réduits, et blocs gaspillés sont des problèmes inhérents. De manière critique, le consensus de Bitcoin gaspille une partie petite mais non négligeable du travail de minage sur des blocs qui ne font jamais partie du registre. Ces blocs orphelins sont l'entropie du système - de l'énergie qui a augmenté le désordre et a été évacuée sous forme de chaleur, non stockée comme information utile. Le résultat est que l'énorme énergie de minage de Bitcoin ne produit qu'un filet de débit.</p>
+
+  <h3 class="section-title" id="h.y2juit6511i3">Le BlockDAG de Kaspa : Parallélisme sans Travail Gaspillé</h3>
+  <p>Kaspa a abordé le problème en se demandant : et si les blocs n'avaient pas à s'aligner en file indienne ? Au lieu d'une route à une voie, Kaspa utilise une autoroute à plusieurs voies pour les blocs, où de nombreux blocs peuvent être créés en parallèle et toujours fusionner en un seul registre. L'innovation fondamentale est l'architecture blockDAG de Kaspa (Directed Acyclic Graph) combinée au protocole de consensus GHOSTDAG. Dans un blockDAG, les blocs ne pointent pas vers un seul bloc précédent (la pointe de la "chaîne la plus longue") comme dans Bitcoin ; au lieu de cela, chaque bloc peut référencer plusieurs prédécesseurs, y compris différentes "pointes" du graphe. Les blocs qui seraient considérés comme concurrents ou orphelins dans Bitcoin ne sont pas écartés dans Kaspa - ils sont incorporés dans le graphe du registre. La structure DAG permet à ces blocs simultanés de coexister et d'être finalement ordonnés de manière cohérente par l'algorithme GhostDAG. Tous les blocs valides contribuent à l'historique du registre ; aucune preuve de travail du mineur n'est gaspillée.</p>
+  <p>L'impact de cette conception sur l'efficacité est spectaculaire. Premièrement, aucune puissance de minage n'est gaspillée sur les blocs orphelins. Deuxièmement, le parallélisme de Kaspa augmente considérablement le débit. Kaspa fonctionne avec un taux de base de 1 bloc par seconde sur son réseau principal (et a récemment été mis à niveau à 10 blocs par seconde), contre 0,1 bloc par seconde pour Bitcoin. C'est une augmentation de 10 fois de la fréquence des blocs par conception, avec des plans pour encore plus. De plus, parce que chaque bloc Kaspa est plus petit (pour maintenir les exigences des nœuds faibles) mais qu'ils arrivent beaucoup plus souvent, les transactions sont réparties sur de nombreux blocs. Le résultat final est un potentiel de débit de milliers de transactions par seconde. En fait, l'algorithme GhostDAG a démontré qu'il pouvait supporter environ 3000 transactions par seconde avec 10 blocs/sec sur des réseaux de test utilisant du mat&eacute;riel courant. Cela a été réalisé tout en maintenant des exigences matérielles modestes. En d'autres termes, l'architecture de Kaspa n'oblige pas à un compromis entre l'évolutivité et la décentralisation - elle traite beaucoup plus de transactions sans augmenter la barrière à l'entrée pour les nœuds. Chaque participant peut toujours valider la chaîne sur des ordinateurs ordinaires, ce qui est crucial pour la décentralisation. Contrairement à de nombreux systèmes à haut débit qui s'appuient sur des nœuds de centre de données puissants ou compromettent le consensus, Kaspa reste un pur système de preuve de travail avec une large distribution de minage et de nœuds complets.</p>
+  <p>Comment Kaspa maintient-il un historique unique et convenu (une source unique de vérité) si les blocs arrivent en parallèle ? La réponse est GhostDAG, un algorithme de consensus qui ordonne les blocs dans le DAG en considérant non seulement la "chaîne la plus longue" (comme dans Bitcoin) mais le "sous-graphe le plus lourd" de blocs. GhostDAG attribue à chaque bloc une sorte de score ou d'ordonnancement basé sur la quantité d'historique validé qui le précède et la façon dont il référence d'autres blocs. Il trouve un motif appelé k-cluster - essentiellement un ensemble de blocs mutuellement conscients - et l'utilise pour décider quels blocs font partie de la structure ordonnée principale (colorés en "bleu") et quels sont hors de la structure principale ("rouge") mais toujours inclus. L'algorithme est gourmand mais converge de manière prouvable vers un historique unique similaire au consensus de Nakamoto, sauf qu'il peut le faire même lorsque de nombreux blocs sont en cours. La garantie formelle est qu'à mesure que les blocs s'accumulent, la probabilité que l'ordonnancement d'un bloc donné change (c'est-à-dire une inversion de fork) diminue de manière exponentielle, tout comme avec les confirmations de Bitcoin - mais cette assurance est obtenue à des taux de bloc beaucoup plus élevés. En termes pratiques, les transactions Kaspa sont profondément enfouies sous de nombreux blocs beaucoup plus rapidement que sur Bitcoin, ce qui les rend très sécurisées contre les réorganisations en quelques secondes. L'équipe de Kaspa note que l'ordonnancement de GhostDAG "devient exponentiellement difficile à inverser à mesure que le temps passe", même à des taux de création de blocs élevés. La finalité est rapide ; le réseau atteint ce que l'on pourrait appeler une irréversibilité thermodynamique des transactions à l'échelle humaine.</p>
+  <p>Étant donné que tous les blocs sont conservés, les mineurs de Kaspa n'ont aucune incitation à retenir ou à miner stratégiquement de manière égoïste pour orpheliner les blocs des autres - un comportement qui peut être rationnel dans des contextes de blockchain plus rapides. La stratégie de Kaspa de révélation maximale d'informations (chaque bloc référence toutes les pointes qu'il connaît) signifie que le réseau est rapidement informé de tous les blocs parallèles. Cela inonde le graphe de connaissances, réduisant l'incertitude. En termes de théorie de l'information, Kaspa minimise l'entropie de l'état du réseau en garantissant qu'aucune fourche invisible ne persiste longtemps ; tout est intégré. Le "principe de révélation maximale" vise essentiellement à réduire l'entropie (incertitude) du système en partageant les données rapidement. Cela s'aligne à nouveau sur les principes physiques : pour maintenir l'ordre, vous voulez propager l'information (ou les signaux énergétiques) aussi efficacement que possible à travers le syst&egrave;me.</p>
+  <p>Il est important de noter que Kaspa y parvient sans compromettre la sécurité ou la décentralisation. Il utilise toujours la preuve de travail, ce qui signifie que la validité de chaque bloc est garantie par l'énergie réelle dépensée. Et parce que les blocs sont plus petits et fréquents, la bande passante et le stockage des nœuds ont été soigneusement gérés (avec des techniques comme l'élagage et la gestion efficace des UTXO) afin que même un ordinateur domestique puisse suivre. Le résultat est un réseau qui offre "une sécurité et une décentralisation de qualité preuve de travail avec des performances comparables à celles des réseaux de preuve d'enjeu de pointe". Contrairement à certains projets qui ont résolu le problème de l'évolutivité en abandonnant la PoW ou en centralisant la production de blocs, Kaspa préserve la sécurité physique de la preuve de travail du consensus de Nakamoto. Il n'y a pas de dépendance vis-à-vis de validateurs privilégiés ou de points de contrôle de comité - ce sont toujours des mineurs qui rivalisent avec des hachages - mais maintenant, le bloc de chaque mineur trouve sa place dans l'historique, et le débit du réseau n'est plus étranglé par le participant le plus lent.</p>
+  <p>Pour le dire simplement, le protocole GhostDAG de Kaspa supprime le goulot d'étranglement structurel que Bitcoin avait jugé inévitable. Le vieux trilemme "sécurité vs vitesse vs décentralisation" est, selon Kaspa, entièrement résolu en pratique. En s'écartant du modèle de chaîne linéaire, Kaspa ouvre les vannes du débit sans sacrifier la sécurité de Nakamoto - une prouesse que de nombreux chercheurs pensaient impossible pendant des années. Tout cela conduit à un système où les blocs arrivent en continu comme des gouttelettes dans une fontaine bien synchronisée, plutôt que les blocs ponctuels et intermittents de l'horloge de Bitcoin. Les transactions sur Kaspa sont confirmées en quelques secondes et finalisées (avec une probabilité de réorganisation négligeable) généralement en quelques dizaines de secondes. En fait, l'objectif de conception de Kaspa était des temps de confirmation limités uniquement par la latence du réseau - aussi rapide que l'information peut physiquement voyager sur Internet. Le réseau livre déjà des transactions entièrement confirmées en environ 10 secondes en moyenne, et ce nombre diminue à mesure que les taux de blocs augmentent. Du point de vue de l'utilisateur, cela signifie qu'envoyer de la valeur via Kaspa ressemble presque à un paiement par carte de crédit ou à un transfert d'argent liquide - le règlement est presque instantané, mais avec l'avantage supplémentaire qu'il est irréversible et sans confiance.</p>
+
+  <h3 class="section-title" id="h.ttddfh4xlbpu">Atteindre le Débit à la Vitesse de la Lumière</h3>
+  <p>Une façon d'apprécier l'alignement de Kaspa avec les principes physiques est d'examiner sa gestion de la latence, le délai d'un côté à l'autre du monde. Le temps d'aller-retour global d'Internet (RTT) - essentiellement le temps qu'il faut à un signal pour aller aux antipodes et revenir - est de l'ordre de 200 millisecondes (0,2 seconde) dans le meilleur des cas (limit&eacute; par la vitesse de la lumi&egrave;re dans la fibre et les sauts de r&eacute;seau). Les blockchains traditionnelles comme Bitcoin fonctionnent des ordres de grandeur plus lentement que cette limite (600 secondes par bloc), de sorte que la latence du réseau n'est pas un facteur majeur dans leur conception ; elles vivent dans un régime d'équilibre confortable et lent. Mais Kaspa s'est audacieusement aventuré dans le régime où les temps de bloc sont de l'ordre de la latence du réseau - actuellement 100 millisecondes par bloc dans la nouvelle mise à niveau (10 BPS), ce qui est en fait plus rapide que la propagation unidirectionnelle vers l'autre côté de la Terre. C'est un seuil critique. Passer d'un temps de bloc de 1 seconde à un temps de bloc de 0,1 seconde n'est pas seulement une amélioration quantitative de 10 fois ; c'est un saut qualitatif qui a nécessité de repenser le consensus.</p>
+  <p>Pourquoi ? Si vous essayez d'exécuter un consensus à chaîne unique (linéaire) avec des blocs de 100 ms dans un réseau mondial, vous auriez un chaos total - à peine un nœud a-t-il entendu parler d'un bloc que cinq autres ont déjà été trouvés. Le délai de propagation signifierait que le réseau n'est jamais synchronisé ; les forks proliféreraient et le consensus se briserait ou se centraliserait (seules les connexions les plus rapides gagneraient toujours). Kaspa est le premier système de preuve de travail à démontrer un consensus dans ce régime sub-RTT, et il peut le faire précisément parce que son GhostDAG multi-leader peut gérer de nombreux blocs simultanés avec élégance. Comme l'a noté le développeur principal Michael Sutton lors de la mise à niveau Crescendo de Kaspa (qui a fait passer le réseau principal de 1 BPS à 10 BPS), "Augmenter le taux de blocs à 10 par seconde, obtenu en réduisant le temps de bloc à 100 ms (< 200 ms ≊ RTT global), ne peut être sécurisé qu'avec un protocole de consensus qui permet intrinsèquement le parallélisme... Franchir le seuil RTT est donc un saut qualitatif, et non pas seulement quantitatif.". En d'autres termes, la conception de Kaspa est fondamentalement alignée sur les limites physiques du transfert d'informations - elle est structurée pour fonctionner à la vitesse maximale que les lois de la physique (vitesse de la lumière, bande passante du réseau) permettent, alors qu'une chaîne linéaire ne peut pas franchir cette limite en toute sécurité sans sacrifier la sécurité ou supposer un rayon de réseau plus petit.</p>
+  <p>Il convient de souligner à quel point cela est remarquable dans le contexte des systèmes distribués. Kaspa réalise un consensus mondial et asynchrone avec des temps de bloc plus courts que les délais de communication mondiaux. Et il le fait sans réduire le réseau ni nécessiter une configuration spéciale de confiance. Le réseau reste vaste et sans permission - les nœuds peuvent être n'importe où dans le monde, connectés par des liens Internet standard - et pourtant Kaspa produit et confirme des blocs plus rapidement que n'importe quelle chaîne unique ne pourrait l'imaginer dans ces conditions. Le protocole GhostDAG permet essentiellement ce que la théorie classique du consensus aurait cru impossible sous une règle stricte de la chaîne la plus longue : maintenir tout le monde en accord malgré des mini-forks constants (blocs parallèles). L'idée est qu'en permettant à ces forks d'exister et en les ordonnant ensuite de manière probabiliste, vous embrassez le chaos et l'organisez, plutôt que d'essayer de l'empêcher entièrement. Le résultat est un débit maximal.</p>
+  <p>Lors de l'activation du hard fork Crescendo, les développeurs de Kaspa ont noté que le système était conçu de telle sorte que même à 10 BPS, il n'était pas nécessaire d'avoir un superordinateur pour faire fonctionner un nœud. L'implémentation en Rust et les optimisations du protocole garantissent qu'un PC moyen avec une connexion Internet domestique peut suivre 10 blocs par seconde et des milliers de transactions par seconde. Cela témoigne d'une éthique de conception axée sur l'efficacité à tous les niveaux - non seulement le débit brut, mais aussi l'utilisation efficace des ressources de calcul et de la bande passante. Par exemple, les blocs restent compacts, et la structure DAG est élaguée et gérée de manière à ne pas devenir incontrôlable. Kaspa inclut même de nouvelles techniques (comme le prochain DAGKnight et les stratégies d'élagage) pour s'adapter aux conditions du réseau et limiter la taille de l'état. Tous ces choix reflètent un minimalisme presque physique : éliminer le gaspillage, qu'il s'agisse de puissance de hachage gaspillée, de temps gaspillé ou de stockage gaspillé. Si le minage de Bitcoin est parfois critiqué pour produire beaucoup de chaleur (énergie gaspillée par transaction), Kaspa réduit considérablement l'énergie par transaction en augmentant le débit et en utilisant un algorithme de hachage plus économe en énergie (kHeavyHash). L'équipe de Kaspa a explicitement conçu kHeavyHash pour être compatible avec le minage optique et léger en ressources, ce qui signifie qu'il pourrait potentiellement fonctionner sur du matériel spécialisé qui utilise beaucoup moins d'électricité. Combiné à la politique du DAG de "pas de blocs gaspillés", cela rend Kaspa moins énergivore que d'autres réseaux PoW par transaction ou par valeur transférée. En termes simples, Kaspa peut faire plus avec chaque joule d'énergie que les mineurs y mettent - un témoignage de son ingénierie supérieure. Même des observateurs indépendants notent cette efficacité : "L'algorithme KHeavyHash est conçu pour optimiser la consommation d'énergie, rendant [Kaspa] moins gourmand en ressources par rapport à... Bitcoin". Nous pouvons considérer cela comme une amélioration de l'efficacité thermodynamique du système : une plus grande partie de l'énergie d'entrée se transforme en transactions sécurisées et finalisées (travail utile) plutôt qu'en hachage gaspillé ou en temps d'attente.</p>
+  <p>En poussant les limites physiques de manière responsable, Kaspa se positionne comme un réseau monétaire très efficace sur le plan thermodynamique. Il aligne la cadence de production de blocs avec la communication la plus rapide possible, élimine le travail redondant et garantit que chaque bit de travail contribue à l'ordonnancement des transactions. En analogie, si Bitcoin est comme un moteur thermique ancien qui produit beaucoup de chaleur perdue et tourne à bas régime, Kaspa est comme une turbine moderne fonctionnant près de sa limite d'efficacité théorique - extrayant le plus de mouvement utile (débit de transaction) possible de chaque unité de carburant (énergie de hachage). Les lois de la physique fixent un plafond strict, et Kaspa est déterminé à atteindre ce plafond. Cet alignement avec les "flux directionnels" de l'évolution technologique (plus de rendement pour moins d'intrants) suggère que Kaspa suit une trajectoire évolutive que nous avons observée dans de nombreux autres systèmes - des processeurs monocœurs aux processeurs multicœurs et au traitement parallèle, de l'Internet commuté au haut débit, des calèches aux autoroutes à plusieurs voies. Les systèmes qui exploitent le parallélisme et réduisent la résistance interne surpassent inévitablement ceux qui restent bloqués par un seul processus séquentiel.</p>
+
+  <h3 class="section-title" id="h.uttpgy92hgk">Moins de Friction, Meilleure Rétention de Valeur</h3>
+  <p>Les vertus techniques de la conception de Kaspa ont de profondes implications économiques. Lorsque nous réduisons l'entropie et la friction dans un système monétaire, nous créons un environnement plus hospitalier pour que la valeur réside et circule. Considérons une économie comme un écosystème vivant ou peut-être un réseau électrique : si l'énergie (ou l'argent) peut circuler librement là où elle est nécessaire avec un minimum de pertes, le système prospère et grandit. Le réseau à faible latence et à haut débit de Kaspa signifie que la valeur peut être échangée rapidement et à moindre coût par n'importe qui, n'importe quand, sans être siphonnée par des intermédiaires ou des coûts d'attente élevés. Cette propriété attire naturellement l'utilisation - les utilisateurs préféreront un système où leurs paiements sont confirmés en une seconde plutôt qu'un système où ils attendent une heure, surtout lorsque la sécurité est comparable. À mesure que l'utilisation augmente, la liquidité et le capital gravitent vers le réseau, augmentant son utilité dans une boucle de rétroaction. L'économie 101 nous dit que, étant donné deux options, les gens choisiront celle avec les coûts de transaction les plus bas (toutes choses égales par ailleurs), et l'argent circulera par le canal qui offre le moins d'impédance au commerce. Kaspa se présente comme ce canal à faible impédance : "travail dissipé minimum, impédance transactionnelle minimale, clarté monétaire maximale", comme l'a décrit un observateur le point de convergence où le capital affluera. Avec Kaspa, les barrières traditionnelles - délais de confirmation, plafonds de débit, frais élevés en cas de congestion - sont considérablement minimisées, de sorte que le "tuyau" pour l'énergie monétaire est large et lisse.</p>
+  <p>Plan K, dans une interview sur l'économie de Kaspa, a utilisé une analogie biologique pour décrire comment une monnaie efficace dirige l'énergie : une bonne monnaie est comme le système vasculaire d'une plante qui canalise les nutriments (énergie) vers les feuilles qui font la photosynthèse (travail productif), plutôt que de laisser les ressources être aspirées par des parasites ou des parties inactives. Dans cette analogie, Kaspa peut être considéré comme une forme de monnaie à faible entropie qui encourage un flux d'énergie efficace. Sa vitesse et sa capacité garantissent que l'énergie économique (valeur) se déplace vers des utilisations productives (transferts réels de biens et services) au lieu d'être gaspillée dans des arriérés ou de l'arbitrage entre les couches. Pendant ce temps, sa base de preuve de travail empêche le détournement d'énergie qui se produit avec la "monnaie facile". Les monnaies fiduciaires, par exemple, ont été comparées à une vigne parasite dans l'analogie de Plan K - elles peuvent être gonflées ou copiées par les autorités centrales, siphonnant efficacement l'énergie de l'économie productive en diluant la valeur. Kaspa, comme Bitcoin, s'immunise contre une telle dilution en exigeant un travail réel pour la création de nouvelles pièces et en limitant strictement la croissance de l'offre. Comme l'a noté Plan K, "L'or, le Bitcoin et Kaspa sont similaires à [des hormones] qui ne peuvent pas être copiées, empêchant tout détournement d'énergie". En termes plus simples, ces monnaies fortes bloquent l'énergie qui a été utilisée pour les produire ; elles offrent un réservoir sécurisé pour la valeur économique sans fuite par dévalorisation.</p>
+  <p>Kaspa étend ce principe de monnaie forte au domaine de l'utilisabilité quotidienne. Bitcoin a prouvé qu'un réseau décentralisé peut stocker de la valeur en toute sécurité (faible entropie dans le temps), mais Kaspa vise également à déplacer la valeur efficacement (faible entropie dans les transactions). En mariant le coût inforgeable de Bitcoin avec une couche transactionnelle sans friction, Kaspa se positionne comme une solution complète pour l'argent : une réserve de valeur, un moyen d'échange et une unité de compte tout en un, sans les compromis habituels. Il est instructif de se rappeler pourquoi historiquement l'or avait besoin d'un substitut (comme le papier-monnaie ou la monnaie fiduciaire) pour les transactions quotidiennes - parce que l'or était lourd et lent à déplacer, introduisant des frictions. Bitcoin, étant lent et avec un débit limité, a de même invité les réseaux de couche 2 ou les pièces concurrentes à combler le vide pour les paiements rapides, cédant essentiellement le rôle de moyen d'échange à des monnaies "plus douces". Kaspa, en revanche, est suffisamment rapide et évolutif pour ne pas nécessiter un réseau monétaire secondaire pour gérer le volume. Il peut être à la fois la couche de règlement de haute intégrité et la couche de transaction à grande vitesse. Cela suggère un avenir où l'activité économique n'aura pas besoin de passer constamment d'un "réseau de réserve de valeur" à un "réseau de paiement" (avec toutes les frictions d'échange et les compromis de sécurité que cela implique) - au lieu de cela, un seul réseau peut tout faire efficacement. En effet, les partisans soutiennent que parce que Kaspa a résolu le trilemme, "il n'y a plus de lacune sur le marché monétaire que Kaspa ne comble pas", éliminant le besoin de magasins de base plus lents comme Bitcoin ou d'alternatives plus rapides mais plus faibles. Que Bitcoin reste une couche de règlement de grande valeur et Kaspa davantage pour l'échange, ou que Kaspa absorbe finalement les deux rôles, le marché décidera. Mais une chose est claire : les systèmes qui gaspillent moins et livrent plus l'emporteront sur ceux qui ne le font pas à long terme. C'est la sélection naturelle appliquée aux systèmes monétaires.</p>
+  <p>Une friction moindre signifie également que les mineurs et les utilisateurs sont mieux alignés dans l'écosystème de Kaspa. Dans Bitcoin, les utilisateurs se plaignent parfois de payer des frais élevés en cas de congestion (qui reviennent finalement aux mineurs), et les mineurs gèrent la variance et les pertes dues aux orphelins. Dans Kaspa, le débit élevé maintient les frais bas (car la capacité est abondante), et la conception sans orphelin signifie que les mineurs ne perdent pas de récompenses en raison de la latence du réseau. Les mineurs gagnent toujours leur juste récompense - en fait, la récompense de bloc de Kaspa est distribuée sur beaucoup plus de blocs par unité de temps, ce qui, paradoxalement, rend le processus de minage plus granulaire et plus juste (plusieurs mineurs par seconde peuvent gagner des récompenses, plutôt qu'un seul gagnant toutes les 10 minutes). Cela peut réduire la variance du minage et les pressions centralisatrices (car dans Bitcoin, un pool de minage qui trouve un bloc légèrement plus rapidement gagne une récompense de 100 % sur 10 minutes, tandis que dans Kaspa, de nombreux mineurs obtiennent chacun une récompense plus petite chaque seconde - un système "multi-leader" où l'avantage est moyenné). Plus de mineurs peuvent inclure des blocs presque simultanément, ce qui pourrait réduire la tendance monopolistique d'un mineur dominant une tranche de temps donnée. La "compétition accrue au sein de chaque tour de latence" a même des implications pour la réduction du MEV (valeur extractible par le mineur) et de la manipulation - car lorsque les blocs sont parallèles, il est beaucoup plus difficile pour un seul acteur de contrôler l'ordonnancement des transactions. En effet, le parallélisme de Kaspa ajoute un peu de chaos qui favorise l'équité : il devient impossible d'appliquer certaines exploitations qui nécessitent un contrôle strict de l'ordonnancement, réduisant ainsi l'entropie des résultats du marché (les prix du marché et les transactions reflètent la vraie offre et demande, et non l'interférence des mineurs). C'est un autre exemple de la façon dont l'approche de Kaspa tend à préserver la valeur au sein du système - en rendant le comportement du système plus thermodynamiquement irréversible, dans le sens où aucun acteur ne peut facilement rembobiner ou réordonner les transactions pour son profit, les changements d'état du réseau (transactions exécutées) sont authentiques et durables. Il aligne les flux économiques avec une inévitabilité presque physique : une fois que quelque chose se produit dans Kaspa, c'est essentiellement fait et ne peut pas être facilement annulé ou triché.</p>
+  <p>D'un point de vue macro, si l'on considère la concurrence mondiale des monnaies et des réseaux comme un paysage évolutif, un système comme Kaspa qui offre une faible résistance et une grande intégrité aura tendance à accumuler une "masse monétaire". Au fil du temps, la liquidité engendre la liquidité - les utilisateurs vont là où se trouvent d'autres utilisateurs et commerçants. Si Kaspa continue d'offrir une sécurité de type Bitcoin avec des performances nettement meilleures, il est raisonnable de penser qu'une plus grande activité économique se déplacera sur Kaspa. Nous avons déjà vu historiquement que les monnaies fiduciaires ont remplacé l'or pour les transactions en raison de leur friction moindre, bien que l'or soit une réserve de valeur supérieure ; et maintenant les cryptomonnaies défient la monnaie fiduciaire en combinant la dureté avec la vitesse numérique. Kaspa peut être considéré comme l'étape suivante : combiner la dureté ultime de la monnaie PoW avec la vitesse ultime des réseaux modernes. Dans le langage de la physique, Kaspa pourrait être le "point final gravitationnel" pour l'énergie monétaire - un attracteur massif qui attire le capital parce qu'il représente un état d'énergie potentielle minimale (c'est-à-dire que vous ne pouvez pas facilement trouver un système où votre argent est plus sûr et plus facile à utiliser en même temps). Lorsqu'il n'y a pas de chemin plus facile (état d'énergie plus faible) pour que la valeur s'écoule, vous avez atteint un équilibre, et Kaspa vise à être ce point d'équilibre pour la monnaie décentralisée.</p>
+
+  <h3 class="section-title">Irréversibilité et la Flèche du Temps dans Kaspa vs. Bitcoin</h3>
+  <p>Un aspect frappant des systèmes de preuve de travail est la façon dont ils établissent une flèche du temps. Chaque bloc est un événement irréversible ; une fois le travail effectué et le bloc accepté, l'annuler nécessiterait de dépenser une quantité d'énergie équivalente (ou supérieure). Cette fonction unidirectionnelle du travail donne aux blockchains une direction temporelle : tout comme l'entropie en physique, il est facile d'avancer (miner de nouveaux blocs, augmenter l'entropie) mais extrêmement difficile de reculer (annuler des blocs, diminuer l'entropie) sans intervention extérieure. La chaîne de blocs de Bitcoin, sécurisée par l'énergie, est souvent comparée à la flèche du temps - une séquence d'historique de plus en plus "établi". Kaspa hérite de cette propriété mais l'accélère. Parce que les blocs arrivent si vite et que GhostDAG approfondit rapidement l'historique du registre, l'irréversibilité des transactions se compose plus rapidement dans Kaspa que dans Bitcoin. La probabilité d'inverser une transaction dans Kaspa diminue exponentiellement à chaque seconde qui passe, car de multiples nouveaux blocs cimentent l'ordre. Dans Bitcoin, six blocs (environ une heure) sont généralement référencés pour une grande confiance ; dans Kaspa, un niveau de sécurité similaire pourrait être atteint en peut-être une douzaine de blocs, ce qui à 1 bloc/sec était d'environ 12 secondes (et à 10 blocs/sec, c'est un peu plus d'une seconde, bien que d'autres facteurs de latence entrent en jeu).</p>
+  <p>Cela signifie que la finalité du registre de Kaspa approche quelque chose de très proche de l'irréversibilité en temps réel. Le comportement du système reflète un processus thermodynamique irréversible qui atteint très rapidement un point de non-retour. Par exemple, si deux transactions conflictuelles (tentatives de double dépense) sont émises, l'inclusion et l'ordonnancement rapides des blocs de Kaspa décideront du gagnant et empileront les confirmations dessus en quelques secondes, rendant la tentative d'inversion du perdant de plus en plus futile. Dans Bitcoin, cette période d'incertitude (entropie) pourrait durer de nombreuses minutes et même alors peut être exploitée par un attaquant avec suffisamment de puissance de hachage dans un état de faible entropie (avant que de nombreuses confirmations ne s'accumulent). Kaspa réduit cette fenêtre, rendant le coût d'inversion de l'historique extrêmement élevé presque immédiatement. Nous pouvons considérer cela comme Kaspa augmentant le gradient thermodynamique qu'un attaquant doit gravir - une colline plus raide qui devient plus raide plus rapidement. Cela est à nouveau lié à l'efficacité : le réseau ne perd pas de temps à transformer la puissance de hachage en sécurité (ordre), de sorte qu'un attaquant n'a pas le "luxe" d'une longue fenêtre de vulnérabilité à exploiter. L'entropie de l'incertitude est rapidement expulsée du système, laissant un état très ordonné (transactions confirmées) qui est stable.</p>
+  <p>Une autre perspective est celle du principe de Landauer, un concept de la physique qui stipule que l'effacement d'un bit d'information a un coût énergétique irréductible (dissipation de chaleur). Dans les blockchains, "effacer" une transaction (via une réorganisation qui supprime une transaction confirmée de l'historique) est extrêmement coûteux en énergie - c'est pourquoi les grandes réorganisations sont infaisables si les mineurs honnêtes contrôlent la majorité de la puissance de hachage. Kaspa garantit que les bits de données de transaction sont incorporés dans de nombreux blocs (bits d'information) presque immédiatement, de sorte que l'information s'enracine et devient thermodynamiquement coûteuse à effacer. Essentiellement, Kaspa aligne la théorie de l'information avec la thermodynamique : l'information (l'état du registre) acquiert une permanence résistante à l'entropie rapidement, ancrée par la preuve de travail. Et parce que Kaspa utilise son énergie d'entrée plus efficacement (pas de blocs gaspillés, plus de confirmations par unité de temps), elle atteint sans doute une "irréversibilité par unité d'énergie" plus élevée que Bitcoin. Chaque joule de minage dans Kaspa contribue à la finalité de nombreuses transactions, tandis que dans Bitcoin, chaque joule sécurise moins de transactions (et certains joules sont dépensés sur des blocs qui pourraient même ne pas compter).</p>
+  <p>La métaphore de la flèche du temps est appropriée : la flèche de Bitcoin avance lentement mais inexorablement, prenant plus de temps pour établir fermement l'histoire, tandis que la flèche de Kaspa vole à grande vitesse, fixant rapidement les événements dans le temps. Les deux flèches pointent dans la même direction - imposée par la deuxième loi de la thermodynamique (consommation d'énergie) - mais celle de Kaspa couvre plus de distance (profondeur du registre) par unité de temps. Cela n'a pas seulement des avantages pratiques (expérience utilisateur, débit), mais cela indique philosophiquement que la conception de Kaspa est en harmonie avec la direction "naturelle" des systèmes complexes : vers plus d'ordre atteint en moins de temps en dépensant de l'énergie. Si Bitcoin a montré que énergie + temps = sécurité, Kaspa montre qu'avec une meilleure conception, vous pouvez obtenir une sécurité équivalente avec la même énergie en beaucoup moins de temps, simplement en éliminant les inefficacités internes. Il ne viole aucune loi fondamentale ; il ne fait que ne pas gaspiller les opportunités que Bitcoin laisse sur la table.</p>
+
+  <h3 class="section-title">Conclusion : Kaspa comme Frontière Efficace des Réseaux Monétaires</h3>
+  <p>En examinant Kaspa à travers les doubles lentilles de la physique et de l'économie, nous voyons un thème émerger : les systèmes évoluent vers une efficacité optimale dans le traitement de l'énergie et de l'information. En économie, l'argent a évolué des marchandises encombrantes à l'or, au papier adossé à l'or, aux réseaux numériques - chaque étape visant à réduire la friction tout en préservant la confiance et la valeur. En informatique et en réseau, nous sommes passés du traitement série au parallèle, des retards analogiques aux signaux quasi-lumineux. Kaspa représente la convergence de ces chemins évolutifs dans le domaine de la monnaie décentralisée. Il prend la dureté et la finalité de la preuve de travail soutenue par l'énergie - l'aspect qui fait de Bitcoin une forme d'"or numérique" - et suralimente l'efficacité du système qui utilise cette énergie. Le résultat est un réseau que l'on peut décrire comme un moteur de valeur : il convertit l'énergie électrique (travail de hachage) en valeur économique numérique (transactions sécurisées et émission de pièces) avec un minimum de gaspillage, canalisant cette valeur rapidement là où elle doit aller.</p>
+  <p>En positionnant Kaspa par rapport à Bitcoin, il ne s'agit pas de rivalité mais de progrès dans l'architecture décentralisée. Bitcoin a été le prototype qui a prouvé qu'une approche thermodynamique de l'argent fonctionnait. Kaspa est une évolution qui affine l'architecture pour minimiser le gaspillage (entropie) et maximiser le débit (travail utile) sans perdre l'essence de ce qui a fait la grandeur de Bitcoin (décentralisation et sécurité via la preuve de travail). Nous n'avons comparé Kaspa qu'à Bitcoin car les deux partagent le fondement fondamental de la PoW et une politique monétaire saine, différant principalement par la conception structurelle. Et cette différence - un blockDAG vs une blockchain - a fait toute la différence. Le blockDAG de Kaspa est une solution naturelle aux goulots d'étranglement de Bitcoin, presque évidente rétrospectivement : si une voie est trop lente, ajoutez plus de voies ; si l'abandon des blocs gaspille de l'énergie, trouvez un moyen de les conserver tous ; si l'attente d'une synchronisation globale entraîne de la latence, autorisez une certaine asynchronie et résolvez-la ensuite algorithmiquement. Ce sont, en un sens, des optimisations de bon sens une fois que la technologie a permis de les mettre en œuvre. La brillante idée de GhostDAG a été de trouver un moyen de faire travailler de nombreux leaders (mineurs) ensemble à la fois sans chaos - comme une symphonie bien orchestrée plutôt qu'une performance solo. Cela montre que l'ordre peut émerger d'un chaos apparent avec les bonnes règles, faisant écho à la façon dont les systèmes physiques s'auto-organisent lorsque des contraintes sont sagement appliquées.</p>
+  <p>Le résultat final des choix de conception de Kaspa est un système qui, selon certains, constitue un aboutissement naturel dans le calcul monétaire à valeur efficace. Il est aussi rapide que la physique le permet, aussi sécurisé que la preuve de travail peut l'être, et aussi décentralisé qu'un réseau globalement inclusif devrait l'être. Pourrions-nous aller plus vite ou être plus efficaces sans rompre le lien fondamental entre l'argent et la thermodynamique ? Probablement pas beaucoup - pas sans une nouvelle physique ou sans compromettre la confiance. Kaspa vise déjà 100 blocs par seconde à l'avenir, approchant un flux de blocs presque continu, et ses développeurs intègrent des fonctionnalités adaptatives (comme DAGKnight) qui ajustent la vitesse de confirmation aux conditions. Nous approchons des limites pratiques de la mise à l'échelle on-chain dans un contexte décentralisé. Tout gain significatif supplémentaire nécessiterait probablement des approches fondamentalement différentes (ou l'acceptation de la centralisation). En ce sens, Kaspa est la frontière efficace - vous ne pouvez pas obtenir un débit significativement plus élevé ou une latence plus faible à l'échelle sans encourir plus de gaspillage ou de risque que Kaspa. Il a trouvé un équilibre qui utilise les ressources de manière optimale.</p>
+  <p>Pour les professionnels et les chercheurs avertis en crypto, Kaspa offre une étude de cas fascinante où les principes de la thermodynamique, de la théorie de l'information et de l'économie convergent. Il valide l'idée qu'un réseau financier décentralisé peut être analysé de la même manière qu'un système physique - avec des entrées d'énergie, des sorties de travail et des inefficacités comme entropie. En réduisant ces inefficacités, Kaspa ne se contente pas de mieux fonctionner ; il crée fondamentalement un système économique plus durable et plus attractif. Un système avec moins de gaspillage signifie que le travail des mineurs va plus loin, les frais des utilisateurs restent plus bas, et plus de valeur circule plutôt que d'être brûlée en frais généraux. Au fil du temps, cela attire plus de participation, plus d'investissements et renforce les effets de réseau. C'est analogue à la façon dont un moteur efficace non seulement économise du carburant, mais permet de nouvelles capacités - des trajets plus longs, des charges plus lourdes - de sorte qu'une blockchain efficace permet plus d'activité économique et de cas d'utilisation qui étoufferaient une chaîne plus lente.</p>
+  <p>En conclusion, Kaspa peut être considéré comme l'aboutissement de plus d'une décennie de recherche sur la mise à l'échelle de l'invention de Nakamoto sans en perdre l'âme. Il montre que les lois de la physique et une économie saine ne sont pas des ennemis de la décentralisation, mais des guides pour l'améliorer. Le succès de Kaspa signifierait que le système monétaire qui suit le plus fidèlement le chemin de la moindre résistance et de la moindre production d'entropie prévaudra - un résultat très aligné sur la physique. En termes pratiques, Kaspa représente un réseau à haut débit, à faible friction et sécurisé qui pourrait transporter la valeur des nations dans un seul protocole, accessible à tous, et limité uniquement par la vitesse de la lumière et l'honnêteté de la majorité. Si Bitcoin a ouvert la porte à une ère financière thermodynamique, Kaspa y accélère, rendant le flux d'énergie économique aussi efficace que le flux d'électrons. Dans le grand récit de la technologie et de l'argent, Kaspa se distingue comme une preuve convaincante que l'efficacité est le destin : étant donné deux systèmes, celui qui minimise le mieux le gaspillage et maximise le travail utile attirera l'avenir. Et Kaspa présente un argument persuasif et techniquement fondé selon lequel il est ce système - un saut évolutif vers un réseau monétaire sans friction, préservant la valeur et finalement plus aligné sur l'humain.</p>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="h.e01avawvoirc">Chapitre 13 : Ordonnancement Kaspa vs Bitcoin</h2>
+  <div class="img-container"><img alt="Ordonnancement Kaspa vs Bitcoin" src="images/image33.png"></div>
+  <h3 class="section-title">Sélection et Ordonnancement des Blocs : Chaîne la Plus Lourde vs Blue Work</h3>
+  <h4 class="subsection-title">Règle de la Chaîne la Plus Lourde de Bitcoin - Sélection Séquentielle</h4>
+  <p>Le mécanisme de consensus de Bitcoin fonctionne sur un principe linéaire où le réseau maintient une seule chaîne de blocs. Lorsque les mineurs créent de nouveaux blocs simultanément, le réseau est confronté à un choix entre des chaînes concurrentes. La règle de la chaîne la plus lourde résout ce problème en sélectionnant la chaîne avec la preuve de travail accumulée la plus importante, choisissant ainsi le chemin qui représente le plus grand investissement computationnel. Cette approche crée un scénario où le gagnant prend tout, où une seule chaîne survit tandis que tous les blocs concurrents deviennent orphelins. Les blocs orphelins, bien que contenant des transactions valides et représentant un travail de calcul réel, ne contribuent en rien à la sécurité du réseau ou à la capacité de traitement des transactions. Cette conception assure un ordonnancement clair mais limite intrinsèquement le débit car un seul bloc peut être accepté à chaque niveau de hauteur. Dans cet exemple, vous pouvez voir comment les blocs sont écartés par Bitcoin.</p>
+  <div class="img-container"><img alt="Blocs orphelins dans Bitcoin" src="images/image38.png"></div>
+  
+  <h4 class="subsection-title">Sélection du Blue Work de Kaspa - Intégration Parallèle</h4>
+  <p>Le protocole GHOSTDAG de Kaspa étend cette approche en opérant au sein d'une structure de Graphe Acyclique Dirigé (DAG) où plusieurs blocs peuvent coexister et contribuer à la sécurité du réseau. Au lieu d'écarter les blocs concurrents, GHOSTDAG les classe comme "bleus" (honnêtes, contribuant au consensus) ou "rouges" (potentiellement conflictuels mais toujours maintenus). La métrique "blue work" représente la preuve de travail accumulée uniquement à partir des blocs bleus dans le DAG. Cette accumulation sélective garantit que seuls les blocs valides par consensus contribuent au calcul de la sécurité, tout en préservant le travail et les transactions des blocs rouges au sein de la structure globale. Dans cet exemple, vous pouvez voir que le bloc qui a été écarté par Bitcoin est inclus dans le DAG de Kaspa, même lorsque k = 0.</p>
+  <div class="img-container"><img alt="Intégration parallèle dans Kaspa (blocs bleus et rouges)" src="images/image20.png"></div>
+  
+  <h4 class="subsection-title">Sélection des Parents et Formation de la Chaîne Principale</h4>
+  <p>Lorsqu'un nouveau bloc entre dans le DAG, GHOSTDAG doit sélectionner un "Parent Sélectionné" parmi plusieurs candidats parents possibles. Ce processus de sélection examine la valeur de "blue work" de chaque parent potentiel et choisit celui qui a la valeur de "blue work" accumulée la plus élevée à partir des blocs honnêtes. Voici le bloc B, sélectionnant le meilleur parent (le parent avec le plus de travail) parmi ses parents.</p>
+  <div class="img-container"><img alt="Sélection du parent et formation de la chaîne principale" src="images/image39.png"></div>
+  <p>Ce parent sélectionné devient la base de l'établissement d'une chaîne principale au sein du DAG. La chaîne principale fournit un mécanisme d'ordonnancement déterministe similaire à la chaîne linéaire de Bitcoin, mais opère dans l'environnement DAG plus complexe. Après avoir sélectionné le parent principal, le protocole traite tous les blocs restants dans ce qu'on appelle le "Mergeset" - les blocs qui sont inclus dans le DAG mais n'ont pas été choisis comme Parent Sélectionné. Après avoir sélectionné un parent, nous pouvons suivre les Parents Sélectionnés à travers le DAG, cela crée une chaîne que vous pouvez voir dans l'image ici.</p>
+  <div class="img-container"><img alt="Suivi des Parents Sélectionnés à travers le DAG" src="images/image10.png"></div>
+  
+  <h4 class="subsection-title">Ordonnancement et Traitement des Transactions</h4>
+  <p>La chaîne principale créée par la sélection du "blue work" sert de mécanisme d'ordonnancement principal pour le traitement des transactions. Les transactions sont traitées d'abord à partir du Parent Sélectionné, puis à partir des blocs du Mergeset dans un ordre convenu par consensus. Cela crée une séquence déterministe que tous les nœuds peuvent reproduire, garantissant un ordonnancement cohérent des transactions sur le réseau.</p>
+
+  <h3 class="section-title">Différences Architecturales Fondamentales</h3>
+  <p><b>Approche de Bitcoin :</b> Crée une séquence linéaire unique où chaque bloc a exactement un parent. Les conflits entraînent l'exclusion permanente des blocs concurrents, seule la chaîne gagnante contribuant à la sécurité du réseau.</p>
+  <p><b>Approche de Kaspa :</b> Maintient une structure DAG où les blocs peuvent avoir plusieurs parents et enfants. Les conflits sont résolus par classification plutôt que par exclusion, permettant à plusieurs blocs de contribuer à la sécurité du réseau tout en maintenant le consensus via la chaîne principale.</p>
+
+  <h3 class="section-title">Implications sur le Débit et la Sécurité</h3>
+  <p>L'approche linéaire de Bitcoin offre de solides garanties de sécurité mais limite le débit à environ un bloc toutes les 10 minutes. L'orphaning des blocs concurrents représente un gaspillage de ressources de calcul et une perte de capacité de transaction.</p>
+  <p>Le système de "blue work" de Kaspa permet un débit beaucoup plus élevé tout en maintenant les propriétés de sécurité. En préservant à la fois les blocs bleus et rouges dans le DAG, le système capture une plus grande partie du travail de calcul et de la capacité de traitement des transactions du réseau. La chaîne principale assure un ordonnancement déterministe malgré la complexité accrue, permettant la création de blocs parallèles sans sacrifier la fiabilité du consensus.</p>
+
+  <h3 class="section-title">Le retour en arrière de Bitcoin en 2013 : Une leçon de finalité</h3>
+  <p>En mars 2013, le réseau Bitcoin a connu un événement critique qui a contredit son principe fondamental selon lequel "la chaîne la plus longue est la chaîne valide".</p>
+  <ol>
+      <li><strong>Une division de la chaîne :</strong> Un mineur utilisant la version 0.8 de Bitcoin Core a produit un bloc incompatible avec les anciennes versions (0.7). Cela a provoqué une division de la chaîne (fork).</li>
+      <li><strong>La coordination sociale a primé sur le protocole :</strong> Bien que la chaîne 0.8 soit devenue plus longue, les développeurs principaux et les grands pools de minage se sont socialement coordonnés pour abandonner cette chaîne et revenir à la chaîne 0.7, plus courte mais compatible.</li>
+      <li><strong>La finalité a été rompue :</strong> 24 blocs de la chaîne 0.8 ont été orphelins. Les transactions qu'ils contenaient, autrefois considérées comme valides, ont été effacées de l'histoire canonique de Bitcoin.</li>
+  </ol>
+  <p>Cet événement a prouvé que le consensus de Bitcoin n'est pas purement déterministe et peut nécessiter une intervention humaine. Dans Kaspa, de telles divisions sont impossibles. Tous les blocs, même s'ils sont minés simultanément, sont inclus dans le DAG, et GHOSTDAG sélectionne un historique ordonné de manière cohérente et algorithmique. Il n'y a pas besoin de retour en arrière ou de coordination sociale ; la finalité est déterministe.</p>
+
+  <hr class="chapter-break">
+  
+  <h2 class="chapter-title" id="chapter14">Chapitre 14 : La Vision de Kaspa pour la Couche 2 : ZK Rollups et Pontage</h2>
+  <h3 class="section-title">Le besoin de solutions de couche 2</h3>
+  <p>Bien que Kaspa offre une scalabilité impressionnante au niveau de sa couche de base (Layer 1), l'avenir des applications décentralisées complexes (DeFi, jeux, etc.) repose sur des solutions de couche 2 (Layer 2). Celles-ci permettent d'exécuter des calculs complexes hors de la chaîne principale, tout en bénéficiant de sa sécurité. Kaspa se concentre sur les "Based ZK-Rollups", où la couche 1 (Kaspa) sert de couche de séquençage, de disponibilité des données et de règlement.</p>
+  
+  <h3 class="section-title">Le défi : Preuve au moment de l'inclusion vs. Incertitude d'exécution</h3>
+  <p>Les L1 parallélisées comme Kaspa introduisent une "incertitude d'exécution" : les transactions sont incluses dans le DAG avant que leur ordre global final ne soit déterminé. C'est un avantage pour la résistance au MEV, car cela empêche les mineurs de prédire la séquence exacte.</p>
+  <p>Cependant, cela crée un conflit avec les ZK-Rollups, qui, idéalement, nécessiteraient une "preuve au moment de l'inclusion". Pour générer une preuve ZK, l'état précédent (pre-state) doit être connu et sans ambiguïté. Mais dans Kaspa, cet état est indéfini au moment de l'inclusion en raison du traitement parallèle.</p>
+  <p>La solution de Kaspa est d'opter pour le consensus multi-leaders et son incertitude d'exécution. Par conséquent, les preuves ZK doivent être différées et soumises à la L1 seulement après que l'ordre des transactions a convergé et qu'un état clair est établi. Cela introduit un nouveau défi : que se passe-t-il si la preuve requise n'arrive jamais ?</p>
+  
+  <h3 class="section-title">Règlement des preuves à durée limitée (Timebound Proof Settlement)</h3>
+  <p>Le modèle proposé est le "règlement des preuves à durée limitée".</p>
+  <ol>
+      <li>Les données de la transaction sont d'abord publiées sur la L1 (disponibilité des données).</li>
+      <li>Le règlement final de ses effets sur la L1 dépend de la soumission et de la vérification d'une preuve ZK dans une fenêtre de temps définie (T).</li>
+      <li>Si une partie impliquée dans une opération ne fournit pas sa preuve dans ce délai, l'opération échoue, avec des pénalités pour garantir la responsabilité.</li>
+  </ol>
+  <p>Ce modèle permet des confirmations optimistes rapides du côté de l'utilisateur, bien avant le règlement final sur la L1, car chaque rollup a un intérêt direct à soumettre sa preuve pour maintenir sa propre "vivacité".</p>
+  
+  <h3 class="section-title">KIP-15 et les Nœuds d'Archivage des Transactions Acceptées (ATANs)</h3>
+  <p>Un problème fondamental pour les L2 sur Kaspa est l'élagage. Comment une L2 peut-elle se référer à des données de transaction qui ont été élaguées de la L1 ? Les preuves ZK sont la solution à long terme, mais une solution intermédiaire est nécessaire.</p>
+  <p>C'est le but de KIP-15 : introduire les <strong>Nœuds d'Archivage des Transactions Acceptées (ATANs)</strong>. Un ATAN se situe entre un nœud complet élagué et un nœud d'archivage complet.</p>
+  <ul>
+      <li>Il ne stocke pas les données complètes des transactions.</li>
+      <li>Il stocke les en-têtes de la chaîne sélectionnée et les <strong>hachages</strong> de toutes les transactions.</li>
+  </ul>
+  <p>Le hachage d'une transaction ne fait que 32 octets, ce qui représente une compression massive par rapport à la transaction elle-même. Un ATAN peut stocker des années d'historique de hachages de transactions avec des besoins en stockage raisonnables (estimés à environ 3-5 To par an à pleine capacité). Cela permet à une L2 de prouver l'existence et l'ordre de n'importe quelle transaction passée sans avoir besoin d'un nœud d'archivage complet, résolvant ainsi le problème de la disponibilité des données dans un environnement élagué.</p>
+  
+  <h3 class="section-title">Conception du Pont Canonique L1<>L2</h3>
+  <p>Pour permettre aux fonds (KAS) de circuler entre la L1 et la L2, un "pont canonique" est nécessaire.</p>
+  <ul>
+      <li><strong>Entrée (L1 vers L2) :</strong> Un utilisateur envoie des KAS à une adresse de délégation statique sur la L1. Cette opération est validée immédiatement par la L1, et les fonds sont utilisables quasi instantanément sur la L2.</li>
+      <li><strong>Sortie (L2 vers L1) :</strong> Une sortie nécessite une autorisation interne à la L2. Sa validité doit être confirmée sur la L1 par la soumission d'une preuve ZK.</li>
+  </ul>
+  <p>Pour ce faire, Kaspa utilise des scripts de "délégation". Au lieu d'envoyer des fonds à l'adresse de l'état du rollup (qui est dynamique), les utilisateurs envoient à des adresses statiques qui délèguent leur autorisation de dépense à la preuve ZK fournie par le rollup. Cela simplifie l'expérience utilisateur et la gestion des fonds du pont.</p>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="chapter15">Chapitre 15 : Le Réseau Igra : Un Cas d'Étude du Rollup ZK Compatible EVM de Kaspa</h2>
+  <h3 class="section-title">Présentation d'Igra</h3>
+  <p>Igra Network est un excellent exemple pratique de la vision de Kaspa pour la couche 2. Il s'agit d'un <strong>rollup ZK compatible EVM</strong> qui utilise de manière unique le BlockDAG de Kaspa comme séquenceur décentralisé et couche de règlement.</p>
+  <p>Cette architecture vise à combiner la sécurité de type Bitcoin avec la vitesse et la polyvalence des chaînes programmables modernes, en résolvant les limitations critiques des solutions de couche 2 actuelles.</p>
+  
+  <h3 class="section-title">Composants Clés</h3>
+  <ul>
+      <li><strong>Couche de base (Kaspa) :</strong> Sert de séquenceur décentralisé. L'ordre des transactions d'Igra est fixé sur le BlockDAG de Kaspa par ses nœuds de minage.</li>
+      <li><strong>Nœud Igra :</strong> Maintient l'état complet de la L2 et exécute les transactions EVM. Il extrait les transactions séquencées de la L1 et les exécute.</li>
+      <li><strong>Relais Igra / RPC :</strong> Fournit le pont entre les utilisateurs et le réseau. Il expose des interfaces RPC Ethereum standard, permettant aux utilisateurs d'interagir avec Igra en utilisant des portefeuilles comme MetaMask.</li>
+  </ul>
+  
+  <h3 class="section-title">Mécanisme de Pontage et Déploiement</h3>
+  <p>Igra utilise une approche de pontage en plusieurs phases pour son token natif, $iKAS, qui est une version enveloppée du KAS.</p>
+  <ol>
+      <li><strong>Phase 1 (Pont Communautaire) :</strong> Initialement, le pontage repose sur un portefeuille multisig (m-sur-n) contrôlé par des signataires choisis par la communauté. C'est un modèle de confiance similaire à celui utilisé pour les fonds communautaires de nombreuses cryptomonnaies. Pour retirer des fonds, les signataires sont tenus de traiter les demandes, avec des garanties pour assurer une transition vers un système sans confiance.</li>
+      <li><strong>Phase 2 (Pont MPC/ZK) :</strong> À l'avenir, ce pont sera remplacé par une solution sans confiance.
+          <ul>
+              <li><strong>Pont MPC (Multi-Party Computation) :</strong> Utilise des techniques cryptographiques comme FROST pour permettre à un ensemble de validateurs de signer des transactions sans qu'aucun d'entre eux ne détienne la clé secrète complète. Cela permet un pontage permissionless.</li>
+              <li><strong>Pont ZK :</strong> La solution ultime. Un utilisateur peut soumettre une preuve ZK à la L1 prouvant qu'il a brûlé des $iKAS sur la L2. Un script sur la L1 vérifiera cette preuve et débloquera le montant correspondant de KAS.</li>
+          </ul>
+      </li>
+  </ol>
+  
+  <h3 class="section-title">Le Testnet Caravel</h3>
+  <p>Le déploiement d'Igra se fait par étapes, en commençant par le testnet "Caravel". Ce lancement se déroule en plusieurs phases :</p>
+  <ol>
+      <li><strong>Activation :</strong> Le réseau est activé sur le testnet de Kaspa.</li>
+      <li><strong>Testeurs Communautaires :</strong> Le logiciel de nœud est distribué à un groupe limité de testeurs pour augmenter progressivement l'activité du réseau.</li>
+      <li><strong>Accès Public :</strong> Le logiciel est rendu public, permettant à quiconque de faire tourner un nœud et de participer.</li>
+  </ol>
+  <p>Ce processus de déploiement prudent est essentiel, car Caravel apporte le protocole Ethereum complet au consensus de Kaspa, qui fonctionne à des vitesses encore inexplorées dans le monde EVM. Des tests intensifs et plusieurs itérations sont nécessaires pour assurer la stabilité et la performance.</p>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="chapter16">Chapitre 16 : Débit des Transactions et Collisions dans le BlockDAG de Kaspa</h2>
+  <h3 class="section-title">Le Défi des Collisions de Transactions</h3>
+  <p>Ce qui rend les DAG incroyablement rapides, c'est la capacité de paralléliser : puisque les blocs créés en parallèle sont tous considérés comme valides, l'augmentation des taux de blocs parallèles ne nuit pas à la sécurité. Cependant, une question se pose : si nous créons 10 blocs par seconde, notre débit de transactions est-il vraiment 10 fois supérieur ?</p>
+  <p>Pas tout à fait. La nuance est que les blocs parallèles peuvent contenir la même transaction, et il n'est pas juste de compter la même transaction plusieurs fois. Nous devrions nous intéresser au <strong>TPS effectif</strong>, c'est-à-dire au nombre de transactions uniques incluses en moyenne.</p>
+  
+  <h3 class="section-title">Analyse de la Sélection Aléatoire</h3>
+  <p>En supposant que les mineurs choisissent les transactions à inclure de manière aléatoire (ce qui est une approximation raisonnable, comme nous le verrons), nous pouvons analyser le TPS effectif.</p>
+  <p>L'analyse mathématique montre que même dans le pire des cas (où la capacité des blocs correspond exactement au nombre de transactions disponibles dans le mempool), le réseau inclut au moins <strong>(1 - 1/e) ≈ 62,3%</strong> de transactions uniques. C'est un plancher ; en pratique, lorsque le mempool est plus grand que la capacité des blocs, l'efficacité tend vers 100%.</p>
+  <p>Le résultat est que le TPS effectif augmente de manière quasi-linéaire avec le taux de blocs. Une augmentation de 10x du taux de blocs se traduit par une augmentation de 8-9x du TPS effectif, ce qui est une amélioration considérable.</p>
+  
+  <h3 class="section-title">Qu'en est-il des Mineurs Malhonnêtes ?</h3>
+  <p>On pourrait craindre que des mineurs "cupides" essaient de manipuler la sélection des transactions pour maximiser leurs profits, par exemple en choisissant tous les mêmes transactions à frais élevés, ce qui augmenterait les collisions et réduirait le TPS effectif.</p>
+  <p>La théorie des jeux nous montre que ce n'est pas une stratégie optimale. La sélection aléatoire est un "équilibre faible". Cela signifie que si un seul mineur s'écarte de cette stratégie, il peut obtenir un léger avantage. Cependant, si de nombreux mineurs s'écartent et choisissent tous les mêmes transactions à frais élevés, ils se retrouvent en concurrence directe pour les mêmes frais, et leur profit attendu diminue. À la fin, la stratégie la plus rationnelle pour un mineur (qui ne peut pas prédire ce que feront les autres) est de diversifier ses choix, ce qui se rapproche d'une sélection aléatoire.</p>
+  
+  <h3 class="section-title">Solutions Potentielles pour les Collisions Élevées</h3>
+  <p>Si, en pratique, on observait un taux de collision élevé, plusieurs solutions pourraient être mises en œuvre :</p>
+  <ol>
+      <li><strong>Compartimentage des transactions (Bucketing) :</strong> On pourrait exiger que les blocs n'incluent que des transactions dont le hachage correspond à certains chiffres du hachage du bloc lui-même. Cela diviserait les transactions en "seaux", et les blocs ne seraient en concurrence que pour les transactions du même seau.</li>
+      <li><strong>Mécanisme d'enchères monopolistique :</strong> Un mécanisme où les mineurs peuvent inclure les transactions qu'ils veulent, mais les frais pour toutes les transactions du bloc sont fixés au niveau des frais les plus bas parmi les transactions incluses. Cela incite les mineurs à inclure plus de transactions (pour augmenter le volume) plutôt que de se concentrer uniquement sur celles qui paient le plus, ce qui encourage naturellement la diversification.</li>
+  </ol>
+  <p>En conclusion, bien que les collisions de transactions soient une considération dans les BlockDAGs, l'architecture de Kaspa et la dynamique de la théorie des jeux garantissent que le débit effectif reste élevé et évolue de manière robuste avec le taux de blocs.</p>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="chapter17">Chapitre 17 : Le Marché des Frais de Kaspa : Une Perspective Théorique des Jeux</h2>
+  <h3 class="section-title">L'Importance du Marché des Frais</h3>
+  <p>Le marché des frais d'une cryptomonnaie est extrêmement important pour sa sécurité à long terme. Une fois que les récompenses de bloc deviennent négligeables, les frais de transaction restent la principale subvention pour la sécurité du réseau. Il est donc crucial de comprendre la dynamique du marché des frais qu'un protocole induit.</p>
+  
+  <h3 class="section-title">Les Trois Maux du Marché des Frais de Bitcoin</h3>
+  <p>Le marché des frais de Bitcoin, en raison de son consensus "un seul leader par tour", présente des propriétés que l'on peut qualifier de "trois maux" :</p>
+  <ol>
+      <li><strong>Course vers le bas (Race-to-the-bottom) :</strong> Lorsque le réseau n'est pas congestionné, la demande est inférieure à l'offre d'espace de bloc. Les utilisateurs n'ont aucune incitation à payer des frais élevés, car leurs transactions seront incluses de toute façon. Les frais tendent vers le minimum, ce qui peut rendre le minage non rentable et menacer la sécurité du réseau.</li>
+      <li><strong>Aberration des prix :</strong> Lorsque le réseau est congestionné, une très petite augmentation des frais peut faire passer une transaction de "jamais incluse" à "incluse dans le prochain bloc". Le prix ne reflète pas un service graduel.</li>
+      <li><strong>Famine (Starvation) :</strong> Dans un réseau congestionné, les transactions à faibles frais peuvent être perpétuellement exclues, car elles ne pourront jamais surenchérir sur les transactions à frais élevés. Cela crée une barrière à l'entrée et soulève des questions sur l'éthos égalitaire de la blockchain.</li>
+  </ol>
+  <p>Ces dynamiques sont une conséquence directe du fait qu'un seul mineur remporte tout le pot à chaque tour.</p>
+  
+  <h3 class="section-title">Comment le BlockDAG Multi-Leaders de Kaspa Améliore le Marché des Frais</h3>
+  <p>Dans Kaspa, plusieurs mineurs créent des blocs en parallèle à chaque tour (multi-leaders). Si plusieurs mineurs incluent la même transaction, ils se partagent la récompense de manière probabiliste. Cela change radicalement la dynamique du jeu pour les mineurs et les utilisateurs.</p>
+  <ul>
+      <li><strong>Contre la course vers le bas :</strong> Parce que les mineurs sont en concurrence, il devient rationnel pour eux d'inclure des transactions même si le réseau n'est que partiellement utilisé, afin de diversifier leurs sources de revenus et d'éviter la concurrence directe. L'analyse montre que le marché des frais s'active dès que le réseau atteint <strong>1/k</strong> de sa capacité (où k est le nombre de leaders par tour), au lieu de 100% pour Bitcoin. Avec 10 leaders par tour, le marché s'active dès que 10% de la capacité est utilisée.</li>
+      <li><strong>Contre la famine et l'aberration :</strong> Les mineurs ont une incitation à inclure un mélange de transactions, y compris celles à frais plus faibles. Il n'est pas toujours optimal de se battre pour les quelques transactions les plus rémunératrices, car la probabilité de gagner ces frais est réduite par la concurrence. Cela crée une courbe de service beaucoup plus douce : une légère augmentation des frais entraîne une légère augmentation de la probabilité d'inclusion, plutôt qu'un changement brutal. Les transactions à faibles frais ont toujours une chance (même si elle est faible) d'être incluses, ce qui évite la famine. Une faible probabilité d'inclusion dans un tour se traduit par un temps d'attente moyen raisonnable, plutôt qu'une attente infinie.</li>
+  </ul>
+  <p>En conclusion, l'architecture multi-leaders de Kaspa, une conséquence directe de son BlockDAG à haute fréquence, crée un marché des frais intrinsèquement plus sain, plus stable et plus équitable. En lissant les dynamiques extrêmes de "tout ou rien" des blockchains à leader unique, Kaspa construit une base économique plus robuste pour sa sécurité à long terme.</p>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="conclusion">Conclusion</h2>
+  <div class="conclusion">
+    <p>Au terme de ce voyage à travers l'architecture et la philosophie de Kaspa, une conclusion s'impose : nous assistons à une véritable évolution dans le domaine des technologies de registres distribués. Kaspa n'est pas simplement une autre cryptomonnaie ; c'est une refonte fondamentale des principes établis par Bitcoin, conçue pour l'ère du numérique à grande vitesse.</p>
+    <p>Nous avons vu comment son BlockDAG, régi par le protocole de consensus GHOSTDAG, démantèle le goulot d'étranglement de la chaîne linéaire. En permettant la création et l'intégration de blocs en parallèle, Kaspa élimine le gaspillage des blocs orphelins, maximise l'efficacité énergétique de la preuve de travail et atteint des vitesses de transaction et de confirmation qui étaient auparavant considérées comme impossibles pour un système PoW décentralisé.</p>
+    <p>Nous avons exploré ses solutions ingénieuses au stockage, avec un système d'élagage à plusieurs niveaux qui garantit la décentralisation à long terme en maintenant des exigences matérielles faibles pour les nœuds. Nous avons également plongé dans sa vision pour l'avenir, avec des solutions de couche 2 comme les ZK-Rollups, qui promettent d'apporter une programmabilité complexe et une interopérabilité sans sacrifier la sécurité de la couche de base.</p>
+    <p>Kaspa nous montre que le trilemme de la blockchain -- l'idée qu'il faut choisir entre sécurité, scalabilité et décentralisation -- n'est peut-être pas une loi immuable, mais plutôt une limitation des architectures de première génération. En s'inspirant des principes de la physique et de l'économie, Kaspa a conçu un système qui tend vers une efficacité maximale, une friction minimale et une rétention de valeur optimale.</p>
+    <p>L'avenir de Kaspa est prometteur. Avec des mises à niveau comme DAGKnight qui formaliseront la finalité et des recherches continues sur la résistance au MEV et les oracles, le projet continue de repousser les frontières de ce qui est possible. Que Kaspa devienne la colonne vertébrale de la prochaine génération d'applications décentralisées ou qu'il coexiste avec d'autres systèmes, une chose est certaine : il a déjà laissé une marque indélébile sur l'histoire de la cryptomonnaie en prouvant qu'un système monétaire peut être à la fois aussi solide que l'or et aussi rapide que la lumière.</p>
+    <p>Nous espérons que ce livre vous a fourni les clés pour comprendre la profondeur et l'élégance de Kaspa. Le voyage ne fait que commencer, et la meilleure façon de le poursuivre est de s'impliquer, de poser des questions et de continuer à apprendre.</p>
+  </div>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="appendixA">Annexe A : Ressources Supplémentaires</h2>
+  <p>Pour ceux qui souhaitent approfondir leur compréhension de Kaspa, voici une liste de ressources essentielles, allant des articles d'introduction aux documents de recherche fondamentaux.</p>
+  
+  <h4>Articles de Démarrage</h4>
+  <ul>
+    <li><strong>Kaspa 101</strong>: Un excellent point de départ pour comprendre le fonctionnement de GHOSTDAG. <a href="https://michaelsutton.github.io/2022-04-23-kaspa-101-part1/">Lire ici</a></li>
+    <li><strong>Scaling Bitcoin with BlockDAG</strong>: Explique pourquoi le BlockDAG est une solution viable aux limitations de Bitcoin. <a href="https://someone235.medium.com/scaling-bitcoin-with-blockdag-d785174a3402">Lire ici</a></li>
+    <li><strong>Kaspa Pruning Primer</strong>: Une introduction au mécanisme d'élagage de Kaspa. <a href="https://hashdag.medium.com/in-which-mayday-mayday-we-are-syncing-about-bf05ad58957a">Lire ici</a></li>
+    <li><strong>Kaspa GhostDAG 101 (Vidéo)</strong>: Une couverture vidéo complète des concepts techniques. <a href="https://www.youtube.com/watch?v=nhI2zo44dfc">Regarder ici</a></li>
+  </ul>
+
+  <h4>Documents de Recherche (Plongée en Profondeur)</h4>
+  <ul>
+    <li><strong>PHANTOM et GHOSTDAG</strong>: Le document académique qui a jeté les bases du consensus de Kaspa. <a href="https://eprint.iacr.org/2018/104.pdf">Lire le PDF</a></li>
+    <li><strong>The DAGKnight Protocol</strong>: Le protocole de consensus de nouvelle génération de Kaspa, conçu pour une finalité rapide et une résistance aux attaques. <a href="https://eprint.iacr.org/2022/1494.pdf">Lire le PDF</a></li>
+    <li><strong>Prunality</strong>: Le document détaillant la théorie derrière le mécanisme d'élagage de Kaspa. <a href="https://github.com/kaspanet/docs/blob/main/Reference/prunality/Prunality.pdf">Lire le PDF</a></li>
+    <li><strong>Bitcoin Whitepaper</strong>: Le document original de Satoshi Nakamoto, pour un contexte historique. <a href="https://bitcoin.org/bitcoin/bitcoin.pdf">Lire le PDF</a></li>
+  </ul>
+
+  <h4>Code et Développement</h4>
+  <ul>
+    <li><strong>Rusty-Kaspa (Dépôt Principal)</strong>: Le code source du nœud Kaspa, écrit en Rust. <a href="https://github.com/kaspanet/rusty-kaspa">Voir sur GitHub</a></li>
+    <li><strong>Kaspa Improvement Proposals (KIPs)</strong>: Le dépôt contenant toutes les propositions d'amélioration de Kaspa. <a href="https://github.com/kaspanet/kips">Voir sur GitHub</a></li>
+  </ul>
+
+  <h4>Communauté et Discussion</h4>
+  <ul>
+    <li><strong>Discord</strong>: Le lieu principal pour les discussions techniques et communautaires. Canaux recommandés : <code>#research-general</code>, <code>#development</code>. <a href="https://discord.gg/kaspa">Rejoindre le Discord</a></li>
+    <li><strong>Telegram (R&D)</strong>: Un groupe où les développeurs et chercheurs collaborent. <a href="https://t.me/kasparnd">Rejoindre sur Telegram</a></li>
+    <li><strong>Forum de Recherche</strong>: Pour les discussions approfondies sur les KIPs et les nouveaux concepts techniques. <a href="https://research.kas.pa/">Visiter le forum</a></li>
+  </ul>
+
+  <hr class="chapter-break">
+  
+  <h2 class="chapter-title" id="appendixB">Annexe B : Analyse Mathématique des Collisions de Transactions (Simplifiée)</h2>
+  <p>Ce chapitre explore la question du TPS (transactions par seconde) effectif dans un BlockDAG. Lorsque plusieurs blocs sont créés en parallèle, ils peuvent contenir les mêmes transactions, ce qui réduit le débit unique. L'analyse montre que même avec une sélection aléatoire des transactions par les mineurs, le débit effectif reste élevé.</p>
+  <p>L'idée clé est que la probabilité que deux mineurs choisissent la même transaction diminue à mesure que le pool de transactions en attente (mempool) augmente. L'analyse mathématique (utilisant la théorie des probabilités et les séries de Taylor) montre que même dans un scénario où la capacité des blocs correspond exactement au nombre de transactions disponibles, le réseau inclut au moins <strong>(1 - 1/e) ≈ 62,3%</strong> de transactions uniques. Ce chiffre représente un minimum ; en pratique, l'efficacité est souvent bien plus élevée.</p>
+  <p>De plus, la théorie des jeux suggère que les mineurs n'ont pas d'incitation significative à s'écarter de cette sélection quasi-aléatoire. Si tous les mineurs essaient de choisir les transactions les plus rémunératrices, ils finissent par se faire concurrence pour les mêmes frais, ce qui diminue leur profit attendu. Une stratégie de diversification (sélection aléatoire) est donc un équilibre stable (un "équilibre faible").</p>
+  <p>En résumé, le parallélisme de Kaspa ne nuit pas significativement au débit effectif, qui augmente de manière quasi-linéaire avec le taux de blocs.</p>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="appendixC">Annexe C : Analyse Mathématique du Marché des Frais (Simplifiée)</h2>
+  <p>Ce chapitre analyse la dynamique du marché des frais en utilisant la théorie des jeux, comparant le modèle "un seul leader" de Bitcoin au modèle "multi-leaders" de Kaspa.</p>
+  <h4>Les Trois Maux du Marché des Frais de Bitcoin :</h4>
+  <ol>
+    <li><strong>Course vers le bas (Race-to-the-bottom)</strong>: Lorsque le réseau n'est pas congestionné, les utilisateurs n'ont aucune incitation à payer des frais élevés, car leurs transactions seront incluses de toute façon. Les frais tendent vers le minimum, ce qui menace la sécurité à long terme du réseau.</li>
+    <li><strong>Aberration des prix</strong>: Lorsque le réseau est congestionné, une très petite augmentation des frais peut faire passer une transaction de "jamais incluse" à "incluse dans le prochain bloc". Le prix ne reflète pas un service graduel.</li>
+    <li><strong>Famine (Starvation)</strong>: Dans un réseau congestionné, les transactions à faibles frais peuvent être perpétuellement exclues, créant une barrière à l'entrée pour les utilisateurs moins fortunés.</li>
+  </ol>
+  <h4>Comment le BlockDAG de Kaspa résout ces problèmes :</h4>
+  <p>Dans Kaspa, plusieurs mineurs créent des blocs en parallèle (multi-leaders). Si plusieurs mineurs incluent la même transaction, ils se partagent la récompense (de manière probabiliste). Cela change radicalement la dynamique :</p>
+  <ul>
+    <li><strong>Contre la course vers le bas</strong>: Parce que les mineurs se font concurrence, il devient rationnel d'inclure des transactions même si le réseau n'est que partiellement utilisé. L'analyse montre que le marché des frais s'active dès que le réseau atteint <strong>1/k</strong> de sa capacité (où k est le nombre de leaders par tour), au lieu de 100% pour Bitcoin. Avec 10 leaders par tour, le marché s'active dès que 10% de la capacité est utilisée.</li>
+    <li><strong>Contre la famine et l'aberration</strong>: Les mineurs ont une incitation à inclure un mélange de transactions, y compris celles à frais plus faibles. Il n'est pas toujours optimal de se battre pour les quelques transactions les plus rémunératrices, car la probabilité de gagner ces frais est réduite par la concurrence. Cela crée une courbe de service plus douce : une légère augmentation des frais entraîne une légère augmentation de la probabilité d'inclusion, plutôt qu'un changement brutal. Les transactions à faibles frais ont toujours une chance d'être incluses, ce qui évite la famine.</li>
+  </ul>
+  <p>En conclusion, l'architecture multi-leaders de Kaspa crée un marché des frais plus sain, plus stable et plus équitable, ce qui est essentiel pour la sécurité et la viabilité à long terme du protocole.</p>
+
+</div>
+</body>
+</html>

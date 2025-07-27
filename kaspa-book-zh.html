@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="content-type">
+<title>Kaspa：下一代协议</title>
+<style type="text/css">
+  body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+  }
+  .container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+  h1, h2, h3, h4 {
+    color: #2c3e50;
+    line-height: 1.3;
+    page-break-after: avoid;
+  }
+  h1.book-title {
+    font-size: 2.5em;
+    text-align: center;
+    margin-bottom: 0.5em;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+  }
+  h2.chapter-title {
+    font-size: 2em;
+    margin-top: 1.5em;
+    border-bottom: 1px solid #bdc3c7;
+    padding-bottom: 5px;
+  }
+  h3.section-title {
+    font-size: 1.5em;
+    margin-top: 1.2em;
+    color: #34495e;
+  }
+  h4.subsection-title {
+    font-size: 1.2em;
+    margin-top: 1em;
+    color: #7f8c8d;
+  }
+  p {
+    text-align: justify;
+    margin-bottom: 1em;
+  }
+  .img-container {
+    display: block;
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    margin: 20px auto;
+    text-align: center;
+    box-sizing: border-box;
+  }
+  .img-container img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+  .author-date {
+    text-align: right;
+    font-style: italic;
+    color: #7f8c8d;
+    margin-bottom: 2em;
+  }
+  .simplified-def {
+    background-color: #ecf0f1;
+    border-left: 5px solid #3498db;
+    padding: 15px;
+    margin: 1.5em 0;
+  }
+  .simplified-def b {
+    color: #2980b9;
+  }
+  ul {
+    list-style-type: disc;
+    margin-left: 20px;
+    padding-left: 20px;
+  }
+  li {
+    margin-bottom: 0.5em;
+  }
+  blockquote {
+    border-left: 4px solid #bdc3c7;
+    padding-left: 15px;
+    margin-left: 0;
+    font-style: italic;
+    color: #7f8c8d;
+  }
+  hr.chapter-break {
+    page-break-before: always;
+    border: 0;
+  }
+  .cover-page {
+    text-align: center;
+    padding: 100px 20px;
+    border: 2px solid #2c3e50;
+    margin-bottom: 50px;
+  }
+  .cover-page .title {
+    font-size: 3em;
+    color: #2c3e50;
+  }
+  .cover-page .subtitle {
+    font-size: 1.5em;
+    color: #7f8c8d;
+  }
+  .cover-page .author {
+    margin-top: 50px;
+    font-size: 1.2em;
+  }
+  .conclusion, .introduction {
+      padding: 20px;
+      background-color: #eaf2f8;
+      border-radius: 5px;
+  }
+/* Styles for Table of Contents */
+.table-of-contents {
+  background-color: #f0f8ff; /* Light blue background */
+  border: 1px solid #cceeff; /* Light blue border */
+  padding: 20px;
+  margin: 20px auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.table-of-contents .chapter-title {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #2c3e50;
+  border-bottom: 1px solid #aaddff;
+  padding-bottom: 10px;
+}
+
+.table-of-contents ul {
+  list-style: none; /* Remove default bullet points */
+  padding-left: 0;
+}
+
+.table-of-contents ul ul {
+  padding-left: 20px; /* Indent for subsections */
+  margin-top: 5px;
+}
+
+.table-of-contents li {
+  margin-bottom: 8px;
+}
+
+.table-of-contents li a {
+  text-decoration: none;
+  color: #3498db; /* Blue link color */
+  font-weight: bold;
+  transition: color 0.2s ease;
+}
+
+.table-of-contents li a:hover {
+  color: #2980b9; /* Darker blue on hover */
+}
+
+.table-of-contents ul ul li a {
+  font-weight: normal; /* Normal font for subsections */
+  font-size: 0.95em;
+  color: #555; /* Slightly darker color for subsections */
+}
+
+.table-of-contents ul ul li a:hover {
+  color: #333;
+}
+
+.table-of-contents .no-id-link {
+    color: #7f8c8d; /* Grey out unlinked items */
+    font-style: italic;
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="cover-page">
+    <h1 class="title">Kaspa：下一代协议</h1>
+    <p class="subtitle">BlockDAG、共识和数字货币未来的综合指南</p>
+    <p class="author">由社区编译和丰富（2025年7月27日）</p>
+  </div>
+
+  <hr class="chapter-break">
+
+  <div class="introduction">
+    <h2 class="chapter-title">引言</h2>
+    <p>欢迎阅读这份关于 Kaspa 的综合指南，Kaspa 是一种加密货币，它不仅迭代了现有技术，而且从根本上重新发明了它们。在一个有成千上万个项目争夺注意力的生态系统中，Kaspa 以其严谨的方法和深刻的创新脱颖而出，旨在解决传统区块链最根本的问题：可扩展性、速度和去中心化，而不做任何妥协。</p>
+    <p>本书旨在揭开 Kaspa 背后的复杂概念。我们将从基础开始，解释什么是定向无环图（DAG），以及 Kaspa 的 GHOSTDAG 协议如何利用它来创建一个快速、安全且完全去中心化的共识系统。无论您是好奇的开发者、寻求理解底层技术的投资者，还是仅仅是加密货币爱好者，本书都旨在引导您一步步前进。</p>
+    <p>我们将探讨 Kaspa 如何解决了“区块链三难困境”，其独特的架构如何实现近乎即时的确认，以及它如何通过先进的修剪系统可持续地管理数据存储。我们还将涵盖更高级的主题，例如其对 MEV（最大可提取价值）的抵抗力、其通过 ZK-Rollups 实现第二层解决方案的愿景，以及其费用市场的经济动态。</p>
+    <p>这项工作是集体努力的成果。我衷心感谢 Kaspa 社区的贡献者，他们的文章、研究和讨论构成了本书的骨干。大部分内容改编和翻译自官方网站 <strong><a href="https://kaspa.com/learn-kaspa">Kaspa.com/learn-kaspa</a></strong> 上的宝贵资源及其主要研究人员和开发人员的著作。特别感谢 <strong>Cihan0x.ETH (<a href="https://x.com/cihan0xeth/status/1949361083883380833">@cihan0xeth</a>)</strong>，其工作部分基于 <strong>@AbiKaspa</strong> 的原始分析，以及 <strong>BankQuote_DAG</strong> 提供的深刻分析，这些都极大地丰富了这项工作。</p>
+    <p>准备好深入了解加密货币世界中最具创新性的架构之一。准备好理解 Kaspa。</p>
+  </div>
+
+  <hr class="chapter-break">
+
+<div class="table-of-contents">
+      <h2 class="chapter-title">目录</h2>
+      <ul>
+          <li><a href="#h.sbugt7p65zq6">第一章：Kaspa 的 BlockDAG</a>
+              <ul>
+                  <li><a href="#h.52y7zpxatzmc">DAG - 有向无环图</a></li>
+                  <li><a href="#h.r0onrjvzaye8">比特币和 Kaspa</a></li>
+              </ul>
+          </li>
+          <li><a href="#h.q9lxzgpefpuh">第二章：Kaspa - 连接区块体与区块头</a>
+              <ul>
+                  <li><a href="#h.3ezesbjpkjql">保护区块体与区块头 - Merkle 根</a></li>
+                  <li><a href="#h.emrhhaf2640n">比特币和 Kaspa</a></li>
+              </ul>
+          </li>
+          <li><a href="#h.y0ik307h70q9">第三章：Kaspa 与“比特币可扩展性问题”</a>
+              <ul>
+                  <li><a href="#h.2jy3kmwufuue">Kaspa 解决了“比特币可扩展性问题”----那是什么？</a></li>
+                  <li><a href="#h.v4bl36mx6e0u">比特币和 Kaspa</a></li>
+              </ul>
+          </li>
+          <li><a href="#h.1tq8u5wwr5up">第四章：MuHash</a>
+              <ul>
+                  <li><a href="#h.ny65anmiz0s">什么是 MuHash 以及 Kaspa 如何使用它？</a></li>
+                  <li><a href="#h.focbph7aurgq">比特币和 Kaspa</a></li>
+              </ul>
+          </li>
+          <li><a href="#h.oy0kgniero14">第五章：Kaspa 的 UTXO 模型</a>
+              <ul>
+                  <li><a href="#h.8nqvw067oam1">什么是 UTXO 以及 Kaspa 如何使用它？</a></li>
+                  <li><a href="#h.5v09d76siagw">比特币和 Kaspa</a></li>
+              </ul>
+          </li>
+          <li><a href="#h.6x07cz5zmxim">第六章：父区块与合并集</a>
+              <ul>
+                  <li><a href="#h.34xcaoqpznos">什么是父区块和合并集，Kaspa 如何使用它们？</a></li>
+                  <li><a href="#h.tsab66lazd4a">比特币与 Kaspa</a></li>
+              </ul>
+          </li>
+          <li><a href="#h.x0nj4tecoh66">第七章：二级修剪</a>
+              <ul>
+                  <li><a href="#h.1wbq42gt63wc">什么是二级修剪以及 Kaspa 如何使用它？</a></li>
+              </ul>
+          </li>
+          <li><a href="#h.mz2dlkhrvwd2">第八章：Kaspa GHOSTDAG 简化版</a>
+              <ul>
+                  <li><a href="#h.hwkbrs8egi6p">什么是 GHOSTDAG 以及 Kaspa 如何使用它？</a></li>
+              </ul>
+          </li>
+          <li><a href="#h.drxg3f8wwuwc">第九章：DAG 术语</a>
+              <!-- Note: Some subsections in Chapter 9 do not have IDs in the original HTML and thus cannot be linked directly. -->
+          </li>
+          <li><a href="#h.1uals18cttyl">第十章：一级修剪</a>
+              <ul>
+                  <li><a href="#h.3i8fyh1jrh8m">什么是一级修剪以及 Kaspa 如何使用它？</a></li>
+              </ul>
+          </li>
+          <li><a href="#h.juf0jn9hl1ev">第十一章：存档节点与全节点</a>
+              <ul>
+                  <li><a href="#h.knim47a94vo6">Kaspa 存档节点与修剪节点</a></li>
+              </ul>
+          </li>
+          <li><a href="#h.xoj5wjv6tg4b">第十二章：Kaspa：能源效率去中心化架构的演进</a>
+              <ul>
+                  <li><a href="#h.pfav0qmvzt92">引言：金钱与效率的物理学</a></li>
+                  <!-- Note: Some subsections in Chapter 12 do not have IDs in the original HTML and thus cannot be linked directly. -->
+                  <li><a href="#h.y2juit6511i3">Kaspa 的 BlockDAG：并行性与无浪费工作</a></li>
+                  <li><a href="#h.ttddfh4xlbpu">以光速实现吞吐量</a></li>
+                  <li><a href="#h.uttpgy92hgk">更小的摩擦，更好的价值保留</a></li>
+              </ul>
+          </li>
+          <li><a href="#h.e01avawvoirc">第十三章：Kaspa 与比特币的排序</a>
+              <!-- Note: Some subsections in Chapter 13 do not have IDs in the original HTML and thus cannot be linked directly. -->
+          </li>
+          <li><a href="#chapter14">第十四章：Kaspa 对第二层的愿景：ZK Rollups 和桥接</a></li>
+          <li><a href="#chapter15">第十五章：Igra 网络：Kaspa 的 EVM 兼容 ZK Rollup 案例研究</a></li>
+          <li><a href="#chapter16">第十六章：Kaspa BlockDAG 中的交易吞吐量和冲突</a></li>
+          <li><a href="#chapter17">第十七章：Kaspa 的费用市场：一个博弈论视角</a></li>
+          <li><a href="#conclusion">结论</a></li>
+          <li><a href="#appendixA">附录 A：额外资源</a></li>
+          <li><a href="#appendixB">附录 B：交易冲突的数学分析（简化版）</a></li>
+          <li><a href="#appendixC">附录 C：费用市场的数学分析（简化版）</a></li>
+      </ul>
+  </div>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="h.sbugt7p65zq6">第一章：Kaspa 的 BlockDAG</h2>
+  <div class="img-container"><img alt="Kaspa 的 BlockDAG" src="images/image1.png"></div>
+  <h3 class="section-title" id="h.52y7zpxatzmc">DAG - 有向无环图</h3>
+  <p>您可能听说过 Kaspa 是一个 BlockDAG，但这到底意味着什么？本文旨在不预设任何先验知识，因此我们将从图论开始。首先，我们将了解什么是图，然后是有向图，接着是有向无环图，最后是它们如何应用于比特币和 Kaspa。</p>
+  <p><b>图</b> - 图论是数学和计算机科学的一个领域，专注于研究图，图是表示实体对之间关系的结构。这些图由通过边（有时称为链接或线）连接的顶点（也称为节点或点）组成。图分为无向图（顶点之间的连接是相互的）和有向图（连接具有特定方向）。作为离散数学的一个关键领域，图论深入探讨了这些结构。下图展示了一个简单的无向图，其中连接没有方向。</p>
+  <div class="img-container"><img alt="无向图" src="images/image63.png"></div>
+  <p><b>有向图</b> - 有向图，常被称为有向图，是一种用于表示点之间连接具有特定方向的关系的结构。与连接双向的普通图不同，在有向图中，每条边都从一个顶点指向另一个顶点。最简单的有向图由两部分组成：一组顶点和一组边，其中每条边都是一对具有明确方向的顶点（从一个顶点到另一个顶点，但反之则不然）。例如，如果您有一条从顶点 X 到顶点 Y 的边，则 X 是起点，Y 是终点。这条边将 X 连接到 Y。另一条边可以从 Y 到 X，但这将是不同的连接。在这种基本配置中，称为简单有向图，您不能在相同的两个顶点之间有多个相同方向的边，也不能有一条边从同一个顶点开始和结束（称为循环）。下图展示了一个有向图，其中边有方向；请注意，带有两个指针的边代表两条边，每条边都有一个方向。</p>
+  <div class="img-container"><img alt="有向图" src="images/image70.png"></div>
+  <p><b>有向无环图</b> - 是一个不包含任何循环的有向图。它由顶点和边组成，其中每条边都从一个顶点指向另一个顶点，确保沿着边的方向永远不会形成闭环。如果一个有向图的顶点可以按照所有边的方向排列成线性序列，则称其为 DAG，这被称为拓扑排序。下图展示了一个有向无环图，其中找不到任何循环。</p>
+  <div class="img-container"><img alt="有向无环图 (DAG)" src="images/image7.png"></div>
+
+  <div class="simplified-def">
+    <h3 class="section-title">简化定义</h3>
+    <p><b>图</b> - 由顶点和连接顶点对的边组成，其中顶点代表任何类型的对象，边代表它们之间的连接。</p>
+    <p><b>有向图</b> - 每条边都有一个特定的方向，从一个顶点指向另一个顶点。有向图中的路径是边的序列，其中一条边的终点是序列中下一条边的起点。</p>
+    <p><b>有向无环图</b> - 一个有向图，其中任何顶点都不能通过包含一条或多条边的路径到达自身，从而确保没有循环。</p>
+    <p>关于图还有很多知识有待学习，但就我们的目的而言，我们只需要知道 Kaspa 的 BlockDAG 只是一种结构，由边和顶点组成，以单一方向连接，并且我们永远不会陷入循环，它是无环的，或者说是一个有向无环图。</p>
+  </div>
+
+  <h3 class="section-title" id="h.r0onrjvzaye8">比特币和 Kaspa</h3>
+  <p><b>比特币</b> - 是一个 DAG，尽管它总是被称为区块链，但比特币使用 DAG 结构。区块是顶点，它们的关系是边的关系。每个区块都以单一方向连接，沿着每个连接，你永远不会形成循环，并且总是会回到创世区块。</p>
+  <div class="img-container"><img alt="比特币区块链结构作为线性 DAG" src="images/image25.png"></div>
+  <p><b>Kaspa</b> - 是一个 DAG，Kaspa 使用 DAG 结构。区块是顶点，它们的关系是边的关系。每个区块都以单一方向连接，沿着每个连接，你永远不会形成循环，并且总是会回到创世区块。</p>
+  <div class="img-container"><img alt="Kaspa 的 BlockDAG 结构" src="images/image30.png"></div>
+  <p>那么，如果比特币和 Kaspa 都使用 DAG，区别在哪里呢？比特币允许区块只指向一个前一个区块。Kaspa 允许区块指向多个前一个区块。这是唯一的结构性差异。</p>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="h.q9lxzgpefpuh">第二章：Kaspa - 连接区块体与区块头</h2>
+  <div class="img-container"><img alt="区块头与区块体连接" src="images/image66.png"></div>
+  <h3 class="section-title" id="h.3ezesbjpkjql">保护区块体与区块头 - Merkle 根</h3>
+  <p>什么将区块体安全地连接到区块头？区块体中交易的 Merkle 根。</p>
+  <p>那是什么意思？本文旨在不预设任何先验知识，因此我们将从 Merkle 树开始。什么是 Merkle 树，它是如何构建的，以及它如何防止篡改。然后，它如何应用于比特币和 Kaspa。</p>
+  <p><b>Merkle 树</b> - 在密码学和计算机科学中，Merkle 树，也称为哈希树，是一种树状结构，其中每个“叶”节点包含一个数据块的加密哈希。非叶节点，通常称为分支或内部节点，包含其子节点标签的加密哈希。这种结构可以高效安全地验证大型数据集的内容。</p>
+  <div class="img-container"><img alt="Merkle 树结构" src="images/image13.png"></div>
+  <p><b>数据块</b> - 在 Merkle 树中，数据块是原始数据的一个片段，例如交易，它构成了树结构的基础。每个数据块都被单独哈希以生成一个叶节点哈希。</p>
+  <div class="img-container"><img alt="哈希交易以创建叶子" src="images/image9.png"></div>
+  <p><b>叶子</b> - Merkle 树中的一个节点，存储单个数据块的加密哈希。叶子节点通过存储此哈希，充当数据块的数字指纹。</p>
+  <div class="img-container"><img alt="哈希交易以创建叶子" src="images/image23.png"></div>
+  <p><b>内部节点</b> - 一个父节点，它聚合其子节点的哈希。这些子哈希被连接并哈希以生成一个唯一的哈希值，该值标识内部节点。</p>
+  <div class="img-container"><img alt="哈希叶子以创建内部节点" src="images/image58.png"></div>
+  <p><b>哈希根</b> - 顶层节点中的单个哈希值，它封装了树中的所有数据。它作为所有底层数据块的紧凑且唯一的摘要。对单个叶节点的任何修改都会改变哈希根。</p>
+  <div class="img-container"><img alt="Merkle 根，最终哈希" src="images/image5.png"></div>
+
+  <div class="simplified-def">
+    <h3 class="section-title">简化定义</h3>
+    <p><b>Merkle 树</b> - 一种树状结构，通过将数据块组织成加密哈希结构来有效验证数据完整性。</p>
+    <p><b>数据块</b> - 信息单元，例如交易，被哈希以创建叶子节点。</p>
+    <p><b>叶子</b> - 存储单个数据块哈希的节点。</p>
+    <p><b>内部节点</b> - 包含其子节点哈希的父节点。</p>
+    <p><b>哈希根</b> - 包含单个哈希的顶层节点，代表整个数据集的完整性。</p>
+  </div>
+
+  <h3 class="section-title" id="h.emrhhaf2640n">比特币和 Kaspa</h3>
+  <p><b>比特币</b> - Merkle 树组织每个区块内的交易数据。交易被哈希到叶子节点，配对并哈希到内部节点，然后组合成一个存储在区块头中的单一哈希根。这种结构可以高效地验证交易的完整性。</p>
+  <div class="img-container"><img alt="比特币中的 Merkle 树" src="images/image18.png"></div>
+  <p><b>Kaspa</b> - Merkle 树以与比特币相同的方式组织每个区块内的交易数据。然而，Kaspa 允许并行区块共存，其中这些区块在 DAG 中的顺序可能未知。Merkle 树依赖于顺序。Kaspa 如何解决这个问题？通过添加一个额外的 Merkle 树。</p>
+  <div class="img-container"><img alt="Kaspa 中的 Merkle 树" src="images/image69.png"></div>
+  <p>什么将区块体安全地连接到区块头？区块体中交易的 Merkle 根（<code>hash_merkle_root</code>）。</p>
+  <p>什么将合并集交易安全地连接到区块头？合并集中交易的 Merkle 根（<code>accepted_id_merkle_root</code>）。这第二个根允许验证来自正在合并的并行区块的交易，从而解决了 DAG 环境中的排序问题。</p>
+  <div class="img-container"><img alt="Kaspa 区块头中的两个 Merkle 根" src="images/image65.png"></div>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="h.y0ik307h70q9">第三章：Kaspa 与“比特币可扩展性问题”</h2>
+  <div class="img-container"><img alt="可扩展性问题图示" src="images/image53.png"></div>
+  <h3 class="section-title" id="h.2jy3kmwufuue">Kaspa 解决了“比特币可扩展性问题”----那是什么？</h3>
+  <p>什么是比特币的可扩展性问题，Kaspa 是如何解决的？通过包含。</p>
+  <p>那是什么意思？本文旨在不预设任何先验知识，因此我们将从客户端-服务器模型开始，然后是点对点网络。什么是 P2P 网络，它看起来像什么，以及消息如何在其中传播。然后，它如何应用于比特币和 Kaspa。</p>
+  <p><b>客户端-服务器模型</b> - 在客户端-服务器网络中，集中式架构通过一台名为服务器的强大计算机来组织通信和资源共享，该计算机连接到多个名为客户端的用户设备。这种结构确保了高效管理，但严重依赖服务器，使其易受攻击。</p>
+  <div class="img-container"><img alt="客户端-服务器模型" src="images/image67.png"></div>
+  <p><b>点对点（P2P）网络</b> - 一种去中心化架构，允许互连节点之间直接通信和资源共享。每个对等点都充当客户端和服务器，有助于网络的弹性性和可扩展性，而不依赖于中央权威。</p>
+  <div class="img-container"><img alt="点对点网络" src="images/image12.png"></div>
+  <p><b>传播时间</b> - 在点对点网络中，传播时间是指数据（例如新区块）从一个节点传输到网络中其他节点所需的时间。在此期间，不同的节点可能对网络状态有不同的看法。</p>
+  <div class="img-container"><img alt="消息在点对点网络中的传播" src="images/image37.png"></div>
+
+  <div class="simplified-def">
+    <h3 class="section-title">简化定义</h3>
+    <p><b>客户端-服务器模型</b> - 一台中央计算机管理多个客户端的数据。</p>
+    <p><b>点对点（P2P）</b> - 多台计算机之间直接共享数据，无需中央权威。</p>
+    <p><b>节点</b> - 参与点对点网络的单个计算机。</p>
+    <p><b>传播时间</b> - 数据在网络中传播所需的时间。</p>
+  </div>
+
+  <h3 class="section-title" id="h.v4bl36mx6e0u">比特币和 Kaspa</h3>
+  <p><b>比特币</b> - 使用 P2P 网络。然而，其安全性取决于区块创建率（10 分钟）远低于传播时间。如果区块创建过快，许多区块会变成“孤块”（被拒绝），这会浪费工作并损害安全性。这就是“可扩展性问题”。</p>
+  <div class="img-container"><img alt="由于网络延迟导致的比特币孤块" src="images/image45.png"></div>
+  <p><b>Kaspa</b> - 使用一种包容性协议（GHOSTDAG），允许区块指向多个前一个区块。如果在传播时间内创建了并行区块，它们都将被包含在 DAG 中。没有孤块。这使得区块创建率可以快于传播时间，从而解决了可扩展性问题，同时保持了安全性。</p>
+  <div class="img-container"><img alt="Kaspa 中并行区块的包含" src="images/image14.png"></div>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="h.1tq8u5wwr5up">第四章：MuHash</h2>
+  <div class="img-container"><img alt="MuHash 概念图示" src="images/image35.png"></div>
+  <h3 class="section-title" id="h.ny65anmiz0s">什么是 MuHash 以及 Kaspa 如何使用它？</h3>
+  <p>一种用于跟踪 UTXO 和修剪旧区块体数据的结构。</p>
+  <p>那是什么意思？本文旨在不预设任何先验知识，因此我们将从 MuHash 开始。什么是 MuHash 结构，它是如何计算的，以及它如何保持乘法特性。然后，它如何应用于比特币和 Kaspa。</p>
+  <p><b>MuHash</b> - 在密码学系统中，MuHash（乘法哈希）是一种专门的哈希算法，旨在高效地从一组元素中计算单个哈希值。它允许增量更新，这意味着可以添加或删除元素而无需重新计算整个哈希，从而提高动态数据集的性能。</p>
+  <div class="img-container"><img alt="在 MuHash 中添加和删除元素" src="images/image57.png"></div>
+  <p><b>分子和分母</b> - MuHash 使用两个计数器：一个分子用于乘以添加的元素，一个分母用于乘以删除的元素。最终状态通过将分子“除以”分母（通过乘以模逆）获得。操作顺序无关紧要，这对于并行处理至关重要。</p>
+  <div class="img-container"><img alt="使用分子和分母计算 MuHash" src="images/image2.png"></div>
+  <div class="img-container"><img alt="使用分子和分母计算 MuHash" src="images/image64.png"></div>
+  <p><b>素数模约束</b> - 素数模数充当数学边界，在所有算术运算中将分子和分母保持在可控范围内。每次乘法都以素数模数进行，这意味着无论添加或删除了多少元素，结果总是“环绕”以保持在有限域内。</p>
+  <div class="img-container"><img alt="素数模约束" src="images/image16.png"></div>
+  <p><b>模逆</b> - 模逆是一种数学运算，它使得在 MuHash 使用的有限域中进行除法成为可能。当您需要将分子“除以”分母以获得最终哈希结果时，您实际上是将分子乘以分母的模逆。</p>
+
+  <div class="simplified-def">
+    <h3 class="section-title">简化定义</h3>
+    <p><b>MuHash</b> - 一种快速哈希集合中元素的结构，其中顺序无关紧要。</p>
+    <p><b>分子</b> - 添加元素时进行乘法的字段。</p>
+    <p><b>分母</b> - 删除元素时进行乘法的字段。</p>
+    <p><b>素数模约束</b> - 定义所有操作发生的数学域的素数。</p>
+    <p><b>模逆</b> - 允许在有限域中进行“除法”的操作。</p>
+    <p>MuHash 仅仅是一种结构，由分子和分母组成，它允许以任意顺序快速哈希集合中的元素，而无需从头开始重新计算。</p>
+  </div>
+
+  <h3 class="section-title" id="h.focbph7aurgq">比特币和 Kaspa</h3>
+  <p><b>比特币</b> - 全节点保留所有交易，包括已花费的旧交易。修剪很困难，因为没有有效的机制可以在不保留历史数据的情况下紧凑且可验证地总结交易状态（UTXO 集）。</p>
+  <div class="img-container"><img alt="完整的比特币区块链存储" src="images/image42.png"></div>
+  <p><b>Kaspa</b> - 全节点修剪旧数据。这种修剪旧数据的能力需要一种方法来从每个区块中删除所有交易数据，并将其加密地保护在每个区块头中。Kaspa 使用 MuHash 从区块中删除交易数据（以便在修剪点之后只保留 DAG 头），并将其保护在每个区块头中。这是修剪的关键步骤。Kaspa 将交易数据（UTXO）与共识数据（区块头）分离，这意味着 Kaspa 只存储未花费的交易，而不是所有曾经发生过的交易。这降低了与比特币相比的存储要求。</p>
+  <div class="img-container"><img alt="使用 MuHash 修剪的 Kaspa 存储" src="images/image51.png"></div>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="h.oy0kgniero14">第五章：Kaspa 的 UTXO 模型</h2>
+  <div class="img-container"><img alt="UTXO 模型图示" src="images/image74.png"></div>
+  <h3 class="section-title" id="h.8nqvw067oam1">什么是 UTXO 以及 Kaspa 如何使用它？</h3>
+  <p>一种用于追踪谁可以花费 Kaspa 的结构。</p>
+  <p>那是什么意思？本文旨在不预设任何先验知识，因此我们将从账户模型和 UTXO 模型开始，然后是 UTXO 是什么，它包含什么，以及它如何被花费。然后，它如何应用于比特币和 Kaspa。</p>
+  <p><b>账户模型</b> - 账户模型表现得像一个传统的银行账户，通过维护余额和提供熟悉的操作。就像检查您的银行余额一样，您可以查询账户的当前持仓，并且类似于银行如何跟踪您的交易历史，账户管理您的财务状况。系统提供标准的账户操作，例如接收存款和进行转账，每个账户都有其唯一的标识符和名称，以便于管理。有几种类型的账户可满足不同的需求，就像银行提供不同类型的账户用于不同目的。</p>
+  <div class="img-container"><img alt="账户模型" src="images/image52.png"></div>
+  <p><b>UTXO 模型</b> - UTXO 模型表现得像您钱包里的实体现金或硬币，每个硬币都有一个特定的价值，并且只能花费一次。就像您的实体钱包里可能有不同面额的钞票和硬币一样，数字钱包包含多个不同金额的 UTXO，代表您可花费的余额。当您进行交易时，特定的 UTXO 作为输入被消费（就像花费精确面额的钞票），新的 UTXO 作为输出为接收者和任何找零创建，类似于收银员在您用大额钞票支付时给您找零。系统通过所有交易跟踪这些“硬币”，维护一个关于哪些 UTXO 存在且可以花费的完整记录，就像实体货币在人与人之间流通时保持其个体身份一样。</p>
+  <div class="img-container"><img alt="UTXO 模型" src="images/image22.png"></div>
+  <p><b>UTXO 结构</b> - UTXO（未花费的交易输出）被构造为一个数字收据，其中包含花费它所需的所有基本信息，类似于支票包含金额、收款人详细信息和授权信息。每个 UTXO 包含其所持有的价值，并定义花费条件。正如实体硬币印有其面额并可以验证其真实性一样，每个 UTXO 携带其价值和加密所有权证明，使其成为一个独立的价值单元，可以独立验证和花费。系统将每个 UTXO 视为一个具有其唯一标识符的离散对象，从而可以精确跟踪单个价值单元在网络中的移动。</p>
+  <div class="img-container"><img alt="UTXO 结构" src="images/image17.png"></div>
+  <p><b>花费 UTXO</b> - 花费 UTXO 就像使用实体现金一样，您必须提供确切的账单或硬币才能进行购买，一旦花费，就不能再使用。这个过程始于找到您想要花费的特定 UTXO 并验证其在 UTXO 集中的存在，类似于检查您钱包中的钞票是否真实且未花费。当创建交易时，您通过其唯一标识符引用 UTXO，并提供一个签名脚本，证明您有权花费它。系统验证 UTXO 尚未被花费（防止双重花费），验证您是否满足花费条件，然后从可花费集中移除 UTXO，同时为接收者和任何找零创建新的 UTXO，从而完成价值从一方到另一方的转移。</p>
+  <div class="img-container"><img alt="花费 UTXO 的过程" src="images/image31.png"></div>
+
+  <div class="simplified-def">
+    <h3 class="section-title">简化定义</h3>
+    <p><b>账户模型</b> - 为每个账户维护单一余额的系统。</p>
+    <p><b>UTXO 模型</b> - 跟踪单个价值“硬币”的系统。</p>
+    <p><b>UTXO</b> - 未花费的交易输出，代表特定金额的资金。</p>
+    <p><b>花费 UTXO</b> - 消费 UTXO 以创建新 UTXO 的过程。</p>
+    <p>UTXO 只是一种追踪谁可以花费什么的结构。</p>
+  </div>
+
+  <h3 class="section-title" id="h.5v09d76siagw">比特币和 Kaspa</h3>
+  <p><b>比特币</b> - 使用 UTXO 模型。交易是已花费和已创建 UTXO 的集合，存储在每个区块的区块体中。</p>
+  <div class="img-container"><img alt="比特币中的 UTXO 模型" src="images/image27.png"></div>
+  <p><b>Kaspa</b> - 也使用 UTXO 模型。主要区别在于这些 UTXO 在 BlockDAG 环境中如何管理和验证，这允许并行处理和更快的确认。</p>
+  <div class="img-container"><img alt="Kaspa 中的 UTXO 模型" src="images/image44.png"></div>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="h.6x07cz5zmxim">第六章：父区块与合并集</h2>
+  <div class="img-container"><img alt="DAG 中区块之间的关系" src="images/image4.png"></div>
+  <h3 class="section-title" id="h.34xcaoqpznos">什么是父区块和合并集，Kaspa 如何使用它们？</h3>
+  <p>两种不同的方式来描述 Kaspa 的 BlockDAG 结构中区块之间的关系。</p>
+  <p><b>传统区块链父区块</b> - 在像比特币这样的线性区块链中，每个区块只有一个父区块（创世区块除外），从而创建了一个简单的链式结构。父子关系是直接的：每个新区块都引用前一个区块的哈希，形成从创世区块到当前尖端的连续序列。</p>
+  <div class="img-container"><img alt="比特币中的父子关系" src="images/image34.png"></div>
+  <p><b>DAG 父区块复杂性</b> - Kaspa 的 BlockDAG 允许区块拥有多个父区块，从而创建了一个更复杂的网络关系。当一个区块被创建时，它可以引用多个现有区块作为父区块，从而允许并行区块的创建和更高的吞吐量。</p>
+  <div class="img-container"><img alt="Kaspa 中的多个父子关系" src="images/image36.png"></div>
+  <p><b>父区块</b> - 父区块是新区块在其区块头中直接引用的区块。这些是区块创建者声明的明确关系----它们是新区块直接构建在其上的区块。当您查看 Kaspa DAG 可视化工具时，这些箭头代表父子关系。</p>
+  <div class="img-container"><img alt="一个新区块指向其父区块" src="images/image11.png"></div>
+  <p><b>父区块如何工作</b> - 当创建一个区块时，矿工根据他们认为的当前 DAG“尖端”选择现有区块作为父区块进行引用。系统验证这些父子关系并使用它们来确定区块在 DAG 结构中的位置。在这里，您可以看到正在创建一个新区块，它引用了 DAG 的“尖端”，即那些没有其他区块指向它们的区块。</p>
+  <div class="img-container"><img alt="创建新区块并选择尖端" src="images/image56.png"></div>
+  <p><b>合并集</b> - 合并集是指位于区块选定父区块的反锥体中，但仍被视为区块共识上下文一部分的区块集合。在这里，区块 C 位于 B 的反锥体中，区块 B 位于 C 的反锥体中。</p>
+  <div class="img-container"><img alt="区块合并集图示" src="images/image29.png"></div>
+  <p><b>合并集如何计算</b> - 合并集是通过查找所有不是选定父区块的祖先但仍可通过区块父区块集访问的区块来计算的。这为共识决策创建了更广泛的区块上下文。在此示例中，如果区块 B 是选定父区块，则正在创建的区块的合并集将包括区块 C 和区块 D。</p>
+  <div class="img-container"><img alt="合并集计算" src="images/image47.png"></div>
+  <p><b>GHOSTDAG 中的合并集</b> - GHOSTDAG 协议处理合并集以确定哪些区块应被标记为“蓝色”（有助于共识）或“红色”（有效但不有助于共识）。此着色过程对于在并行区块环境中维护共识至关重要。</p>
+
+  <h3 class="section-title">父区块和合并集如何协同工作</h3>
+  <p><b>选择选定父区块</b> - 在所有父区块中，系统选择一个作为“选定父区块”----即“蓝色工作量”最大的父区块。这在 DAG 中创建了一个主链骨干，同时识别了其他父子关系。这里，父链被突出显示。</p>
+  <div class="img-container"><img alt="选定父区块的选择和主链" src="images/image75.png"></div>
+  <p><b>合并集处理</b> - 一旦选定父区块被选择，合并集就会被计算和处理，以确定最终的 GHOSTDAG 数据。合并集排除了选定父区块，因为它已经被计入主链。在这里，合并集包括区块 C，因为它位于区块 B（选定父区块）的反锥体中，尽管它不是新区块的父区块（父区块只包括区块 B 和区块 D）。</p>
+  <div class="img-container"><img alt="合并集处理" src="images/image26.png"></div>
+  <p><b>虚拟父区块选择</b> - 在创建虚拟状态时，系统使用这两个概念：它从候选区块中选择虚拟父区块，同时确保生成的合并集不超过大小限制。这平衡了包含许多并行区块和保持可管理共识复杂性。</p>
+
+  <h3 class="section-title">实际差异</h3>
+  <p><b>存储和迭代</b> - 父区块直接存储在区块头中，而合并集数据则单独计算并存储在 GHOSTDAG 数据结构中。系统提供不同的迭代器，以不同的顺序（共识顺序、“蓝色工作量”顺序等）访问合并集区块。</p>
+  <p><b>对共识的影响</b> - 父区块定义了 DAG 的基本结构，但合并集决定了哪些区块实际有助于共识计算，例如“蓝色分数”和“蓝色工作量”。一个区块可能是父区块，但最终在合并集中被标记为红色，这意味着它不 contributes 到主共识链。</p>
+
+  <div class="simplified-def">
+    <h3 class="section-title">简化定义</h3>
+    <p><b>父区块</b> - 新区块在其区块头中直接引用的区块，从而在 DAG 中建立明确的关系。</p>
+    <p><b>合并集</b> - 区块反锥体中的区块集合，用于共识处理，不包括选定的父区块。</p>
+    <p><b>选定父区块</b> - 具有最大“蓝色工作量”的父区块，形成主链的骨干。</p>
+    <p><b>蓝色/红色合并集</b> - 合并集中有助于共识（蓝色）或不助于共识（红色）的区块。</p>
+    <p>父区块定义了 DAG 的结构，而合并集决定了共识的参与。</p>
+  </div>
+
+  <h3 class="section-title" id="h.tsab66lazd4a">比特币与 Kaspa</h3>
+  <p><b>比特币</b> - 每个区块只有一个父区块（创世区块除外），因此父区块和合并集之间没有区别。唯一的父区块既是结构关系，也是共识关系。</p>
+  <div class="img-container"><img alt="简单的比特币结构" src="images/image55.png"></div>
+  <p><b>Kaspa</b> - 将结构关系（父区块）与共识关系（合并集）分离。多个父区块创建了 DAG 结构，但合并集处理决定了哪些区块实际有助于共识状态。</p>
+  <div class="img-container"><img alt="Kaspa 的复杂结构与父区块和合并集" src="images/image24.png"></div>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="h.x0nj4tecoh66">第七章：二级修剪</h2>
+  <div class="img-container"><img alt="二级修剪图示" src="images/image48.png"></div>
+  <h3 class="section-title" id="h.1wbq42gt63wc">什么是二级修剪以及 Kaspa 如何使用它？</h3>
+  <p>二级修剪是 Kaspa 存储优化中的高级步骤，它在保留验证新区块和参与网络共识能力的同时，移除与共识相关的数据。它通过选择性地移除 DAG 结构数据、关系和一些区块头本身，超越了一级修剪。</p>
+  <p>为什么是“二级”？ - 这个术语强调，在移除区块体（一级）之后，Kaspa 可以在保留验证能力的同时移除额外的共识数据。二级修剪通过移除对持续验证不必要的冗余共识信息，实现了最大的存储效率。</p>
+  <p>那是什么意思？ - 本文假设您已了解一级修剪，因此我们将从一级修剪后存在的共识数据开始，然后解释二级修剪如何选择性地移除共识结构，哪些保留，哪些移除，以及验证如何继续在减少的共识数据下工作。</p>
+
+  <h3 class="section-title">一级修剪与二级修剪</h3>
+  <p><b>一级修剪的基础</b> - 在一级修剪之后，节点保留所有区块头、GHOSTDAG 数据、可访问性关系和 DAG 结构信息。这允许进行完整的共识验证，但仍需要大量存储空间来存储 Kaspa 维护的复杂 DAG 关系。</p>
+  <p><b>二级修剪的挑战</b> - 挑战在于确定哪些共识数据可以安全删除，而不会损害节点验证新区块的能力。系统必须保留足够的结构信息以维持共识，同时删除冗余数据。</p>
+
+  <h3 class="section-title">多级证明系统</h3>
+  <p><b>证明级别分类</b> - Kaspa 的修剪系统根据区块对于不同证明级别的重要性进行分类。与较高证明级别关联的区块保留的共识数据比仅为较低级别所需的更多。</p>
+  <p><b>基于级别的保留数据</b> - 系统根据每个区块所属的证明级别来确定要保留哪些共识数据。较高级别的区块保留更多的关系和共识信息，而较低级别的区块可以安全地删除其共识数据。</p>
+  <p><b>连续的 DAG 区域</b> - 修剪确保每个级别中剩余的关系代表一个连续的 DAG 区域，从而保持共识验证所需的结构完整性。</p>
+
+  <h3 class="section-title">二级修剪中删除的内容</h3>
+  <p><b>移除关系数据</b> - 二级修剪移除仅属于更高证明级别的区块的级别特定关系数据。这保留了关系代表连续 DAG 区域的语义，同时移除了不必要的低级别数据。</p>
+  <p><b>选择性移除 GHOSTDAG 数据</b> - 系统移除某些区块的 GHOSTDAG 数据，同时保留其用于基本共识验证。对于部分修剪的区块，GHOSTDAG 数据在级别 0 被移除。</p>
+  <p><b>移除区块头</b> - 在最激进的二级修剪形式中，一些区块头本身可以被移除，同时保留过去的修剪点。只有对修剪点查询不必要的区块头才会被移除。</p>
+
+  <h3 class="section-title">二级修剪中保留的内容</h3>
+  <p><b>基本共识结构</b> - 关键的共识数据，例如修剪点的反锥体、DAA 窗口区块和 GHOSTDAG 区块，始终保留用于基本验证。这确保了即使数据存储减少，共识操作也能继续进行。</p>
+  <p><b>证明级别关联</b> - 区块根据证明级别的重要性保持其分类，从而决定保留哪些数据。系统根据这些关联保留共识验证所需的最小数据量。</p>
+  <p><b>过去的修剪点</b> - 过去的修剪点头始终保留，以保持响应修剪点查询和支持修剪证明系统的能力。</p>
+
+  <h3 class="section-title">共识验证如何继续</h3>
+  <p><b>状态转换</b> - 经过二级修剪的区块，如果具有有效状态并属于某个证明级别，则转换为“仅区块头”状态。这保留了有效状态意味着存在基本共识数据的语义。</p>
+  <p><b>验证减少的数据</b> - 即使进行了二级修剪，节点也可以使用保留的共识数据结构和剩余关系验证新区块。系统保留了足够的信息来验证 GHOSTDAG 规则和区块之间的关系。</p>
+  <p><b>基于证明的验证</b> - 保留的证明级别数据允许节点使用加密证明而不是完整的历史共识数据来验证区块，从而在存储量大大减少的情况下参与共识。</p>
+
+  <h3 class="section-title">存档节点与修剪节点</h3>
+  <p><b>存档节点行为</b> - 配置为存档的节点完全忽略一级和二级修剪，保留所有共识数据。这些节点充当网络的完整共识账本，但需要最大的存储空间。</p>
+  <p><b>修剪节点效率</b> - 常规修剪节点利用二级修剪实现最大存储效率，同时通过多级证明系统保持完整的共识验证能力。</p>
+  <p>注：有关修剪节点如何保持全节点以及为什么存档节点对于网络运行是可选的（同时保持比特币的无信任模型）的详细解释，请参阅扩展文章《存档节点与全节点》，其中涵盖了验证能力、加密证明和网络可持续性。</p>
+
+  <div class="simplified-def">
+    <h3 class="section-title">简化定义</h3>
+    <p><b>二级修剪</b> - 移除与共识相关的数据，同时保留足够的信息来验证共识规则。</p>
+    <p><b>证明级别关联</b> - 根据区块所属的证明级别对其进行分类，从而决定保留哪些共识数据。</p>
+    <p><b>“仅区块头”状态</b> - 其共识数据已被修剪但保留基本验证信息的区块。</p>
+    <p><b>连续的 DAG 区域</b> - 修剪后在剩余共识数据中保持结构完整性。</p>
+    <p>二级修剪通过智能数据分类，在保持共识验证能力的同时，实现了最大的存储效率。</p>
+  </div>
+
+  <h3 class="section-title">比特币与 Kaspa：共识数据修剪</h3>
+  <p><b>比特币</b> - 共识信息对于验证至关重要，无法安全删除。</p>
+  <p><b>Kaspa</b> - 复杂的 DAG 结构和多级证明系统允许进行复杂的二级修剪，其中可以根据其对验证的重要性选择性地移除不同级别的共识数据。这使得存储优化更加激进，同时保持了共识能力。</p>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="h.mz2dlkhrvwd2">第八章：Kaspa GHOSTDAG 简化版</h2>
+  <div class="img-container"><img alt="GHOSTDAG 图示" src="images/image43.png"></div>
+  <h3 class="section-title" id="h.hwkbrs8egi6p">什么是 GHOSTDAG 以及 Kaspa 如何使用它？</h3>
+  <p>一种共识协议，它在 DAG 结构中对区块进行排序，同时保持安全性属性。</p>
+  <p>那是什么意思？本文将从传统共识开始解释 GHOSTDAG，然后是 GHOSTDAG 的方法，它如何对区块进行分类，以及它在比特币和 Kaspa 之间有何不同。</p>
+  <h3 class="section-title">传统共识 - 线性链排序</h3>
+  <p>传统的区块链共识在一条线性链上运行，其中区块形成一个单一序列。每个区块只有一个父区块（创世区块除外），从而创建了一个简单的排序机制。当发生冲突（同一高度的多个区块）时，网络选择一个区块并拒绝其他区块作为孤块。这种方法确保了清晰的排序，但限制了吞吐量，因为每个级别只能接受一个区块。</p>
+  <div class="img-container"><img alt="传统共识" src="images/image32.png"></div>
+
+  <h3 class="section-title">GHOSTDAG 协议 - DAG 共识</h3>
+  <p>GHOSTDAG 扩展了共识，使其能够与有向无环图（DAG）结构配合使用，其中区块可以有多个父区块。该协议通过首先选择“蓝色工作量”最高的父区块来处理区块，然后检查合并集中的所有区块，将其分类为“蓝色”（诚实）或“红色”（可能冲突）。这种分类基于数学约束，包括安全参数 K，它限制了反锥体的大小以保持安全属性。这里灰色区块当前正在被网络验证，区块 C 是其选定的父区块。如果 k=0，则链区块 C 已经是 1 个蓝色区块，导致区块 B 被分类为红色。如果 k = 1（或更多），区块 B 被分类为蓝色，因为它在其反锥体中只有 1 个蓝色区块（区块 C）。</p>
+  <div class="img-container"><img alt="区块分类规则" src="images/image28.png"></div>
+
+  <h3 class="section-title">蓝色工作量累积</h3>
+  <p>该协议仅从蓝色区块中累积工作量证明，从而创建了“蓝色工作量”指标。蓝色区块将其计算工作量贡献给累积安全评分，而红色区块则被排除在此计算之外。这种选择性累积确保只有共识有效的区块才有助于网络安全，从而防止恶意或冲突区块破坏系统。在此示例中，假设区块 B 为红色（k=0），则我们灰色区块的“蓝色工作量”将被计算为从区块 C 继承的“蓝色工作量”，加上区块 C 的“蓝色工作量”。如果区块 B 为蓝色，则我们新区块的“蓝色工作量”将继承其选定父区块（区块 C）的“蓝色工作量”，然后加上其选定父区块（C）的“蓝色工作量”及其合并集（区块 B）中蓝色区块的“蓝色工作量”。</p>
+  <div class="img-container"><img alt="蓝色工作量累积" src="images/image62.png"></div>
+
+  <h3 class="section-title">父区块选择和排序</h3>
+  <p>GHOSTDAG 根据“蓝色工作量”值通过父区块选择来确定区块顺序。该协议选择累积“蓝色工作量”最高的父区块作为“选定父区块”，从而在 DAG 结构中创建一条主干链。区块排序使用“蓝色工作量”作为主要标准，区块头哈希在平局时提供确定性顺序。在我们的示例中，假设区块 C 是选定父区块，区块 B 是蓝色。交易处理顺序为 1. 选定父区块 (C) 2. 有序合并集 (B)</p>
+  <div class="img-container"><img alt="父区块选择和排序" src="images/image6.png"></div>
+
+  <h3 class="section-title">数据存储和管理</h3>
+  <p>该协议将分类结果存储在结构化数据中，其中包含蓝色和红色区块列表。蓝色区块在添加时会跟踪反锥体大小以供未来分类决策，而红色区块则简单地添加到红色列表中。这种组织保持了完整的 DAG 信息，同时明确区分了共识角色。</p>
+
+  <div class="simplified-def">
+    <h3 class="section-title">简化定义</h3>
+    <p><b>传统共识</b> - 一种线性链排序系统，其中区块形成一个单一序列，每个区块有一个父区块。</p>
+    <p><b>GHOSTDAG 协议</b> - 一种 DAG 共识机制，根据反锥体大小约束将区块分类为蓝色或红色。</p>
+    <p><b>区块分类</b> - 确定区块是蓝色（共识有效）还是红色（可能冲突）的过程。</p>
+    <p><b>蓝色工作量累积</b> - 一种选择性的工作量证明计数，仅包括来自蓝色区块的工作量。</p>
+    <p>GHOSTDAG 是一种共识协议，它支持 DAG 结构，同时保持区块链的安全属性。</p>
+  </div>
+
+  <h3 class="section-title" id="h.emrhhaf2640n">比特币和 Kaspa</h3>
+  <p><b>比特币</b> - 使用传统的线性链共识，其中区块形成一个单一序列。冲突的区块被孤立，不 contribute 到安全性。最长链（累积工作量最多）通过简单的比较机制确定共识。</p>
+  <div class="img-container"><img alt="比特币和 GHOSTDAG" src="images/image71.png"></div>
+  <p><b>Kaspa</b> - 使用 GHOSTDAG 协议管理具有多个并发区块的 DAG 结构。蓝色区块通过“蓝色工作量”累积来 contribute 到安全性，而红色区块保留在 DAG 中，但被排除在共识决策之外。该协议同时维护两种类型的区块，以便全面跟踪网络状态。</p>
+  <div class="img-container"><img alt="Kaspa 和 GHOSTDAG" src="images/image19.png"></div>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="h.drxg3f8wwuwc">第九章：DAG 术语</h2>
+  <div class="img-container"><img alt="DAG 术语" src="images/image8.png"></div>
+  <h3 class="section-title">过去、未来、反锥体、合并集、K 参数，这些都意味着什么？</h3>
+  <p>过去、未来和反锥体是 DAG 术语，而合并集和 K 用于 GHOSTDAG。</p>
+  <p>DAG 术语是描述 BlockDAG 结构中关系的专业词汇。我们将从线性链、DAG 开始，然后稍微提及 GHOSTDAG。</p>
+
+  <h3 class="section-title">线性链术语 - 传统区块链</h3>
+  <p>线性链术语使用简单的概念，其中区块形成一个单一序列。每个区块都有一个父区块和可能一个子区块，从而创建简单的祖先-后代关系。诸如“高度”、“前一个区块”和“下一个区块”之类的术语描述了线性进展。当发生冲突时，区块要么被“接受”到主链中，要么被“孤立”并丢弃。</p>
+  <div class="img-container"><img alt="线性链术语" src="images/image15.png"></div>
+
+  <h3 class="section-title">DAG 术语</h3>
+  <p>允许区块拥有多个父区块在 DAG 内部创建了新的关系。</p>
+  <div class="img-container"><img alt="DAG 术语" src="images/image50.png"></div>
+
+  <h3 class="section-title">过去与未来的关系 - DAG</h3>
+  <p>“过去”关系定义了从给定区块沿父链接向后追溯可到达的所有区块。如果存在一条有向路径连接两个区块，则一个区块位于另一个区块的“过去”。“未来”关系则相反----如果区块 A 位于区块 B 的“过去”，则区块 B 位于区块 A 的“未来”。</p>
+  <div class="img-container"><img alt="过去与未来的关系 - DAG" src="images/image73.png"></div>
+
+  <h3 class="section-title">反锥体关系 - DAG</h3>
+  <p>反锥体描述了既不是彼此祖先也不是彼此后代的区块----它们同时存在于 DAG 中。如果两个区块都无法通过有向路径到达对方，则它们处于彼此的反锥体中。这种关系对于 GHOSTDAG 的安全参数 K 至关重要，它限制了反锥体的大小以保持共识安全。在这里，区块 B 和区块 C 处于彼此的反锥体中，区块 B 无法从区块 C 到达，区块 C 无法从区块 B 到达。</p>
+  <div class="img-container"><img alt="反锥体关系 - DAG" src="images/image59.png"></div>
+
+  <h3 class="section-title">合并集和蓝/红分类 - GHOSTDAG</h3>
+  <p>合并集是指创建新区块时合并的区块集合。合并集包含区块的直接父区块，但也可以包含不是直接父区块的区块。GHOSTDAG 根据反锥体大小约束将合并集中的区块分类为“蓝色”（诚实）或“红色”（可能冲突）。此分类决定了哪些区块通过“蓝色工作量”累积来 contribute 到网络安全。以下是区块 B 在反锥体大小约束 = 0 时将其合并集分类为蓝色和红色的示例。</p>
+  <div class="img-container"><img alt="合并集和蓝/红分类 - GHOSTDAG" src="images/image46.png"></div>
+
+  <h3 class="section-title">K 参数 - GHOSTDAG</h3>
+  <p>K 参数控制蓝色区块反锥体的最大允许大小。该参数根据网络延迟、区块生产率和所需的安全保障进行计算。在此示例中，k = 1，而不是像上面示例中那样 k = 0，因此每个蓝色区块在其反锥体中还有 1 个蓝色区块。</p>
+  <div class="img-container"><img alt="K 参数 - GHOSTDAG" src="images/image61.png"></div>
+
+  <div class="simplified-def">
+    <h3 class="section-title">简化定义</h3>
+    <p><b>过去关系</b> - 从给定区块沿父链接向后追溯可到达的所有区块。</p>
+    <p><b>未来关系</b> - 所有可以通过沿父链接向前追溯到达给定区块的区块。</p>
+    <p><b>反锥体关系</b> - 既不是彼此祖先也不是彼此后代的区块。</p>
+    <p><b>合并集</b> - 创建新区块时合并的 GHOSTDAG 区块集合。</p>
+    <p><b>蓝/红分类</b> - GHOSTDAG 将区块分类为诚实（蓝色）或可能冲突（红色）。</p>
+    <p><b>安全参数 K</b> - GHOSTDAG 反锥体的最大允许大小，用于保持共识安全。</p>
+  </div>
+
+  <h3 class="section-title" id="h.emrhhaf2640n">比特币和 Kaspa</h3>
+  <p><b>比特币</b> - 使用简单的线性术语：“前一个区块”、“下一个区块”、“链高度”和“最长链”。关系是简单的祖先-后代连接。冲突的区块被“孤立”，没有中间状态。</p>
+  <div class="img-container"><img alt="比特币和术语" src="images/image54.png"></div>
+  <p><b>Kaspa</b> - 使用额外的术语，包括 DAG 的过去/未来/反锥体关系、GHOSTDAG 的合并集以及合并集的蓝/红分类。Kaspa 维护多个并发区块，管理它们的关系，并提供一致的排序。</p>
+  <div class="img-container"><img alt="Kaspa 和术语" src="images/image49.png"></div>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="h.1uals18cttyl">第十章：一级修剪</h2>
+  <div class="img-container"><img alt="一级修剪图示" src="images/image41.png"></div>
+  <h3 class="section-title" id="h.3i8fyh1jrh8m">什么是一级修剪以及 Kaspa 如何使用它？</h3>
+  <p>一级修剪是 Kaspa 多阶段存储优化的第一步。它从区块中移除旧的交易数据，同时在修剪点保留 UTXO 集以进行状态验证----但关键是，它保留所有区块头以保持区块链的完整性。</p>
+  <p>为什么是“一级”？ - 这个术语强调，移除区块体只是一个开始。虽然一级修剪显著降低了存储要求并降低了运行节点的门槛（从而增加了去中心化），但它之后还有额外的修剪步骤，可以移除更多数据（二级修剪）。本文专门关注区块体的移除----这是所有后续优化得以实现的基础。</p>
+  <p>那是什么意思？ - 本文不预设任何先验知识，因此我们将从传统的区块链存储挑战开始，然后解释一级修剪如何通过维护 UTXO 集来工作，哪些被移除，哪些被保留，修剪点的 UTXO 集如何实现验证，以及这如何为 Kaspa 的可扩展存储模型奠定基础，从而实现更广泛的网络参与。</p>
+  <h3 class="section-title">传统存储与一级修剪</h3>
+  <p><b>传统完整存储</b> - 在传统的区块链实现中，节点存储完整的区块数据，包括从创世区块到当前尖端的所有交易细节。这意味着每个输入、输出、签名和交易脚本都将永久保留，导致存储需求不断增加，这对于许多用户来说可能变得过于昂贵。</p>
+  <p><b>一级修剪的挑战</b> - 挑战在于移除旧的交易数据，同时仍然能够验证新的交易。新的交易必须引用以前的输出（UTXO），因此系统必须保留足够的信息来验证这些引用，即使在旧的区块体被修剪之后。</p>
+
+  <h3 class="section-title">UTXO 集作为基础</h3>
+  <p><b>UTXO 集的定义</b> - UTXO 集代表区块链中特定时间点所有未花费的交易输出。它是所有当时存在且可以花费的“硬币”的快照，类似于所有流通中货币的库存。</p>
+  <p><b>修剪点 UTXO 集</b> - Kaspa 在修剪点维护一个特殊的 UTXO 集，作为验证的基础状态。这个 UTXO 集随着修剪点的推进而更新，确保它始终反映该检查点处正确的可用状态。</p>
+  <p><b>UTXO 集的进展</b> - 当修剪点向前推进时，系统将链中区块的 UTXO 差异应用于更新修剪点的 UTXO 集。这个过程确保了 UTXO 集在旧数据被修剪时保持准确。</p>
+
+  <h3 class="section-title">一级修剪中修剪的内容</h3>
+  <p><b>移除区块体数据</b> - 一级修剪会从旧区块中移除实际的交易数据，包括交易输入、输出、签名和脚本。这包括 UTXO 多集、UTXO 差异、接受数据和完整的区块交易存储。</p>
+  <p><b>区块头保留</b> - 尽管交易数据被移除，但区块头被保留以保持区块链的结构完整性。区块转换为“仅区块头”状态，表明区块头存在但区块体已被修剪。</p>
+  <p><b>保留基本数据</b> - 系统保留共识验证所需的关键数据，包括修剪点的反锥体、DAA 窗口区块和 GHOSTDAG 区块。这确保了即使在修剪之后，共识操作也能继续进行。</p>
+
+  <h3 class="section-title">UTXO 集如何实现验证</h3>
+  <p><b>交易验证过程</b> - 新交易可以根据修剪点的 UTXO 集以及所有后续的 UTXO 更改进行验证。系统验证引用的 UTXO 存在且未被双重花费，即使没有原始交易数据。</p>
+  <p><b>状态重建</b> - 修剪点处的 UTXO 集，加上后续区块的 UTXO 差异，可以重建当前可花费状态。这使得即使没有完整的历史交易数据也能实现完整的验证能力。</p>
+  <p><b>承诺验证</b> - 系统可以使用区块头中的加密承诺来验证 UTXO 集的完整性。这确保了修剪后的 UTXO 集与区块链头声称的应该一致。</p>
+
+  <h3 class="section-title">存档节点与修剪节点</h3>
+  <p><b>存档节点行为</b> - 配置为存档的节点完全忽略一级修剪，保留所有交易数据。这些节点充当网络的完整历史账本，但需要显着更大的存储空间。</p>
+  <p><b>修剪节点效率</b> - 常规修剪节点利用一级修剪来保持可管理的存储空间，同时完全参与共识验证。UTXO 集提供了足够的信息来验证新交易，而无需完整的历史数据。</p>
+
+  <h4 class="subsection-title">解决关于修剪和创世证明的担忧</h4>
+  <p>一个反复出现的担忧是，由于修剪导致账本历史中出现空白，可能会损害链从一开始（创世区块）的可验证性，特别是关于没有预挖的证明。</p>
+  <p>这种担忧是没有根据的。原因如下：</p>
+  <ol>
+      <li><strong>创世区块内置于代码中：</strong> 创世区块本身是 Kaspa 节点软件中“硬编码”的。这个创世区块包含一个空的 UTXO 集，这证明没有预挖。任何用户都可以在公共源代码中验证这一点。</li>
+      <li><strong>创世证明：</strong> 每个节点都维护一个“创世证明”。这是一段简短的数据链，它以加密方式证明账本的当前状态确实是从内置的创世区块演变而来的。伪造这样的证明将需要与创建整个账本所投入的工作量相当的工作量。换句话说，这个证明的强度与拥有完整历史记录一样强。</li>
+      <li><strong>重建历史的完整性：</strong> 尽管为了研究和方便的目的，正在努力重建完整的历史记录，但这个过程是去中心化的。数据是从许多用户那里收集的。没有任何一方可以控制剩余的“空白”，这使得选择性地“隐藏”部分历史记录变得不可能。</li>
+  </ol>
+  <p>总而言之，Kaspa 的修剪机制旨在确保网络保持安全、受保护和透明，即使没有任何存档节点。链从创世区块开始的可验证性由强大的加密证明保证，而不是需要存储不断增长的完整历史记录。</p>
+
+  <div class="simplified-def">
+    <h3 class="section-title">简化定义</h3>
+    <p><b>一级修剪</b> - 移除旧的区块交易数据，同时保留 UTXO 集以进行验证。</p>
+    <p><b>修剪点 UTXO 集</b> - 修剪点处所有可花费输出的快照，用作验证的基础。</p>
+    <p><b>“仅区块头”状态</b> - 其交易数据已被修剪但保留其区块头的区块。</p>
+    <p><b>UTXO 进展</b> - 随着修剪点推进而更新修剪点 UTXO 集的过程。</p>
+    <p>一级修剪通过 UTXO 集实现了存储效率，同时保留了验证能力。</p>
+  </div>
+
+  <h3 class="section-title" id="h.emrhhaf2640n">比特币与 Kaspa：全节点启动</h3>
+  <p><b>比特币</b> - 全节点必须从创世区块下载并验证所有区块数据才能启动，这需要完整的历史交易数据。虽然比特币在初始同步后支持简单的修剪，但新节点仍然需要完整的区块链历史才能建立初始状态。线性链结构使这个过程简单，但存储密集。</p>
+  <p><b>Kaspa</b> - 全节点可以使用修剪证明启动，而无需下载完整的历史数据，这得益于一级修剪与共识协议的集成。系统验证修剪证明并应用加密可验证的数据（“可信数据”）来建立初始状态。这些“可信数据”不需要对任何一方的信任----它们通过加密证明进行数学验证，确保数据符合共识规则。验证过程通过加密证明修剪点证明代表一个有效的共识状态，而可信数据经过严格检查以确保它们与区块链的预期状态相符。这使得新节点能够高效同步，同时保持完整的验证能力，而无需信任外部方。</p>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="h.juf0jn9hl1ev">第十一章：存档节点与全节点</h2>
+  <div class="img-container"><img alt="存档节点与全节点" src="images/image76.png"></div>
+  <h3 class="section-title" id="h.knim47a94vo6">Kaspa 存档节点与修剪节点</h3>
+  <p><b>修剪节点是全节点</b> - 使用一级和二级修剪的修剪节点仍被视为全节点，因为它们保持完整的验证能力。它们可以验证所有新区块，参与共识，并为网络提供服务，而无需信任外部方。修剪点证明系统确保即使数据被修剪，这些节点也能保持对完整区块链状态的加密验证。</p>
+  <p><b>存档节点是可选的</b> - 存档节点保留所有历史数据，但对于 Kaspa 网络无限期运行而言并非必需。网络可以完全由修剪节点运行，因为修剪点证明提供了关于修剪状态的数学可验证保证。这与比特币不同，比特币网络需要存档节点（存储从创世区块开始的完整交易历史）才能启动新节点。</p>
+  <p><b>无需额外信任要求</b> - 修剪系统通过使用加密证明而非可信方来保持比特币的无信任模型。新节点可以从修剪证明启动并验证完整的区块链状态，而无需下载所有历史数据，同时保持与存储所有创世区块数据的节点相同的安全保障。</p>
+  <p><b>网络可持续性</b> - 这种设计确保 Kaspa 网络能够可持续地扩展，而无需参与者不断增加存储需求。修剪节点提供与存档节点相同的共识安全性，同时通过降低硬件要求实现更广泛的网络参与。</p>
+  <p><b>存档节点行为</b> - 配置为存档的节点完全忽略一级和二级修剪，保留所有共识数据（以及历史应用程序数据）。这些节点充当网络的完整共识账本，但需要最大的存储空间，并且对于网络运行而言纯属可选。</p>
+  <p><b>修剪节点效率</b> - 常规修剪节点（全节点）利用修剪来实现最大存储效率，同时通过多级证明系统保持完整的共识验证能力。这些节点在安全性和验证能力方面与存档节点没有区别。</p>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="h.xoj5wjv6tg4b">第十二章：Kaspa：能源效率去中心化架构的演进</h2>
+  <h3 class="section-title" id="h.pfav0qmvzt92">引言：金钱与效率的物理学</h3>
+  <p>在去中心化网络的世界中，效率不仅仅是一种奢侈品，更是一种生存特征。加密货币作为货币能源系统运行，其中现实世界的能源被转化为安全、不可变的价值记录。正如物理系统力求最小化能量浪费和熵一样，一个设计良好的加密网络也应该最小化浪费和摩擦。比特币通过将货币价值与工作量证明的能量消耗联系起来，开创了这一概念，从而创建了一种由热力学成本保证的“数字黄金”形式。但比特币的架构，尽管具有革命性，却存在结构性低效率，限制了其吞吐量并浪费了矿工投入的一部分能量。</p>
+  <p>Kaspa 应运而生----一个重新定义去中心化共识架构的下一代工作量证明网络。Kaspa 基于 BlockDAG（有向无环图）而非单一链，这使得多个区块可以并行创建和处理。这种设计旨在最小化系统熵和低效率，使 Kaspa 成为一种用于存储和移动经济价值的“高效引擎”。</p>
+
+  <h3 class="section-title">熵、能量与货币系统</h3>
+  <p>要理解 Kaspa 的重要性，我们首先必须理解能量和熵如何与货币系统相关联。在物理学中，在一个地方创造秩序（低熵）需要消耗能量并在另一个地方增加熵----这个原则也适用于金钱。像黄金这样的硬通货历史上其价值来源于获取它所需的巨大能量和劳动。比特币以数字方式应用了相同的原则，要求矿工进行昂贵的计算（哈希）来添加区块，从而确保每枚硬币和每个区块都带有能量消耗的证据。然而，如果大部分工作被浪费，或者系统设计造成不必要的摩擦，那么“货币引擎”就会以热量的形式损失能量。</p>
+
+  <h3 class="section-title">经济系统中的摩擦</h3>
+  <p>在经济学中，摩擦是指任何导致价值流动损失或效率低下的因素。比特币出于必要性引入了一些摩擦：它的设计权衡了速度和安全性。交易平均需要大约 10 分钟才能生成新区块，约定俗成是等待 6 次确认（大约 1 小时）以获得高防回滚保证。这种延迟和低吞吐量产生了经济摩擦。此外，比特币的挖矿过程有时会以孤块的形式产生浪费的工作（当两个矿工几乎同时找到一个有效区块时，只有一个区块成为主链的一部分，另一个被丢弃）。这些孤块代表了矿工实际消耗的能量，但它们并没有持续地为账本做出贡献。</p>
+
+  <h3 class="section-title">比特币的单链瓶颈</h3>
+  <p>比特币区块链可以被视为交易的单车道。每次只能接受一个区块，并且每个区块都必须按顺序排列。如果两个区块同时到达，其中一个将被迫让步，并被有效地丢弃为孤块。这种设计是故意选择的，以保持系统有序，但代价是严重的性能限制。这种单链架构的局限性众所周知：缺乏可扩展性，如果区块时间缩短则容易受到自私挖矿攻击，以及区块浪费是固有的问题。最重要的是，比特币的共识浪费了少量但不可忽略的挖矿工作在那些永远不会成为账本一部分的区块上。这些孤块是系统的熵----能量增加了混乱并以热量的形式耗散，而不是作为有用的信息存储。结果是，比特币巨大的挖矿能量只产生了一点点吞吐量。</p>
+
+  <h3 class="section-title" id="h.y2juit6511i3">Kaspa 的 BlockDAG：并行性与无浪费工作</h3>
+  <p>Kaspa 通过询问以下问题来解决这个问题：如果区块不必排队呢？Kaspa 不使用单车道，而是使用多车道高速公路来处理区块，许多区块可以并行创建，但仍可合并到单个账本中。核心创新是 Kaspa 的 BlockDAG（有向无环图）架构与 GHOSTDAG 共识协议相结合。在 BlockDAG 中，区块不像比特币那样只指向一个前一个区块（“最长链”的尖端）；相反，每个区块可以指向多个前驱，包括图的不同“尖端”。在比特币中会被认为是冲突或孤立的区块在 Kaspa 中不会被丢弃----它们会被合并到账本图中。DAG 结构允许这些并发区块共存，并最终由 GhostDAG 算法一致地排序。所有有效的区块都对账本历史做出贡献；没有任何矿工的工作量证明被浪费。</p>
+  <p>这种设计对效率的影响是惊人的。首先，没有挖矿能力浪费在孤块上。其次，Kaspa 的并行性显著提高了吞吐量。Kaspa 在其主网上的基本速度是每秒 1 个区块（最近已升级到每秒 10 个区块），而比特币是每秒 0.1 个区块。这是设计上区块频率的 10 倍增长，并计划进一步增加。此外，由于每个 Kaspa 区块更小（以保持节点要求较低），但它们到达的频率更高，因此交易分布在许多区块上。最终结果是每秒数千笔交易的潜在吞吐量。事实上，GhostDAG 算法已证明在测试网络上以 10 区块/秒的速度和常用硬件可以支持大约 3000 笔交易/秒。这在保持适度硬件要求的情况下实现。换句话说，Kaspa 的架构不会在可扩展性和去中心化之间强制权衡----它处理更多的交易，而不会增加节点的进入门槛。每个参与者仍然可以在普通计算机上验证链，这对于去中心化至关重要。与许多依赖强大数据中心节点或妥协共识的高吞吐量系统不同，Kaspa 仍然是一个纯粹的工作量证明系统，具有广泛的挖矿和全节点分布。</p>
+  <p>如果区块并行到达，Kaspa 如何维护一个唯一且一致的历史（单一真相来源）？答案是 GhostDAG，一种共识算法，它通过不仅考虑“最长链”（如比特币），还考虑区块的“最重子图”来在 DAG 中排序区块。GhostDAG 根据每个区块之前已验证历史的数量以及它如何引用其他区块，为每个区块分配某种分数或顺序。它找到一种称为 k-簇的模式----本质上是一组相互了解的区块----并用它来决定哪些区块是主要有序结构的一部分（标记为“蓝色”），哪些在主要结构之外（“红色”）但仍被包含。该算法是贪婪的，但可证明地收敛于一个独特的历史，类似于中本聪共识，只是它即使在许多区块正在处理时也能做到这一点。正式保证是，随着区块的累积，特定区块的顺序改变（即，分叉回滚）的概率呈指数级下降，就像比特币的确认一样----但这种安全性是在更高的区块速率下实现的。在实践中，Kaspa 交易被埋藏在许多区块之下比比特币快得多，使其在几秒钟内非常安全地防止重组。Kaspa 团队指出，GhostDAG 的排序“随着时间的推移，其逆转难度呈指数级增长”，即使在区块创建速率很高的情况下也是如此。终结性很快；该网络实现了人类尺度上交易的热力学不可逆性。</p>
+  <p>鉴于所有区块都得到保留，Kaspa 矿工没有动机扣留或自私地挖矿以使其他区块成为孤块----这种行为在更快的区块链环境中可能是理性的。Kaspa 的最大信息披露策略（每个区块引用其所知道的所有尖端）意味着网络会迅速了解所有并行区块。这使得图充满了知识，减少了不确定性。在信息论方面，Kaspa 通过确保没有不可见的分叉长时间存在来最小化网络状态的熵；一切都被整合。 “最大披露原则”本质上旨在通过快速共享数据来最小化系统熵（不确定性）。这再次与物理原理相符：为了保持秩序，您希望尽可能高效地在系统中传播信息（或能量信号）。</p>
+  <p>值得注意的是，Kaspa 在不损害安全性或去中心化的情况下实现了这一点。它仍然使用工作量证明，这意味着每个区块的有效性都通过实际消耗的能量来保证。而且由于区块更小、更频繁，节点带宽和存储空间也得到了精心管理（使用修剪和高效的 UTXO 管理等技术），因此即使是家用电脑也能跟上。结果是，该网络提供了“工作量证明级别的安全性和去中心化，同时性能可与领先的权益证明网络相媲美”。与许多依赖强大数据中心节点或妥协共识的高吞吐量系统不同，Kaspa 仍然是一个纯粹的工作量证明系统，具有广泛的挖矿和全节点分布。</p>
+  <p>简单来说，Kaspa 的 GhostDAG 协议消除了比特币曾认为不可避免的结构性瓶颈。旧的“安全性与速度与去中心化”三难困境，根据 Kaspa 的说法，在实践中已完全解决。通过摆脱线性链模型，Kaspa 开启了吞吐量的大门，而不会牺牲中本聪的安全性----这一壮举是许多研究人员多年来认为不可能实现的。所有这些都导致了一个系统，其中区块像同步良好的喷泉中的水滴一样持续到达，而不是比特币时钟的准时、间歇性区块。Kaspa 上的交易在几秒钟内得到确认，并在几十秒内最终确定（重组概率可忽略不计）。事实上，Kaspa 的设计目标是确认时间仅受网络延迟限制----尽可能快地物理信息通过互联网传播。该网络平均在大约 10 秒内提供完全确认的交易，并且随着区块速率的增加，这个数字还会下降。从用户的角度来看，这意味着通过 Kaspa 发送价值几乎就像信用卡支付或现金转账----结算几乎是即时的，但额外的好处是它是不可逆的且无需信任。</p>
+
+  <h3 class="section-title" id="h.ttddfh4xlbpu">以光速实现吞吐量</h3>
+  <p>衡量 Kaspa 与物理原理一致性的一种方法是考察其对延迟的处理，即从世界一端到另一端的单向延迟。全球互联网的往返时间（RTT）----本质上是信号到达对跖点并返回所需的时间----在最佳情况下约为 200 毫秒（0.2 秒）（受光纤中光速和网络跳数限制）。像比特币这样的传统区块链的运行速度比这个限制慢几个数量级（每个区块 600 秒），因此网络延迟不是其设计中的主要因素；它们生活在一个舒适、缓慢的平衡状态。但 Kaspa 大胆地进入了区块时间与网络延迟同量级的领域----目前在新升级中每个区块 100 毫秒（10 BPS），这实际上比单向传播到地球另一端还要快。这是一个关键的阈值。从 1 秒的区块时间到 0.1 秒的区块时间不仅仅是 10 倍的定量改进；这是一个质的飞跃，需要重新思考共识。</p>
+  <p>为什么？如果你试图在全球网络中以 100 毫秒的区块运行单链（线性）共识，那将是一片混乱----一个节点刚听说一个区块，另外五个区块就已经被发现。传播延迟将意味着网络永远不会同步；分叉会增殖，共识会崩溃或中心化（只有最快的连接会永远获胜）。Kaspa 是第一个在次 RTT 机制下演示共识的工作量证明系统，它之所以能做到这一点，正是因为其多领导者 GhostDAG 可以优雅地处理许多并发区块。正如首席开发人员 Michael Sutton 在 Kaspa 的 Crescendo 升级（将主网从 1 BPS 提升到 10 BPS）期间指出的那样，“将区块速率提高到每秒 10 个，通过将区块时间减少到 100 毫秒（< 200 毫秒 ≈ 全球 RTT）来实现，只能通过本质上允许并行性的共识协议来保证……因此，跨越 RTT 阈值是一个质的飞跃，而不仅仅是量上的。”换句话说，Kaspa 的设计从根本上与信息传输的物理限制对齐----它的结构旨在以物理定律（光速、网络带宽）允许的最大速度运行，而线性链无法在不牺牲安全性或不假设更小网络半径的情况下安全地跨越此限制。</p>
+  <p>值得强调的是，这在分布式系统背景下是多么了不起。Kaspa 实现了全球性的、异步的共识，其区块时间比全球通信延迟还要短。而且它无需缩小网络或要求特殊的信任设置。网络仍然庞大且无需许可----节点可以位于世界任何地方，通过标准互联网连接----然而，Kaspa 生成和确认区块的速度比任何单链在这些条件下所能想象的都要快。GhostDAG 协议本质上实现了经典共识理论在严格的最长链规则下认为不可能的事情：尽管存在持续的小分叉（并行区块），但仍能保持所有人的共识。其思想是，通过允许这些分叉存在，然后概率性地排序它们，你就能拥抱混乱并组织它，而不是试图完全阻止它。结果是最大的吞吐量。</p>
+  <p>在激活 Crescendo 硬分叉后，Kaspa 开发人员指出，该系统的设计使得即使在 10 BPS 的情况下，也不需要超级计算机来运行节点。Rust 实现和协议优化确保了普通家用电脑连接家庭互联网也能跟上每秒 10 个区块和每秒数千笔交易的速度。这表明了一种以效率为核心的设计理念----不仅是原始吞吐量，还包括计算资源和带宽的有效利用。例如，区块保持紧凑，并且 DAG 结构经过修剪和管理，使其不会变得臃肿。Kaspa 还包含新技术（例如即将推出的 DAGKnight 和修剪策略）以适应网络条件并限制状态大小。所有这些选择都反映了几乎物理上的极简主义：消除浪费，无论是浪费的哈希算力、浪费的时间还是浪费的存储。如果比特币挖矿有时因其产生大量热量（每笔交易的能量浪费）而受到批评，那么 Kaspa 通过提高吞吐量和使用更节能的哈希算法（kHeavyHash）显著降低了每笔交易的能量消耗。Kaspa 团队明确设计了 kHeavyHash，使其与光学挖矿和轻量级资源兼容，这意味着它可能在耗电量大大降低的专用硬件上运行。结合 DAG 的“无浪费区块”策略，这使得 Kaspa 在每笔交易或每笔转移价值的能量消耗方面比其他 PoW 网络更低。简而言之，Kaspa 可以用矿工投入的每焦耳能量做更多的事情----这是其卓越工程的证明。甚至独立观察者也注意到了这种效率：“kHeavyHash 算法旨在优化能耗，使 [Kaspa] 比……比特币的资源密集度更低。”我们可以将其视为系统热力学效率的提高：更大比例的输入能量被转化为安全的、最终确定的交易（有用功），而不是浪费的哈希或等待时间。</p>
+  <p>通过负责任地突破物理极限，Kaspa 将自己定位为一个高效的热力学货币网络。它将区块生产的节奏与最快的通信速度对齐，消除了冗余工作，并确保每一比特的工作都有助于交易的排序。同样，如果比特币像一台产生大量废热且运行缓慢的旧式热机，那么 Kaspa 就像一台现代涡轮机，在其理论效率极限附近运行----从每单位燃料（哈希能量）中提取尽可能多的有用功（交易吞吐量）。物理定律设定了严格的上限，而 Kaspa 决心达到这个上限。这种与技术演进“定向流”（更少的投入带来更多的产出）的对齐表明，Kaspa 遵循了我们在许多其他系统中观察到的演进轨迹----从单核到多核处理器和并行处理，从拨号上网到宽带互联网，从马车到多车道高速公路。利用并行性并降低内部阻力的系统不可避免地会超越那些停留在单一顺序过程中的系统。</p>
+
+  <h3 class="section-title" id="h.uttpgy92hgk">更小的摩擦，更好的价值保留</h3>
+  <p>Kaspa 设计的技术优点具有深远的经济影响。当我们减少货币系统中的熵和摩擦时，我们为价值的驻留和流通创造了一个更友好的环境。将经济视为一个活生生的生态系统，或者更像一个电网：如果能量（或金钱）可以自由地流向需要的地方，且损失最小，那么系统就会蓬勃发展。Kaspa 的低延迟和高吞吐量网络意味着价值可以被任何人、在任何地方快速且廉价地交换，而不会被中间商或高昂的等待成本耗尽。这种特性自然会吸引使用----用户会更喜欢一个他们的支付在一秒钟内得到确认的系统，而不是一个需要等待一小时的系统，尤其是在安全性可比的情况下。随着使用量的增加，流动性和资本会流向网络，从而在反馈循环中增加其效用。经济学基本原理告诉我们，在两种选择中，人们会选择交易成本最低的那个（在其他条件相同的情况下），金钱将通过对交易阻力最小的渠道流动。Kaspa 将自己定位为这种低阻抗渠道：“最小的耗散功，最小的交易阻抗，最大的货币清晰度”，正如一位观察者描述的资本将汇聚的收敛点。有了 Kaspa，传统障碍----确认延迟、吞吐量限制和拥堵时的高额费用----被显著最小化，因此货币能量的“管道”宽阔而顺畅。</p>
+  <p>Plan K 在一次关于 Kaspa 经济学的采访中，用生物学类比来描述高效货币如何引导能量：好的货币就像植物的维管系统，将营养物质（能量）输送到进行光合作用的叶子（生产性工作），而不是让资源被寄生虫或不活跃的部分吸收。在这个类比中，Kaspa 可以被视为一种低熵货币形式，它鼓励高效的能量流动。它的速度和容量确保经济能量（价值）流向生产性用途（商品和服务的实际转移），而不是浪费在积压或层间套利中。同时，它的工作量证明基础防止了“宽松货币”所发生的能量转移。例如，法定货币在 Plan K 的类比中被比作寄生藤蔓----它们可以被中央机构膨胀或复制，通过稀释价值有效地从生产性经济中吸取能量。Kaspa，像比特币一样，通过要求真实的劳动来创造新币并严格限制供应增长来抵御这种稀释。正如 Plan K 所指出的，“黄金、比特币和 Kaspa 类似于无法复制的 [荷尔蒙]，从而防止任何能量转移。”简单地说，这些硬通货锁定了用于生产它们的能量；它们为经济价值提供了安全的储存，而不会因贬值而流失。</p>
+  <p>Kaspa 将这种硬通货原则扩展到日常使用领域。比特币证明了去中心化网络可以安全地存储价值（随时间推移的低熵），但 Kaspa 也旨在高效地转移价值（交易中的低熵）。通过将比特币的不可伪造成本与无摩擦的交易层相结合，Kaspa 将自己定位为一种完整的货币解决方案：一种价值存储、一种交换媒介和一种记账单位，所有这些都集于一身，没有通常的妥协。回顾一下为什么历史上黄金需要替代品（如纸币或法定货币）来进行日常交易----因为黄金笨重且移动缓慢，造成了摩擦。比特币，由于其缓慢和有限的吞吐量，同样邀请了第二层网络或竞争币来填补快速支付的空白，本质上将交换媒介的角色让给了“更软”的货币。另一方面，Kaspa 足够快且可扩展，不需要次级货币网络来处理交易量。它既可以是高完整性结算层，也可以是高速交易层。这预示着未来经济活动将不再需要不断地在“价值存储网络”和“支付网络”之间切换（以及随之而来的所有交易摩擦和安全妥协）----相反，一个网络可以高效地完成所有事情。事实上，支持者认为，由于 Kaspa 解决了三难困境，“货币市场中不再有 Kaspa 无法填补的空白”，从而消除了对像比特币这样较慢的基础存储或较快但较弱的替代品的需求。无论比特币是否仍然是高价值结算层，而 Kaspa 更多地用于交换，或者 Kaspa 最终吸收了这两个角色，市场将决定。但有一点很清楚：浪费更少、交付更多的系统最终会胜过那些做不到的系统。这是应用于货币系统的自然选择。</p>
+  <p>更小的摩擦也意味着矿工和用户在 Kaspa 生态系统中更好地对齐。在比特币中，用户有时抱怨在拥堵时支付高额费用（最终流向矿工），而矿工则要处理由于孤块造成的波动和损失。在 Kaspa 中，高吞吐量使费用保持在较低水平（因为容量充足），而无孤块设计意味着矿工不会因网络延迟而损失奖励。矿工仍然获得应有的奖励----事实上，Kaspa 的区块奖励在单位时间内分配到更多的区块中，这反而使挖矿过程更精细、更公平（每秒有多个矿工可以获得奖励，而不是每 10 分钟只有一个赢家）。这可以减少挖矿方差和中心化压力（因为在比特币中，一个挖矿池如果发现区块稍快，就会在 10 分钟内赢得 100% 的奖励，而在 Kaspa 中，许多矿工每秒都会获得较小的奖励----一个“多领导者”系统，其中优势被平均化）。更多的矿工可以几乎同时包含区块，这可能会减少单个矿工在特定时间段内垄断的趋势。“每个延迟回合内竞争的增加”甚至对减少 MEV（矿工可提取价值）和操纵产生了影响----因为当区块并行时，单个参与者控制交易顺序要困难得多。事实上，Kaspa 的并行性增加了一点混乱，从而促进了公平：某些需要严格控制顺序的漏洞变得无法利用，从而减少了市场结果的熵（市场价格和交易反映真实的供求关系，而不是矿工的干预）。这是 Kaspa 方法如何倾向于在系统内保留价值的另一个例子----通过使系统行为在热力学上更不可逆转，这意味着任何参与者都无法轻易回滚或重新排序交易以获取利润，网络状态的变化（已执行的交易）是真实且持久的。它使经济流与几乎物理上的必然性对齐：一旦 Kaspa 中发生某事，它基本上就完成了，不能轻易被撤销或欺骗。</p>
+  <p>从宏观角度看，如果将全球货币和网络竞争视为一个演化景观，那么像 Kaspa 这样提供低阻力和高完整性的系统将倾向于积累“货币质量”。随着时间的推移，流动性产生流动性----用户会去有其他用户和商家的地方。如果 Kaspa 继续提供类似比特币的安全性，同时性能显著提高，那么有理由相信更多的经济活动将转移到 Kaspa。我们已经历史性地看到，法定货币取代黄金进行交易是因为摩擦较小，尽管黄金是更优越的价值储存；现在加密货币通过结合硬度和数字速度来挑战法定货币。Kaspa 可以被视为下一步：将 PoW 货币的极致硬度与现代网络的极致速度相结合。用物理学的语言来说，Kaspa 可能是货币能量的“引力终点”----一个巨大的吸引子，吸引资本，因为它代表了最小势能的状态（即，你很难找到一个系统，你的钱既更安全又更容易使用）。当价值流动没有更简单的路径（更低的能量状态）时，你就达到了平衡，而 Kaspa 的目标就是成为去中心化货币的平衡点。</p>
+
+  <h3 class="section-title">不可逆性与 Kaspa 与比特币的时间之箭</h3>
+  <p>工作量证明系统的一个显著特点是它们如何建立时间之箭。每个区块都是一个不可逆的事件；一旦工作完成且区块被接受，撤销它将需要消耗等量（或更多）的能量。这种单向的工作功能赋予区块链时间方向：就像物理学中的熵一样，向前（挖新区块，增加熵）很容易，但向后（撤销区块，减少熵）在没有外部干预的情况下极其困难。比特币的区块链，由能量保障，常被比作时间之箭----一个越来越“确立”的历史序列。Kaspa 继承了这一特性，但加速了它。由于区块到达速度非常快，并且 GhostDAG 迅速加深了账本历史，因此 Kaspa 中的交易不可逆性比比特币更快。Kaspa 中交易被撤销的概率随着时间的推移呈指数级下降，因为多个新区块巩固了顺序。在比特币中，通常需要六个区块（大约一小时）才能获得高度信任；在 Kaspa 中，类似的安全性水平可能在十几秒内实现，即 1 区块/秒时大约 12 秒（而 10 区块/秒时，略多于 1 秒，尽管还有其他延迟因素）。</p>
+  <p>这意味着 Kaspa 的账本最终性达到了与实时不可逆性非常相似的程度。系统行为反映了一个不可逆的热力学过程，它非常迅速地达到一个不可逆转的点。例如，如果发出两笔冲突的交易（双重花费尝试），Kaspa 快速的区块包含和排序将在几秒钟内决定赢家并累积确认，使得失败者的回滚尝试越来越徒劳。在比特币中，这种不确定性（熵）的时期可能持续数分钟，即使在那时，如果攻击者拥有足够的哈希算力，在低熵状态下（在累积大量确认之前），它仍然可能被利用。Kaspa 减少了这个窗口，使得回滚历史的成本几乎立即变得极高。我们可以将其视为 Kaspa 增加了攻击者必须攀登的热力学梯度----一个更陡峭的山坡，它变得更陡峭的速度更快。这又与效率有关：网络不会浪费时间将哈希算力转化为安全性（秩序），因此攻击者没有利用长期漏洞窗口的“奢侈”。不确定性的熵被迅速从系统中排出，留下一个非常有序（已确认交易）且稳定的状态。</p>
+  <p>另一个角度是朗道尔原理，这是一个物理学概念，指出擦除一个比特的信息具有不可约的能量成本（热量耗散）。在区块链中，“擦除”交易（通过重组，从历史中删除已确认的交易）在能量方面非常昂贵----这就是为什么如果诚实矿工控制大部分哈希算力，大型重组是不可行的。Kaspa 确保交易数据比特几乎立即被嵌入到许多区块（信息比特）中，从而使信息扎根并变得在热力学上昂贵，无法擦除。本质上，Kaspa 将信息论与热力学对齐：信息（账本状态）通过工作量证明迅速获得抗熵的永久性。而且由于 Kaspa 更有效地利用其输入能量（没有浪费的区块，每单位时间有更多的确认），可以说它比比特币实现了更高的“每单位能量不可逆性”。Kaspa 中的每一次挖矿焦耳都有助于许多交易的最终性，而在比特币中，每一次焦耳只保证更少的交易（有些焦耳甚至可能花费在不计数的区块上）。</p>
+  <p>时间之箭的比喻很恰当：比特币之箭缓慢而坚定地向前移动，需要更长时间才能牢固地确立历史，而 Kaspa 之箭则高速飞行，迅速将事件固定在时间中。两支箭都指向同一个方向----由热力学第二定律（能量消耗）强制----但 Kaspa 之箭在单位时间内覆盖了更远的距离（账本深度）。这不仅具有实际优势（用户体验、吞吐量），而且从哲学上表明 Kaspa 的设计与复杂系统的“自然”方向一致：通过消耗能量，在更短的时间内实现更大的秩序。如果比特币表明能量 + 时间 = 安全性，那么 Kaspa 表明，通过更好的设计，您可以在更短的时间内以相同的能量实现同等安全性，只需消除内部低效率即可。它不违反任何基本定律；它只是没有浪费比特币留下的机会。</p>
+
+  <h3 class="section-title">结论：Kaspa 作为货币网络的效率前沿</h3>
+  <p>通过物理学和经济学的双重视角审视 Kaspa，我们看到了一个新兴的主题：系统向能量和信息处理的最佳效率演进。在经济学中，货币从笨重的商品演变为黄金，再到由黄金支持的纸币，直至数字网络----每一步都旨在减少摩擦，同时保持信任和价值。在计算和网络领域，我们从串行处理转向并行处理，从模拟延迟转向接近光速的信号。Kaspa 代表了去中心化货币领域中这些演进路径的融合。它汲取了能量支持的工作量证明的硬度和最终性----使比特币成为一种“数字黄金”的方面----并增强了利用这种能量的系统的效率。结果是一个可以被描述为价值引擎的网络：它将电能（哈希工作）转化为数字经济价值（安全交易和代币发行），浪费最小，并迅速将价值引导到需要的地方。</p>
+    <p>将 Kaspa 与比特币进行对比，这并非竞争，而是去中心化架构的进步。比特币是原型，证明了货币的热力学方法是可行的。Kaspa 是一种演进，它优化了架构以最小化浪费（熵）并最大化吞吐量（有用功），同时不失去使比特币伟大的核心（通过工作量证明实现去中心化和安全性）。我们将 Kaspa 与比特币进行比较，仅仅是因为它们都共享工作量证明和健全货币政策的基本基础，主要区别在于结构设计。而这种区别----BlockDAG 与区块链----带来了巨大的不同。Kaspa 的 BlockDAG 是比特币瓶颈的自然解决方案，几乎是事后诸葛亮：如果一条车道太慢，就增加更多车道；如果丢弃区块浪费能量，就找到一种方法来保留所有区块；如果等待全球同步导致延迟，就允许一些异步，然后通过算法解决它。这些在某种意义上是常识性的优化，一旦技术允许它们实现。GhostDAG 的卓越洞察力在于找到一种方法，让许多领导者（矿工）同时协同工作而不会造成混乱----就像一场精心编排的交响乐，而不是独奏。这表明秩序可以从看似混乱中通过正确的规则产生，这与物理系统在明智地应用约束时如何自组织相呼应。</p>
+    <p>Kaspa 设计选择的最终结果是一个系统，在某些人看来，它代表了高效价值计算的自然高潮。它的速度达到了物理学所允许的极限，其安全性达到了工作量证明所能达到的最高水平，其去中心化程度达到了一个全球包容性网络应有的水平。我们能否在不打破金钱与热力学之间基本联系的情况下，更快或更高效？可能不会太多----除非有新的物理学或损害信任。Kaspa 的目标是未来每秒 100 个区块，接近准连续的区块流，其开发人员正在整合自适应功能（如 DAGKnight），根据条件调整确认速度。我们正在接近去中心化背景下链上扩展的实际极限。任何进一步的显著增长可能都需要根本不同的方法（或接受中心化）。从这个意义上说，Kaspa 是效率前沿----你无法在不比 Kaspa 产生更多浪费或风险的情况下，在规模上获得显著更高的吞吐量或更低的延迟。它找到了一个优化资源利用的平衡点。</p>
+    <p>对于经验丰富的加密专业人士和研究人员来说，Kaspa 提供了一个引人入胜的案例研究，其中热力学、信息论和经济学原理汇聚一堂。它证实了去中心化金融网络可以像物理系统一样进行分析----包括能量输入、工作输出和作为熵的低效率。通过减少这些低效率，Kaspa 不仅表现更好；它从根本上创造了一个更可持续、更具吸引力的经济系统。一个浪费更少的系统意味着矿工的工作更有价值，用户的费用更低，更多的价值在流通而不是被消耗在开销中。随着时间的推移，这会吸引更多的参与和投资，并增强网络效应。这类似于高效发动机不仅节省燃料，而且能够实现新功能----更长的行程，更重的负载----因此，高效的区块链能够实现更多的经济活动和用例，而这些活动和用例可能会扼杀较慢的链。</p>
+    <p>总而言之，Kaspa 可以被视为十多年来研究如何扩展中本聪发明而不失其灵魂的结晶。它表明，物理定律和健全的经济学并非去中心化的敌人，而是改进去中心化的指导。Kaspa 的成功意味着，最忠实地遵循最小阻力路径和最小熵生产的货币系统将最终胜出----这一结果与物理学高度契合。在实践中，Kaspa 代表了一个高吞吐量、低摩擦、安全的网络，它可以在一个协议中承载国家的价值，对所有人开放，并且只受光速和多数诚实原则的限制。如果比特币开启了热力学金融时代，那么 Kaspa 则加速了这一进程，使经济能量的流动像电子的流动一样高效。在技术和货币的宏大叙事中，Kaspa 作为效率是命运的有力证明而脱颖而出：给定两个系统，最能最小化浪费和最大化有用功的系统将吸引未来。而 Kaspa 提出了一个令人信服且技术上健全的论点，证明它就是这样的系统----向无摩擦、保值且最终更符合人类需求的货币网络迈出的进化飞跃。</p>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="h.e01avawvoirc">第十三章：Kaspa 与比特币的排序</h2>
+  <div class="img-container"><img alt="Kaspa 与比特币的排序" src="images/image33.png"></div>
+  <h3 class="section-title">区块选择与排序：最重链与蓝色工作量</h3>
+  <h4 class="subsection-title">比特币的最重链规则 - 顺序选择</h4>
+  <p>比特币的共识机制基于线性原则，网络维护一条单一的区块链。当矿工同时创建新区块时，网络面临在竞争链之间做出选择。最重链规则通过选择累积工作量证明最多的链来解决这个问题，从而选择代表最大计算投资的路径。这种方法创建了一种“赢者通吃”的场景，其中只有一条链存活，而所有竞争区块都成为孤块。孤块虽然包含有效交易并代表实际的计算工作，但对网络安全或交易处理能力没有任何贡献。这种设计确保了清晰的排序，但固有地限制了吞吐量，因为每个高度级别只能接受一个区块。在此示例中，您可以看到比特币如何丢弃区块。</p>
+  <div class="img-container"><img alt="比特币中的孤块" src="images/image38.png"></div>
+
+  <h4 class="subsection-title">Kaspa 的蓝色工作量选择 - 并行集成</h4>
+  <p>Kaspa 的 GHOSTDAG 协议通过在有向无环图（DAG）结构中运行来扩展此方法，其中多个区块可以共存并 contribute 到网络安全。GHOSTDAG 不会丢弃竞争区块，而是将它们分类为“蓝色”（诚实，有助于共识）或“红色”（可能冲突但仍保留）。“蓝色工作量”指标仅代表 DAG 中蓝色区块的累积工作量证明。这种选择性累积确保只有共识有效的区块才有助于安全计算，同时保留红色区块的工作量和交易在整体结构中。在此示例中，您可以看到比特币丢弃的区块被包含在 Kaspa 的 DAG 中，即使 k = 0。</p>
+  <div class="img-container"><img alt="Kaspa 中的并行集成（蓝色和红色区块）" src="images/image20.png"></div>
+
+  <h4 class="subsection-title">父区块选择与主链形成</h4>
+  <p>当一个新区块进入 DAG 时，GHOSTDAG 必须从几个可能的候选父区块中选择一个“选定父区块”。这个选择过程检查每个潜在父区块的“蓝色工作量”值，并选择来自诚实区块的累积“蓝色工作量”值最高的父区块。这里是区块 B，它从其父区块中选择最佳父区块（工作量最大的父区块）。</p>
+  <div class="img-container"><img alt="父区块选择与主链形成" src="images/image39.png"></div>
+  <p>这个选定的父区块成为在 DAG 中建立主链的基础。主链提供了一个确定性排序机制，类似于比特币的线性链，但在更复杂的 DAG 环境中运行。选择父区块后，我们可以通过 DAG 跟踪选定的父区块；这会创建一条链，您可以在此处的图像中看到。</p>
+  <div class="img-container"><img alt="通过 DAG 跟踪选定的父区块" src="images/image10.png"></div>
+
+  <h4 class="subsection-title">排序与交易处理</h4>
+  <p>通过“蓝色工作量”选择创建的主链作为交易处理的主要排序机制。交易首先从选定的父区块处理，然后从合并集区块中按照共识约定的顺序处理。这创建了一个确定性序列，所有节点都可以重现，确保网络中交易的一致排序。</p>
+
+  <h3 class="section-title">基本架构差异</h3>
+  <p><b>比特币的方法：</b> 创建一个单一的线性序列，其中每个区块只有一个父区块。冲突导致竞争区块的永久排除，只有获胜链有助于网络安全。</p>
+  <p><b>Kaspa 的方法：</b> 维护一个 DAG 结构，其中区块可以有多个父区块和子区块。冲突通过分类而不是排除来解决，允许多个区块有助于网络安全，同时通过主链保持共识。</p>
+
+  <h3 class="section-title">对吞吐量和安全性的影响</h3>
+  <p>比特币的线性方法提供了强大的安全保障，但将吞吐量限制在每 10 分钟左右一个区块。丢弃竞争区块代表了计算资源的浪费和交易容量的损失。</p>
+  <p>Kaspa 的“蓝色工作量”系统在保持安全属性的同时，允许更高的吞吐量。通过在 DAG 中保留蓝色和红色区块，该系统捕获了网络更大一部分的计算工作量和交易处理能力。主链确保了确定性排序，尽管复杂性增加，从而允许并行区块的创建，而不会牺牲共识的可靠性。</p>
+
+  <h3 class="section-title">比特币 2013 年的回滚：关于最终性的一课</h3>
+  <p>2013 年 3 月，比特币网络经历了一次关键事件，这与它“最长链是有效链”的基本原则相悖。</p>
+  <ol>
+      <li><strong>链分裂：</strong> 一个使用 Bitcoin Core 0.8 版本的矿工生成了一个与旧版本（0.7）不兼容的区块。这导致了链分裂（分叉）。</li>
+      <li><strong>社会协调超越了协议：</strong> 尽管 0.8 链变得更长，但核心开发者和大型矿池通过社会协调，放弃了这条链，回滚到更短但兼容的 0.7 链。</li>
+      <li><strong>最终性被打破：</strong> 0.8 链中的 24 个区块被孤立。它们所包含的交易，曾被认为是有效的，从比特币的规范历史中被抹去。</li>
+  </ol>
+  <p>这一事件证明，比特币的共识并非纯粹确定性，可能需要人工干预。在 Kaspa 中，这种分裂是不可能的。所有区块，即使是同时挖出的，都被包含在 DAG 中，GHOSTDAG 会一致地、算法地选择一个有序的历史。不需要回滚或社会协调；最终性是确定性的。</p>
+
+  <hr class="chapter-break">
+  
+  <h2 class="chapter-title" id="chapter14">第十四章：Kaspa 对第二层的愿景：ZK Rollups 和桥接</h2>
+  <h3 class="section-title">对第二层解决方案的需求</h3>
+  <p>尽管 Kaspa 在其基础层（第 1 层）提供了令人印象深刻的可扩展性，但复杂去中心化应用程序（DeFi、游戏等）的未来取决于第 2 层解决方案。这些解决方案允许在主链之外执行复杂的计算，同时受益于其安全性。Kaspa 专注于“基于 ZK-Rollups”，其中第 1 层（Kaspa）充当排序、数据可用性和结算层。</p>
+  
+  <h3 class="section-title">挑战：包含时证明与执行不确定性</h3>
+  <p>像 Kaspa 这样的并行化 L1 引入了“执行不确定性”：交易在确定其最终全局顺序之前就被包含在 DAG 中。这是 MEV 抵抗的一个优势，因为它阻止了矿工预测精确的序列。</p>
+  <p>然而，这与 ZK-Rollups 产生了冲突，ZK-Rollups 理想情况下需要“包含时证明”。为了生成 ZK 证明，前一个状态必须是已知且明确的。但在 Kaspa 中，由于并行处理，包含时这个状态是未定义的。</p>
+  <p>Kaspa 的解决方案是选择多领导者共识及其执行不确定性。因此，ZK 证明必须推迟，并且只有在交易顺序收敛并确定清晰状态后才能提交到 L1。这带来了新的挑战：如果所需的证明从未到达怎么办？</p>
+  
+  <h3 class="section-title">限时证明结算</h3>
+  <p>建议的模型是“限时证明结算”。</p>
+  <ol>
+      <li>交易数据首先发布到 L1（数据可用性）。</li>
+      <li>其在 L1 上的最终结算取决于在指定时间窗口 (T) 内提交和验证 ZK 证明。</li>
+      <li>如果参与操作的一方未能在该时间范围内提供其证明，则操作失败，并处以罚款以确保问责制。</li>
+  </ol>
+  <p>这种模型允许用户端快速进行乐观确认，远早于 L1 上的最终结算，因为每个 rollup 都直接有兴趣提交其证明以保持自身的“活性”。</p>
+  
+  <h3 class="section-title">KIP-15 和已接受交易存档节点 (ATANs)</h3>
+  <p>Kaspa 上 L2 的一个基本问题是修剪。L2 如何引用已从 L1 修剪的交易数据？ZK 证明是长期解决方案，但需要一个临时解决方案。</p>
+  <p>这就是 KIP-15 的目的：引入<strong>已接受交易存档节点 (ATANs)</strong>。ATAN 介于修剪过的全节点和完整的存档节点之间。</p>
+  <ul>
+      <li>它不存储完整的交易数据。</li>
+      <li>它存储选定链的区块头和所有交易的<strong>哈希</strong>。</li>
+  </ul>
+  <p>交易哈希只有 32 字节，与交易本身相比，这是一个巨大的压缩。一个 ATAN 可以存储多年的交易哈希历史，且存储要求合理（满负荷运行时估计每年约为 3-5 TB）。这使得 L2 能够证明任何过去交易的存在和顺序，而无需完整的存档节点，从而解决了修剪环境中的数据可用性问题。</p>
+  
+  <h3 class="section-title">规范 L1<>L2 桥接设计</h3>
+  <p>为了允许资金（KAS）在 L1 和 L2 之间流动，需要一个“规范桥接”。</p>
+  <ul>
+      <li><strong>入站（L1 到 L2）：</strong> 用户将 KAS 发送到 L1 上的静态委托地址。此操作立即由 L1 验证，资金几乎立即在 L2 上可用。</li>
+      <li><strong>出站（L2 到 L1）：</strong> 出站交易需要 L2 上的内部授权。其有效性必须通过提交 ZK 证明在 L1 上确认。</li>
+  </ul>
+  <p>为此，Kaspa 使用“委托”脚本。用户不是将资金发送到汇总的状态地址（这是动态的），而是发送到静态地址，这些地址将其花费权限委托给汇总提供的 ZK 证明。这简化了用户体验和桥接资金的管理。</p>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="chapter15">第十五章：Igra 网络：Kaspa 的 EVM 兼容 ZK Rollup 案例研究</h2>
+  <h3 class="section-title">Igra 概述</h3>
+  <p>Igra 网络是 Kaspa 对第二层愿景的一个极好的实际案例。它是一个 <strong>EVM 兼容的 ZK Rollup</strong>，独特地利用 Kaspa 的 BlockDAG 作为去中心化排序器和结算层。</p>
+  <p>该架构旨在将类似比特币的安全性与现代可编程链的速度和多功能性相结合，解决当前第二层解决方案的关键限制。</p>
+  
+  <h3 class="section-title">关键组件</h3>
+  <ul>
+      <li><strong>基础层（Kaspa）：</strong> 作为去中心化排序器。Igra 交易的顺序由其挖矿节点在 Kaspa 的 BlockDAG 上确定。</li>
+      <li><strong>Igra 节点：</strong> 维护 L2 的完整状态并执行 EVM 交易。它从 L1 中提取排序后的交易并执行它们。</li>
+      <li><strong>Igra 中继/RPC：</strong> 提供用户与网络之间的桥梁。它公开标准的以太坊 RPC 接口，允许用户使用 MetaMask 等钱包与 Igra 交互。</li>
+  </ul>
+  
+  <h3 class="section-title">桥接机制与部署</h3>
+  <p>Igra 为其原生代币 $iKAS（KAS 的封装版本）采用了多阶段桥接方法。</p>
+  <ol>
+      <li><strong>阶段 1（社区桥接）：</strong> 最初，桥接依赖于由社区选择的签名者控制的多重签名钱包（m-of-n）。这是一种信任模型，类似于许多加密货币社区基金所使用的模型。为了提取资金，签名者需要处理请求，并采取保障措施以确保向无信任系统过渡。</li>
+      <li><strong>阶段 2（MPC/ZK 桥接）：</strong> 未来，该桥接将被无信任解决方案取代。
+          <ul>
+              <li><strong>MPC（多方计算）桥接：</strong> 使用 FROST 等加密技术，允许一组验证者签署交易，而无需任何一方持有完整的私钥。这实现了无需许可的桥接。</li>
+              <li><strong>ZK 桥接：</strong> 最终解决方案。用户可以向 L1 提交 ZK 证明，证明他们已在 L2 上销毁了 $iKAS。L1 上的脚本将验证此证明并解锁相应数量的 KAS。</li>
+          </ul>
+      </li>
+  </ol>
+  
+  <h3 class="section-title">Caravel 测试网</h3>
+  <p>Igra 的部署分阶段进行，从“Caravel”测试网开始。此次发布分几个阶段进行：</p>
+  <ol>
+      <li><strong>激活：</strong> 网络在 Kaspa 的测试网上激活。</li>
+      <li><strong>社区测试人员：</strong> 节点软件分发给有限的测试人员组，以逐步增加网络活动。</li>
+      <li><strong>公共访问：</strong> 软件公开发布，允许任何人运行节点并参与。</li>
+  </ol>
+  <p>这种细致的部署过程至关重要，因为 Caravel 将完整的以太坊协议引入 Kaspa 的共识，该共识以 EVM 世界尚未探索的速度运行。需要进行大量测试和多次迭代以确保稳定性和性能。</p>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="chapter16">第十六章：Kaspa BlockDAG 中的交易吞吐量和冲突</h2>
+  <h3 class="section-title">交易冲突的挑战</h3>
+  <p>使 DAG 速度惊人的原因是其并行处理能力：由于并行创建的区块都被视为有效，因此增加并行区块的速率不会损害安全性。然而，这引出了一个问题：如果我们每秒创建 10 个区块，我们的交易吞吐量真的会增加 10 倍吗？</p>
+  <p>不完全是。微妙之处在于并行区块可能包含相同的交易，多次计算相同的交易是不公平的。我们应该关注<strong>有效 TPS</strong>，即平均包含的唯一交易数量。</p>
+  
+  <h3 class="section-title">随机选择分析</h3>
+  <p>假设矿工随机选择要包含的交易（这是一个合理的近似，我们将在后面看到），我们可以分析有效 TPS。</p>
+  <p>数学分析表明，即使在最坏的情况下（即区块容量恰好等于内存池中可用交易的数量），网络也至少包含 <strong>(1 - 1/e) ≈ 62.3%</strong> 的唯一交易。这是一个下限；在实践中，当内存池大于区块容量时，效率往往接近 100%。</p>
+  <p>此外，博弈论表明矿工没有很大的动力偏离这种准随机选择。如果所有矿工都试图选择相同的、高费用的交易，他们最终会直接竞争相同的费用，他们的预期利润会下降。最终，矿工（无法预测其他人会做什么）最理性的策略是分散他们的选择，这接近于随机选择。</p>
+  
+  <h3 class="section-title">高冲突的潜在解决方案</h3>
+  <p>如果在实践中观察到高冲突率，可以实施几种解决方案：</p>
+  <ol>
+      <li><strong>交易分桶：</strong> 可以要求区块只包含其哈希与区块自身哈希的某些数字匹配的交易。这将把交易分成“桶”，区块只会在同一个桶中竞争交易。</li>
+      <li><strong>垄断拍卖机制：</strong> 一种机制，矿工可以包含他们想要的任何交易，但区块中所有交易的费用都设置为包含交易中最低费用的水平。这激励矿工包含更多交易（以增加交易量），而不是只关注那些支付最高的交易，从而自然地鼓励多样化。</li>
+  </ol>
+  <p>总之，尽管交易冲突是 BlockDAG 中的一个考虑因素，但 Kaspa 的架构和博弈论动态确保了有效吞吐量保持高水平，并随着区块速率的增加而稳健扩展。</p>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="chapter17">第十七章：Kaspa 的费用市场：一个博弈论视角</h2>
+  <h3 class="section-title">费用市场的重要性</h3>
+  <p>加密货币的费用市场对其长期安全至关重要。一旦区块奖励变得微不足道，交易费用将成为网络安全的主要补贴。因此，了解协议所带来的费用市场动态至关重要。</p>
+  
+  <h3 class="section-title">比特币费用市场的三个弊端</h3>
+  <p>比特币的费用市场，由于其“每轮单一领导者”的共识机制，表现出可被称为“三个弊端”的特性：</p>
+  <ol>
+      <li><strong>竞相压价：</strong> 当网络不拥堵时，需求低于区块空间供给。用户没有动力支付高额费用，因为他们的交易无论如何都会被包含。费用趋向于最低，这可能导致挖矿无利可图并威胁网络安全。</li>
+      <li><strong>价格异常：</strong> 当网络拥堵时，即使是很小的费用增加，也可能使交易从“从未被包含”变为“在下一个区块中被包含”。价格不反映渐进式服务。</li>
+      <li><strong>饥饿：</strong> 在拥堵的网络中，低费用交易可能会被永久排除，因为它们永远无法超越高费用交易。这造成了进入障碍，并引发了对区块链平等主义精神的质疑。</li>
+  </ol>
+  <p>这些动态是每个回合中单个矿工赢得全部奖励的直接结果。</p>
+  
+  <h3 class="section-title">Kaspa 的多领导者 BlockDAG 如何改善费用市场</h3>
+  <p>在 Kaspa 中，多个矿工在每个回合中并行创建区块（多领导者）。如果多个矿工包含相同的交易，他们将按概率分享奖励。这彻底改变了矿工和用户的博弈动态。</p>
+  <ul>
+      <li><strong>对抗竞相压价：</strong> 由于矿工之间存在竞争，即使网络只被部分利用，他们也会理性地包含交易，以分散收入来源并避免直接竞争。分析表明，一旦网络达到其容量的 <strong>1/k</strong>（其中 k 是每回合领导者的数量），费用市场就会活跃起来，而不是比特币的 100%。当每回合有 10 个领导者时，一旦使用了 10% 的容量，市场就会活跃起来。</li>
+      <li><strong>对抗饥饿和异常：</strong> 矿工有动力包含各种交易，包括费用较低的交易。争夺少数高回报交易并不总是最优选择，因为竞争会降低赢得这些费用的可能性。这会产生更平滑的服务曲线：费用略微增加会导致包含概率略微增加，而不是突然改变。低费用交易仍然有机会（尽管很小）被包含，从而防止饥饿。低包含概率在回合中转化为合理的平均等待时间，而不是无限等待。</li>
+  </ul>
+  <p>总而言之，Kaspa 的多领导者架构是其高频 BlockDAG 的直接结果，它创建了一个本质上更健康、更稳定、更公平的费用市场。通过缓解单领导者区块链的极端“全有或全无”动态，Kaspa 为其长期安全奠定了更坚实的经济基础。</p>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="conclusion">结论</h2>
+  <div class="conclusion">
+    <p>在结束对 Kaspa 架构和理念的探索之旅时，一个结论脱颖而出：我们正在见证分布式账本技术领域的真正演进。Kaspa 不仅仅是另一种加密货币；它是对比特币所建立原则的根本性重新设计，专为高速数字时代而生。</p>
+    <p>我们已经看到，其由 GHOSTDAG 共识协议管理的 BlockDAG 如何打破了线性链的瓶颈。通过允许区块的并行创建和集成，Kaspa 消除了孤块的浪费，最大化了工作量证明的能源效率，并实现了以前认为去中心化 PoW 系统不可能达到的交易和确认速度。</p>
+    <p>我们探讨了其巧妙的存储解决方案，即多级修剪系统，通过保持节点较低的硬件要求来确保长期的去中心化。我们还深入探讨了其对未来的愿景，即像 ZK-Rollups 这样的第二层解决方案，这些解决方案有望在不牺牲基础层安全性的情况下带来复杂的可编程性和互操作性。</p>
+    <p>Kaspa 向我们表明，区块链三难困境——即必须在安全性、可扩展性和去中心化之间做出选择——可能不是一个不可改变的定律，而是第一代架构的局限性。通过从物理学和经济学原理中汲取灵感，Kaspa 设计了一个趋向于最大效率、最小摩擦和最佳价值保留的系统。</p>
+    <p>Kaspa 的未来充满希望。随着像 DAGKnight 这样的升级将最终性形式化，以及对 MEV 抵抗和预言机的持续研究，该项目不断突破可能性的界限。无论 Kaspa 是否成为下一代去中心化应用的支柱，还是与其他系统共存，有一点是肯定的：它已经通过证明一个货币系统既可以像黄金一样坚固，又可以像光一样快，在加密货币历史上留下了不可磨灭的印记。</p>
+    <p>我们希望这本书能为您提供理解 Kaspa 深度和优雅的钥匙。旅程才刚刚开始，继续这段旅程的最佳方式是参与其中、提出问题并不断学习。</p>
+  </div>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="appendixA">附录 A：额外资源</h2>
+  <p>对于希望加深对 Kaspa 理解的读者，这里列出了一些重要资源，从入门文章到基础研究论文。</p>
+  
+  <h4>入门文章</h4>
+  <ul>
+    <li><strong>Kaspa 101</strong>: 理解 GHOSTDAG 工作原理的绝佳起点。 <a href="https://michaelsutton.github.io/2022-04-23-kaspa-101-part1/">在此阅读</a></li>
+    <li><strong>用 BlockDAG 扩展比特币</strong>: 解释了为什么 BlockDAG 是解决比特币局限性的可行方案。 <a href="https://someone235.medium.com/scaling-bitcoin-with-blockdag-d785174a3402">在此阅读</a></li>
+    <li><strong>Kaspa 修剪入门</strong>: Kaspa 修剪机制的介绍。 <a href="https://hashdag.medium.com/in-which-mayday-mayday-we-are-syncing-about-bf05ad58957a">在此阅读</a></li>
+    <li><strong>Kaspa GhostDAG 101 (视频)</strong>: 对技术概念的全面视频概述。 <a href="https://www.youtube.com/watch?v=nhI2zo44dfc">在此观看</a></li>
+  </ul>
+
+  <h4>研究论文 (深入探讨)</h4>
+  <ul>
+    <li><strong>PHANTOM and GHOSTDAG</strong>: 为 Kaspa 共识奠定基础的学术论文。 <a href="https://eprint.iacr.org/2018/104.pdf">阅读 PDF</a></li>
+    <li><strong>The DAGKnight Protocol</strong>: Kaspa 的下一代共识协议，专为快速最终性和抗攻击性而设计。 <a href="https://eprint.iacr.org/2022/1494.pdf">阅读 PDF</a></li>
+    <li><strong>Prunality</strong>: 详细阐述 Kaspa 修剪机制背后理论的论文。 <a href="https://github.com/kaspanet/docs/blob/main/Reference/prunality/Prunality.pdf">阅读 PDF</a></li>
+    <li><strong>比特币白皮书</strong>: 中本聪的原始论文，供历史背景参考。 <a href="https://bitcoin.org/bitcoin/bitcoin.pdf">阅读 PDF</a></li>
+  </ul>
+
+  <h4>代码与开发</h4>
+  <ul>
+    <li><strong>Rusty-Kaspa (主代码库)</strong>: Kaspa 节点的源代码，用 Rust 编写。 <a href="https://github.com/kaspanet/rusty-kaspa">在 GitHub 上查看</a></li>
+    <li><strong>Kaspa 改进提案 (KIPs)</strong>: 包含所有 Kaspa 改进提案的代码库。 <a href="https://github.com/kaspanet/kips">在 GitHub 上查看</a></li>
+  </ul>
+
+  <h4>社区与讨论</h4>
+  <ul>
+    <li><strong>Discord</strong>: 技术和社区讨论的主要场所。推荐频道: <code>#research-general</code>, <code>#development</code>。 <a href="https://discord.gg/kaspa">加入 Discord</a></li>
+    <li><strong>Telegram (研发)</strong>: 开发者和研究人员协作的小组。 <a href="https://t.me/kasparnd">在 Telegram 上加入</a></li>
+    <li><strong>研究论坛</strong>: 用于深入讨论 KIPs 和新技术概念。 <a href="https://research.kas.pa/">访问论坛</a></li>
+  </ul>
+
+  <hr class="chapter-break">
+  
+  <h2 class="chapter-title" id="appendixB">附录 B：交易冲突的数学分析（简化版）</h2>
+  <p>本章探讨了 BlockDAG 中有效 TPS（每秒交易数）的问题。当多个区块并行创建时，它们可能包含相同的交易，这会降低唯一吞吐量。分析表明，即使矿工随机选择交易，有效吞吐量仍然很高。</p>
+  <p>关键思想是，随着待处理交易池（内存池）的增加，两个矿工选择相同交易的概率会降低。数学分析（使用概率论和泰勒级数）表明，即使在区块容量恰好等于可用交易数量的情况下，网络也至少包含 <strong>(1 - 1/e) ≈ 62.3%</strong> 的唯一交易。这个数字代表一个最小值；在实践中，效率通常要高得多。</p>
+  <p>此外，博弈论表明，矿工没有显著的动机偏离这种准随机选择。如果所有矿工都试图选择支付最高的交易，他们最终会竞争相同的费用，这会降低他们的预期利润。因此，多样化策略（随机选择）是一个稳定的均衡（一个“弱均衡”）。</p>
+  <p>总而言之，Kaspa 的并行性不会显著损害有效吞吐量，有效吞吐量几乎与区块速率成线性增长。</p>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="appendixC">附录 C：费用市场的数学分析（简化版）</h2>
+  <p>本章使用博弈论分析了费用市场的动态，比较了比特币的“单一领导者”模型和 Kaspa 的“多领导者”模型。</p>
+  <h4>比特币费用市场的三个弊端：</h4>
+  <ol>
+    <li><strong>竞相压价</strong>: 当网络不拥堵时，用户没有动力支付高额费用，因为他们的交易无论如何都会被包含。费用趋向于最低，这威胁到网络的长期安全。</li>
+    <li><strong>价格异常</strong>: 当网络拥堵时，即使是很小的费用增加，也可能使交易从“从未被包含”变为“在下一个区块中被包含”。价格不反映渐进式服务。</li>
+    <li><strong>饥饿</strong>: 在拥堵的网络中，低费用交易可能会被永久排除，为不太富裕的用户创造了进入壁垒。</li>
+  </ol>
+  <h4>Kaspa 的 BlockDAG 如何解决这些问题：</h4>
+  <p>在 Kaspa 中，多个矿工并行创建区块（多领导者）。如果多个矿工包含相同的交易，他们将（概率性地）分享奖励。这从根本上改变了动态：</p>
+  <ul>
+    <li><strong>对抗竞相压价</strong>: 由于矿工之间存在竞争，即使网络只被部分利用，包含交易也变得理性。分析表明，一旦网络达到其容量的 <strong>1/k</strong>（其中 k 是每轮领导者的数量），费用市场就会活跃起来，而不是比特币的 100%。当每轮有 10 个领导者时，一旦使用了 10% 的容量，市场就会活跃起来。</li>
+    <li><strong>对抗饥饿和异常</strong>: 矿工有动力包含各种交易，包括费用较低的交易。争夺少数支付最高的交易并不总是最优选择，因为竞争会降低赢得这些费用的可能性。这会产生更平滑的服务曲线：费用略微增加会导致包含概率略微增加，而不是突然改变。低费用交易仍然有机会被包含，从而防止饥饿。</li>
+  </ul>
+  <p>总而言之，Kaspa 的多领导者架构创建了一个更健康、更稳定、更公平的费用市场，这对于协议的长期安全和可行性至关重要。</p>
+
+</div>
+</body>
+</html>

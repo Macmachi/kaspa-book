@@ -1,6 +1,6 @@
 <!--
 Rymentz
-Version : v1.0.0
+Version : v1.0.1
 -->
 
 <!DOCTYPE html>
@@ -46,10 +46,13 @@ Version : v1.0.0
         }
         .language-links {
             margin-top: 30px;
+            display: flex; /* Use flexbox for layout */
+            flex-wrap: wrap; /* Allow items to wrap to the next line */
+            justify-content: center; /* Center items horizontally */
+            gap: 15px; /* Space between items */
         }
         .language-links a {
             display: inline-block;
-            margin: 15px;
             padding: 15px 30px;
             font-size: 1.2em;
             color: #ffffff;
@@ -57,6 +60,8 @@ Version : v1.0.0
             border-radius: 5px;
             text-decoration: none;
             transition: background-color 0.3s ease;
+            min-width: 180px; /* Ensure a minimum width for buttons */
+            box-sizing: border-box; /* Include padding in width */
         }
         .language-links a:hover {
             background-color: #2980b9;
@@ -85,10 +90,13 @@ Version : v1.0.0
             .main-content p {
                 font-size: 1em;
             }
+            .language-links {
+                flex-direction: column; /* Stack links vertically on small screens */
+                align-items: center; /* Center items when stacked */
+            }
             .language-links a {
-                display: block; /* Stack links vertically on small screens */
-                margin: 10px auto;
-                width: calc(100% - 60px); /* Adjust width for padding */
+                width: 100%; /* Full width for buttons on small screens */
+                max-width: 300px; /* Limit max width for very narrow screens */
             }
         }
     </style>
@@ -103,6 +111,15 @@ Version : v1.0.0
         <div class="language-links">
             <a href="kaspa-book-en.html">English Version</a>
             <a href="kaspa-book-fr.html">Version Française</a>
+            <a href="kaspa-book-es.html">Versión Española</a>
+            <a href="kaspa-book-de.html">Deutsche Version</a>
+            <a href="kaspa-book-it.html">Versione Italiana</a>
+            <a href="kaspa-book-pt.html">Versão Portuguesa</a>
+            <a href="kaspa-book-ru.html">Русская Версия</a>
+            <a href="kaspa-book-zh.html">中文版</a>
+            <a href="kaspa-book-ja.html">日本語版</a>
+            <a href="kaspa-book-ko.html">한국어 버전</a>
+            <a href="kaspa-book-ar.html">النسخة العربية</a>
         </div>
 
         <p class="language-note">

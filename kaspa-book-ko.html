@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="content-type">
+<title>카스파: 차세대 프로토콜</title>
+<style type="text/css">
+  body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+  }
+  .container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+  h1, h2, h3, h4 {
+    color: #2c3e50;
+    line-height: 1.3;
+    page-break-after: avoid;
+  }
+  h1.book-title {
+    font-size: 2.5em;
+    text-align: center;
+    margin-bottom: 0.5em;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+  }
+  h2.chapter-title {
+    font-size: 2em;
+    margin-top: 1.5em;
+    border-bottom: 1px solid #bdc3c7;
+    padding-bottom: 5px;
+  }
+  h3.section-title {
+    font-size: 1.5em;
+    margin-top: 1.2em;
+    color: #34495e;
+  }
+  h4.subsection-title {
+    font-size: 1.2em;
+    margin-top: 1em;
+    color: #7f8c8d;
+  }
+  p {
+    text-align: justify;
+    margin-bottom: 1em;
+  }
+  .img-container {
+    display: block;
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    margin: 20px auto;
+    text-align: center;
+    box-sizing: border-box;
+  }
+  .img-container img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+  .author-date {
+    text-align: right;
+    font-style: italic;
+    color: #7f8c8d;
+    margin-bottom: 2em;
+  }
+  .simplified-def {
+    background-color: #ecf0f1;
+    border-left: 5px solid #3498db;
+    padding: 15px;
+    margin: 1.5em 0;
+  }
+  .simplified-def b {
+    color: #2980b9;
+  }
+  ul {
+    list-style-type: disc;
+    margin-left: 20px;
+    padding-left: 20px;
+  }
+  li {
+    margin-bottom: 0.5em;
+  }
+  blockquote {
+    border-left: 4px solid #bdc3c7;
+    padding-left: 15px;
+    margin-left: 0;
+    font-style: italic;
+    color: #7f8c8d;
+  }
+  hr.chapter-break {
+    page-break-before: always;
+    border: 0;
+  }
+  .cover-page {
+    text-align: center;
+    padding: 100px 20px;
+    border: 2px solid #2c3e50;
+    margin-bottom: 50px;
+  }
+  .cover-page .title {
+    font-size: 3em;
+    color: #2c3e50;
+  }
+  .cover-page .subtitle {
+    font-size: 1.5em;
+    color: #7f8c8d;
+  }
+  .cover-page .author {
+    margin-top: 50px;
+    font-size: 1.2em;
+  }
+  .conclusion, .introduction {
+      padding: 20px;
+      background-color: #eaf2f8;
+      border-radius: 5px;
+  }
+/* 목차 스타일 */
+.table-of-contents {
+  background-color: #f0f8ff; /* Light blue background */
+  border: 1px solid #cceeff; /* Light blue border */
+  padding: 20px;
+  margin: 20px auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.table-of-contents .chapter-title {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #2c3e50;
+  border-bottom: 1px solid #aaddff;
+  padding-bottom: 10px;
+}
+
+.table-of-contents ul {
+  list-style: none; /* Remove default bullet points */
+  padding-left: 0;
+}
+
+.table-of-contents ul ul {
+  padding-left: 20px; /* Indent for subsections */
+  margin-top: 5px;
+}
+
+.table-of-contents li {
+  margin-bottom: 8px;
+}
+
+.table-of-contents li a {
+  text-decoration: none;
+  color: #3498db; /* Blue link color */
+  font-weight: bold;
+  transition: color 0.2s ease;
+}
+
+.table-of-contents li a:hover {
+  color: #2980b9; /* Darker blue on hover */
+}
+
+.table-of-contents ul ul li a {
+  font-weight: normal; /* Normal font for subsections */
+  font-size: 0.95em;
+  color: #555; /* Slightly darker color for subsections */
+}
+
+.table-of-contents ul ul li a:hover {
+  color: #333;
+}
+
+.table-of-contents .no-id-link {
+    color: #7f8c8d; /* Grey out unlinked items */
+    font-style: italic;
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="cover-page">
+    <h1 class="title">카스파: 차세대 프로토콜</h1>
+    <p class="subtitle">블록DAG, 합의 및 디지털 화폐의 미래에 대한 포괄적인 가이드</p>
+    <p class="author">커뮤니티에 의해 편집 및 보강 (2025년 7월 27일)</p>
+  </div>
+
+  <hr class="chapter-break">
+
+  <div class="introduction">
+    <h2 class="chapter-title">서론</h2>
+    <p>Kaspa에 대한 이 포괄적인 가이드에 오신 것을 환영합니다. Kaspa는 기존 기술을 단순히 반복하는 것을 넘어 근본적으로 재창조하는 암호화폐입니다. 수많은 프로젝트가 주목을 받기 위해 경쟁하는 생태계에서 Kaspa는 엄격한 접근 방식과 심오한 혁신으로 두각을 나타내며, 확장성, 속도, 탈중앙화라는 전통적인 블록체인의 가장 근본적인 문제를 타협 없이 해결하는 것을 목표로 합니다.</p>
+    <p>이 책은 Kaspa의 복잡한 개념을 명확히 하는 것을 목표로 합니다. 먼저 기본부터 시작하여, 유향 비순환 그래프(DAG)가 무엇인지, 그리고 Kaspa의 GHOSTDAG 프로토콜이 이를 어떻게 활용하여 빠르고 안전하며 완전히 탈중앙화된 합의 시스템을 구축하는지 설명합니다. 당신이 호기심 많은 개발자이든, 기반 기술을 이해하려는 투자자이든, 아니면 단순히 암호화폐 애호가이든, 이 책은 당신을 단계별로 안내하도록 설계되었습니다.</p>
+    <p>Kaspa가 어떻게 "블록체인 트릴레마"를 해결했는지, 고유한 아키텍처가 어떻게 거의 즉각적인 확인을 가능하게 하는지, 그리고 정교한 가지치기 시스템을 통해 데이터 저장을 어떻게 지속 가능하게 관리하는지 탐구할 것입니다. 또한 MEV(최대 추출 가능 가치)에 대한 저항, ZK-Rollups를 통한 레이어 2 솔루션에 대한 비전, 수수료 시장의 경제적 역학 관계와 같은 고급 주제도 다룰 것입니다.</p>
+    <p>이 작업은 공동 노력의 결과입니다. Kaspa 커뮤니티의 기여자들에게 깊은 감사를 표합니다. 그들의 기사, 연구 및 토론이 이 책의 중추를 형성했습니다. 내용의 대부분은 공식 웹사이트 <strong><a href="https://kaspa.com/learn-kaspa">Kaspa.com/learn-kaspa</a></strong>의 귀중한 자료와 주요 연구원 및 개발자들의 저작에서 각색 및 번역되었습니다. 또한, <strong>Cihan0x.ETH (<a href="https://x.com/cihan0xeth/status/1949361083883380833">@cihan0xeth</a>)</strong>의 작업은 부분적으로 <strong>@AbiKaspa</strong>의 원본 분석을 기반으로 하며, <strong>BankQuote_DAG</strong>의 통찰력 있는 분석이 이 작업을 크게 풍부하게 해 주었습니다.</p>
+    <p>암호화폐 세계에서 가장 혁신적인 아키텍처 중 하나에 몰입할 준비를 하세요. Kaspa를 이해할 준비를 하세요.</p>
+  </div>
+
+  <hr class="chapter-break">
+
+<div class="table-of-contents">
+      <h2 class="chapter-title">목차</h2>
+      <ul>
+          <li><a href="#h.sbugt7p65zq6">제1장: 카스파의 블록DAG</a>
+              <ul>
+                  <li><a href="#h.52y7zpxatzmc">DAG - 유향 비순환 그래프</a></li>
+                  <li><a href="#h.r0onrjvzaye8">비트코인과 카스파</a></li>
+              </ul>
+          </li>
+          <li><a href="#h.q9lxzgpefpuh">제2장: 카스파 - 바디를 헤더에 연결</a>
+              <ul>
+                  <li><a href="#h.3ezesbjpkjql">블록 바디를 헤더에 고정하기 - 머클 루트</a></li>
+                  <li><a href="#h.emrhhaf2640n">비트코인과 카스파</a></li>
+              </ul>
+          </li>
+          <li><a href="#h.y0ik307h70q9">제3장: 카스파와 "비트코인 스케일링 문제"</a>
+              <ul>
+                  <li><a href="#h.2jy3kmwufuue">카스파는 "비트코인 스케일링 문제"를 해결했습니다 - 무엇인가요?</a></li>
+                  <li><a href="#h.v4bl36mx6e0u">비트코인과 카스파</a></li>
+              </ul>
+          </li>
+          <li><a href="#h.1tq8u5wwr5up">제4장: MuHash</a>
+              <ul>
+                  <li><a href="#h.ny65anmiz0s">MuHash란 무엇이며 카스파는 어떻게 사용하나요?</a></li>
+                  <li><a href="#h.focbph7aurgq">비트코인과 카스파</a></li>
+              </ul>
+          </li>
+          <li><a href="#h.oy0kgniero14">제5장: 카스파의 UTXO 모델</a>
+              <ul>
+                  <li><a href="#h.8nqvw067oam1">UTXO란 무엇이며 카스파는 어떻게 사용하나요?</a></li>
+                  <li><a href="#h.5v09d76siagw">비트코인과 카스파</a></li>
+              </ul>
+          </li>
+          <li><a href="#h.6x07cz5zmxim">제6장: 부모와 머지셋</a>
+              <ul>
+                  <li><a href="#h.34xcaoqpznos">부모와 머지셋이란 무엇이며 카스파는 어떻게 사용하나요?</a></li>
+                  <li><a href="#h.tsab66lazd4a">비트코인 vs 카스파</a></li>
+              </ul>
+          </li>
+          <li><a href="#h.x0nj4tecoh66">제7장: 2차 가지치기</a>
+              <ul>
+                  <li><a href="#h.1wbq42gt63wc">2차 가지치기란 무엇이며 카스파는 어떻게 사용하나요?</a></li>
+              </ul>
+          </li>
+          <li><a href="#h.mz2dlkhrvwd2">제8장: 카스파 GHOSTDAG 간략화</a>
+              <ul>
+                  <li><a href="#h.hwkbrs8egi6p">GHOSTDAG란 무엇이며 카스파는 어떻게 사용하나요?</a></li>
+              </ul>
+          </li>
+          <li><a href="#h.drxg3f8wwuwc">제9장: DAG 용어</a>
+          </li>
+          <li><a href="#h.1uals18cttyl">제10장: 1차 가지치기</a>
+              <ul>
+                  <li><a href="#h.3i8fyh1jrh8m">1차 가지치기란 무엇이며 카스파는 어떻게 사용하나요?</a></li>
+              </ul>
+          </li>
+          <li><a href="#h.juf0jn9hl1ev">제11장: 아카이브 노드 vs 풀 노드</a>
+              <ul>
+                  <li><a href="#h.knim47a94vo6">카스파 아카이브 노드 vs 가지치기 노드</a></li>
+              </ul>
+          </li>
+          <li><a href="#h.xoj5wjv6tg4b">제12장: 카스파: 에너지 효율적인 분산형 아키텍처의 진화</a>
+              <ul>
+                  <li><a href="#h.pfav0qmvzt92">서론: 돈과 효율성의 물리학</a></li>
+                  <li><a href="#h.y2juit6511i3">카스파의 블록DAG: 낭비 없는 병렬 처리</a></li>
+                  <li><a href="#h.ttddfh4xlbpu">광속으로 처리량 달성</a></li>
+                  <li><a href="#h.uttpgy92hgk">마찰 감소, 가치 보존 향상</a></li>
+              </ul>
+          </li>
+          <li><a href="#h.e01avawvoirc">제13장: 카스파 vs 비트코인 정렬</a>
+          </li>
+          <li><a href="#chapter14">제14장: 카스파의 레이어 2 비전: ZK 롤업 및 브리징</a></li>
+          <li><a href="#chapter15">제15장: 이그라 네트워크: 카스파의 EVM 호환 ZK 롤업 사례 연구</a></li>
+          <li><a href="#chapter16">제16장: 카스파 블록DAG의 트랜잭션 처리량 및 충돌</a></li>
+          <li><a href="#chapter17">제17장: 카스파의 수수료 시장: 게임 이론적 관점</a></li>
+          <li><a href="#conclusion">결론</a></li>
+          <li><a href="#appendixA">부록 A: 추가 자료</a></li>
+          <li><a href="#appendixB">부록 B: 트랜잭션 충돌의 수학적 분석 (간략화)</a></li>
+          <li><a href="#appendixC">부록 C: 수수료 시장의 수학적 분석 (간략화)</a></li>
+      </ul>
+  </div>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="h.sbugt7p65zq6">제1장: 카스파의 블록DAG</h2>
+  <div class="img-container"><img alt="카스파의 블록DAG" src="images/image1.png"></div>
+  <h3 class="section-title" id="h.52y7zpxatzmc">DAG - 유향 비순환 그래프</h3>
+  <p>카스파가 블록DAG라는 말을 들어보셨을지 모르지만, 그것이 무엇을 의미할까요? 이 장은 사전 지식을 전제로 하지 않으므로, 그래프 이론부터 시작합니다. 먼저 그래프가 무엇인지, 그 다음 유향 그래프가 무엇인지, 그리고 유향 비순환 그래프에 대해 알아본 후, 이것이 비트코인과 카스파 모두에 어떻게 적용되는지 설명합니다.</p>
+  <p><b>그래프</b> - 그래프 이론은 수학 및 컴퓨터 과학 분야로, 엔티티 쌍 간의 관계를 나타내는 구조인 그래프 연구에 중점을 둡니다. 이 그래프는 정점(노드 또는 점이라고도 함)과 간선(링크 또는 선이라고도 함)으로 연결되어 있습니다. 그래프는 정점 간의 연결이 상호적인 무향 그래프와, 연결이 특정 방향을 갖는 유향 그래프로 분류됩니다. 이산 수학의 핵심 분야인 그래프 이론은 이러한 구조를 심층적으로 탐구합니다. 다음 그림은 연결에 방향이 없는 단순한 무향 그래프를 보여줍니다.</p>
+  <div class="img-container"><img alt="무향 그래프" src="images/image63.png"></div>
+  <p><b>유향 그래프</b> - 유향 그래프는 종종 다이어그램이라고도 불리며, 지점 간의 연결에 특정 방향이 있는 관계를 보여주는 데 사용되는 구조입니다. 연결이 양방향으로 가는 일반적인 그래프와 달리, 유향 그래프에서는 각 간선이 한 정점에서 다른 정점으로 향합니다. 가장 간단한 형태의 유향 그래프는 두 가지 주요 부분으로 구성됩니다. 즉, 정점의 모음과 간선의 집합으로, 각 간선은 명확한 방향(한 정점에서 다른 정점으로, 하지만 그 반대는 아님)을 가진 정점 쌍입니다. 예를 들어, 정점 X에서 정점 Y로 가는 간선이 있다면, X가 시작점이고 Y가 끝점입니다. 이 간선은 X와 Y를 연결합니다. Y에서 X로 가는 다른 간선이 있을 수 있지만, 그것은 별개의 연결입니다. 단순 유향 그래프라고 불리는 이 기본 구성에서는 동일한 두 정점 사이에 동일한 방향을 가진 여러 간선을 가질 수 없으며, 동일한 정점에서 시작하여 동일한 정점에서 끝나는 간선(루프라고 함)도 가질 수 없습니다. 다음 그림은 간선에 방향이 있는 유향 그래프를 보여줍니다. 두 개의 포인터가 있는 간선은 각각 방향을 가진 두 개의 간선을 나타냅니다.</p>
+  <div class="img-container"><img alt="유향 그래프" src="images/image70.png"></div>
+  <p><b>유향 비순환 그래프</b> - 는 사이클을 포함하지 않는 유향 그래프입니다. 정점과 간선으로 구성되어 있으며, 각 간선은 한 정점에서 다른 정점으로 향하는 방향을 가지며, 간선의 방향을 따라가면 결코 닫힌 루프가 되지 않음을 보장합니다. 유향 그래프는 모든 간선의 방향을 존중하는 선형 순서로 정점을 배열할 수 있는 경우 DAG라고 불리며, 이는 위상 정렬로 알려져 있습니다. 다음 그림은 사이클(또는 루프)을 찾을 수 없는 유향 비순환 그래프를 보여줍니다.</p>
+  <div class="img-container"><img alt="유향 비순환 그래프 (DAG)" src="images/image7.png"></div>
+
+  <div class="simplified-def">
+    <h3 class="section-title">간략화된 정의</h3>
+    <p><b>그래프</b> - 정점과 정점 쌍을 연결하는 간선으로 구성되며, 정점은 모든 종류의 객체를 나타내고 간선은 그들 사이의 연결을 나타냅니다.</p>
+    <p><b>유향 그래프</b> - 각 간선은 한 정점에서 다른 정점으로 향하는 특정 방향을 가집니다. 유향 그래프의 경로는 간선의 시퀀스로, 한 간선의 끝 정점이 시퀀스에서 다음 간선의 시작 정점입니다.</p>
+    <p><b>유향 비순환 그래프</b> - 하나 이상의 간선을 포함하는 경로를 통해 어떤 정점도 자신에게 도달할 수 없는 유향 그래프로, 사이클이 없음을 보장합니다.</p>
+    <p>그래프에 대해 배울 것이 훨씬 더 많지만, 우리의 목적을 위해서는 카스파의 블록DAG가 단순히 간선과 정점으로 구성된 구조이며, 한 방향으로 연결되어 있고, 결코 사이클에 빠지지 않는다는 것, 즉 유향 비순환 그래프라는 것만 알면 됩니다.</p>
+  </div>
+
+  <h3 class="section-title" id="h.r0onrjvzaye8">비트코인과 카스파</h3>
+  <p><b>비트코인</b> - 은 DAG입니다. 항상 블록체인이라고 불리지만, 비트코인은 DAG 구조를 사용합니다. 블록은 정점이고, 그들의 관계는 간선입니다. 각 블록은 한 방향으로 연결되어 있으며, 각 연결을 따라가면 결코 사이클을 형성하지 않고 항상 제네시스로 돌아갑니다.</p>
+  <div class="img-container"><img alt="선형 DAG로서의 비트코인 블록체인 구조" src="images/image25.png"></div>
+  <p><b>카스파</b> - 는 DAG입니다. 카스파는 DAG 구조를 사용합니다. 블록은 정점이고, 그들의 관계는 간선입니다. 각 블록은 한 방향으로 연결되어 있으며, 각 연결을 따라가면 결코 사이클을 형성하지 않고 항상 제네시스로 돌아갑니다.</p>
+  <div class="img-container"><img alt="카스파 블록DAG 구조" src="images/image30.png"></div>
+  <p>그렇다면 비트코인과 카스파 모두 DAG를 사용한다면 차이점은 무엇일까요? 비트코인은 블록이 단 하나의 이전 블록만 가리킬 수 있도록 허용합니다. 카스파는 블록이 여러 이전 블록을 가리킬 수 있도록 허용합니다. 이것이 구조적인 유일한 차이점입니다.</p>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="h.q9lxzgpefpuh">제2장: 카스파 - 바디를 헤더에 연결</h2>
+  <div class="img-container"><img alt="블록 헤더가 블록 바디에 연결됨" src="images/image66.png"></div>
+  <h3 class="section-title" id="h.3ezesbjpkjql">블록 바디를 헤더에 고정하기 - 머클 루트</h3>
+  <p>블록 바디를 헤더에 고정하는 것은 무엇입니까? 바디에 있는 트랜잭션의 머클 루트입니다.</p>
+  <p>그것이 무엇을 의미합니까? 이 장은 사전 지식을 전제로 하지 않으므로, 머클 트리부터 시작하겠습니다. 머클 트리가 무엇인지, 어떻게 구축되고, 어떻게 변조를 방지하는지. 그런 다음, 비트코인과 카스파 모두에 어떻게 적용되는지 설명합니다.</p>
+  <p><b>머클 트리</b> - 암호학 및 컴퓨터 과학에서 머클 트리(해시 트리라고도 함)는 각 "리프" 노드가 데이터 블록의 암호화 해시를 포함하는 트리와 같은 구조입니다. 비리프 노드(종종 브랜치 또는 내부 노드라고 함)는 자식 노드의 레이블의 암호화 해시를 포함합니다. 이 구조는 대규모 데이터 세트의 내용을 효율적이고 안전하게 검증할 수 있게 합니다.</p>
+  <div class="img-container"><img alt="머클 트리 구조" src="images/image13.png"></div>
+  <p><b>데이터 블록</b> - 머클 트리에서 데이터 블록은 트랜잭션과 같이 트리의 기본을 형성하는 원시 데이터의 한 세그먼트입니다. 각 데이터 블록은 리프 노드 해시를 생성하기 위해 개별적으로 해시됩니다.</p>
+  <div class="img-container"><img alt="리프를 만들기 위해 트랜잭션을 해시함" src="images/image9.png"></div>
+  <p><b>리프</b> - 머클 트리에서 단일 데이터 블록의 암호화 해시를 저장하는 노드입니다. 리프 노드는 이 해시를 저장함으로써 데이터 블록의 디지털 지문 역할을 합니다.</p>
+  <div class="img-container"><img alt="리프를 만들기 위해 트랜잭션을 해시함" src="images/image23.png"></div>
+  <p><b>내부 노드</b> - 자식 노드의 해시를 집계하는 부모 노드입니다. 이 자식 해시는 연결되어 해시되어 내부 노드를 식별하는 단일 해시 값을 생성합니다.</p>
+  <div class="img-container"><img alt="내부 노드를 만들기 위해 리프를 해시함" src="images/image58.png"></div>
+  <p><b>해시 루트</b> - 트리 내의 모든 데이터를 캡슐화하는 최상위 노드의 단일 해시 값입니다. 이는 모든 기본 데이터 블록의 간결하고 고유한 요약 역할을 합니다. 단일 리프 노드의 변경은 해시 루트를 변경합니다.</p>
+  <div class="img-container"><img alt="머클 루트, 최종 해시" src="images/image5.png"></div>
+
+  <div class="simplified-def">
+    <h3 class="section-title">간략화된 정의</h3>
+    <p><b>머클 트리</b> - 데이터 블록을 암호화 해시 구조로 정리하여 데이터 무결성을 효율적으로 검증하는 데 사용되는 트리와 같은 구조입니다.</p>
+    <p><b>데이터 블록</b> - 리프 노드를 생성하기 위해 해시되는 트랜잭션과 같은 정보 단위입니다.</p>
+    <p><b>리프</b> - 단일 데이터 블록의 해시를 저장하는 노드입니다.</p>
+    <p><b>내부 노드</b> - 자식 노드의 해시를 포함하는 부모 노드입니다.</p>
+    <p><b>해시 루트</b> - 전체 데이터 세트의 무결성을 나타내는 단일 해시를 포함하는 최상위 노드입니다.</p>
+  </div>
+
+  <h3 class="section-title" id="h.emrhhaf2640n">비트코인과 카스파</h3>
+  <p><b>비트코인</b> - 머클 트리는 각 블록 내의 트랜잭션 데이터를 정리합니다. 트랜잭션은 리프 노드로 해시되고, 쌍을 이루어 내부 노드로 해시되며, 블록 헤더에 저장된 단일 머클 루트로 결합됩니다. 이 구조는 트랜잭션 무결성을 효율적으로 검증할 수 있게 합니다.</p>
+  <div class="img-container"><img alt="비트코인의 머클 트리" src="images/image18.png"></div>
+  <p><b>카스파</b> - 머클 트리는 비트코인과 동일한 방식으로 각 블록 내의 트랜잭션 데이터를 정리합니다. 그러나 카스파는 병렬 블록의 공존을 허용하며, 이들 블록의 DAG 내 순서는 알 수 없습니다. 머클 트리는 순서에 의존합니다. 카스파는 이 문제를 어떻게 해결할까요? 추가 머클 트리를 추가함으로써.</p>
+  <div class="img-container"><img alt="카스파의 머클 트리" src="images/image69.png"></div>
+  <p>블록 바디를 헤더에 고정하는 것은 무엇입니까? 바디에 있는 트랜잭션의 머클 루트(<code>hash_merkle_root</code>)입니다.</p>
+  <p>머지셋 트랜잭션을 헤더에 고정하는 것은 무엇입니까? 머지셋에 있는 트랜잭션의 머클 루트(<code>accepted_id_merkle_root</code>)입니다. 이 두 번째 루트는 병합되는 병렬 블록의 트랜잭션을 검증할 수 있게 하여 DAG 환경에서의 순서 지정 문제를 해결합니다.</p>
+  <div class="img-container"><img alt="카스파 블록 헤더의 두 머클 루트" src="images/image65.png"></div>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="h.y0ik307h70q9">제3장: 카스파와 "비트코인 스케일링 문제"</h2>
+  <div class="img-container"><img alt="스케일링 문제 그림" src="images/image53.png"></div>
+  <h3 class="section-title" id="h.2jy3kmwufuue">카스파는 "비트코인 스케일링 문제"를 해결했습니다 - 무엇인가요?</h3>
+  <p>비트코인의 스케일링 문제는 무엇이며 카스파는 어떻게 해결했습니까? 포함을 통해서.</p>
+  <p>그것이 무엇을 의미합니까? 이 장은 사전 지식을 전제로 하지 않으므로, 클라이언트-서버 모델부터 시작하여 피어 투 피어 네트워크에 대해 설명합니다. P2P 네트워크가 무엇인지, 어떻게 생겼는지, 그리고 메시지가 어떻게 전파되는지. 그런 다음, 비트코인과 카스파 모두에 어떻게 적용되는지 설명합니다.</p>
+  <p><b>클라이언트-서버 모델</b> - 클라이언트-서버 네트워크에서는 중앙 집중식 아키텍처가 서버라고 불리는 단일 강력한 컴퓨터를 통해 통신 및 자원 공유를 조직하며, 이 서버는 클라이언트라고 불리는 여러 사용자 장치에 연결됩니다. 이 구조는 효율적인 관리를 보장하지만, 서버에 크게 의존하므로 취약합니다.</p>
+  <div class="img-container"><img alt="클라이언트-서버 모델" src="images/image67.png"></div>
+  <p><b>피어 투 피어(P2P) 네트워크</b> - 상호 연결된 노드 간의 직접 통신 및 자원 공유를 가능하게 하는 분산형 아키텍처입니다. 각 피어는 클라이언트와 서버 역할을 모두 수행하여 중앙 기관에 의존하지 않고 네트워크의 탄력성과 확장성에 기여합니다.</p>
+  <div class="img-container"><img alt="피어 투 피어 네트워크" src="images/image12.png"></div>
+  <p><b>전파 시간</b> - P2P 네트워크에서 전파 시간은 데이터(새로운 블록 등)가 네트워크를 통해 한 노드에서 다른 노드로 이동하는 데 걸리는 시간입니다. 이 시간 동안 다른 노드는 네트워크 상태에 대해 다른 시각을 가질 수 있습니다.</p>
+  <div class="img-container"><img alt="P2P 네트워크에서 메시지 전파" src="images/image37.png"></div>
+
+  <div class="simplified-def">
+    <h3 class="section-title">간략화된 정의</h3>
+    <p><b>클라이언트-서버 모델</b> - 중앙 컴퓨터가 여러 클라이언트의 데이터를 관리합니다.</p>
+    <p><b>피어 투 피어(P2P)</b> - 여러 컴퓨터가 중앙 기관 없이 직접 데이터를 공유합니다.</p>
+    <p><b>노드</b> - P2P 네트워크에 참여하는 단일 컴퓨터입니다.</p>
+    <p><b>전파 시간</b> - 데이터가 네트워크를 통해 전파되는 데 걸리는 시간입니다.</p>
+  </div>
+
+  <h3 class="section-title" id="h.v4bl36mx6e0u">비트코인과 카스파</h3>
+  <p><b>비트코인</b> - 은 P2P 네트워크를 사용합니다. 그러나 보안은 블록 생성 속도(10분)가 전파 시간보다 훨씬 느리다는 사실에 달려 있습니다. 블록이 너무 빨리 생성되면 많은 블록이 "고아 블록"(거부됨)이 되어 작업이 낭비되고 보안이 손상됩니다. 이것이 "스케일링 문제"입니다.</p>
+  <div class="img-container"><img alt="네트워크 지연으로 인한 비트코인 고아 블록" src="images/image45.png"></div>
+  <p><b>카스파</b> - 는 여러 이전 블록을 가리킬 수 있는 포괄적인 프로토콜(GHOSTDAG)을 사용합니다. 전파 시간 동안 병렬 블록이 생성되면, 이들 모두 DAG에 포함됩니다. 고아 블록은 없습니다. 이를 통해 블록 생성 속도가 전파 시간보다 빨라져, 보안을 유지하면서 스케일링 문제를 해결합니다.</p>
+  <div class="img-container"><img alt="카스파의 병렬 블록 포함" src="images/image14.png"></div>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="h.1tq8u5wwr5up">제4장: MuHash</h2>
+  <div class="img-container"><img alt="MuHash 개념 그림" src="images/image35.png"></div>
+  <h3 class="section-title" id="h.ny65anmiz0s">MuHash란 무엇이며 카스파는 어떻게 사용하나요?</h3>
+  <p>UTXO를 추적하고 오래된 블록 바디 데이터를 가지치기하는 구조.</p>
+  <p>그것이 무엇을 의미합니까? 이 장은 사전 지식을 전제로 하지 않으므로, MuHash부터 시작하겠습니다. MuHash 구조가 무엇인지, 어떻게 계산되고, 곱셈의 속성을 어떻게 유지하는지. 그런 다음, 비트코인과 카스파 모두에 어떻게 적용되는지 설명합니다.</p>
+  <p><b>MuHash</b> - 암호화 시스템에서 MuHash(곱셈 해시)는 요소 집합에서 단일 해시 값을 효율적으로 계산하도록 설계된 특수 해시 알고리즘입니다. 이는 증분 업데이트를 허용하며, 이는 전체 해시를 다시 계산할 필요 없이 요소를 추가하거나 제거할 수 있음을 의미하여 동적 데이터 세트의 성능을 향상시킵니다.</p>
+  <div class="img-container"><img alt="MuHash에서 요소 추가 및 제거" src="images/image57.png"></div>
+  <p><b>분자와 분모</b> - MuHash는 두 개의 카운터를 사용합니다. 추가된 요소를 곱하는 분자와 제거된 요소를 곱하는 분모입니다. 최종 상태는 분자를 분모로 "나누는"(모듈러 역수를 곱하는) 방식으로 얻어집니다. 연산 순서는 중요하지 않으며, 이는 병렬 처리에 매우 중요합니다.</p>
+  <div class="img-container"><img alt="분자와 분모를 사용한 MuHash 계산" src="images/image2.png"></div>
+  <div class="img-container"><img alt="분자와 분모를 사용한 MuHash 계산" src="images/image64.png"></div>
+  <p><b>소수 모듈러스 제약</b> - 소수 모듈러스는 모든 산술 연산 동안 분자와 분모를 관리 가능한 범위 내에 유지하는 수학적 경계 역할을 합니다. 각 곱셈은 소수 모듈러스로 수행됩니다. 이는 아무리 많은 요소가 추가되거나 제거되더라도 결과는 항상 유한 필드 내에서 "래핑 어라운드"됨을 의미합니다.</p>
+  <div class="img-container"><img alt="소수 모듈러스 제약" src="images/image16.png"></div>
+  <p><b>모듈러 역수</b> - 모듈러 역수는 MuHash가 사용하는 유한 필드에서 나눗셈을 가능하게 하는 수학 연산입니다. 최종 해시 결과를 얻기 위해 분자를 분모로 "나눌" 필요가 있을 때, 실제로는 분모의 모듈러 역수를 분자에 곱합니다.</p>
+
+  <div class="simplified-def">
+    <h3 class="section-title">간략화된 정의</h3>
+    <p><b>MuHash</b> - 순서가 중요하지 않은 집합에서 요소를 빠르게 해시하기 위한 구조입니다.</p>
+    <p><b>분자</b> - 요소가 추가될 때 곱해지는 필드입니다.</p>
+    <p><b>분모</b> - 요소가 제거될 때 곱해지는 필드입니다.</p>
+    <p><b>소수 모듈러스 제약</b> - 모든 연산이 발생하는 수학적 필드를 정의하는 소수입니다.</p>
+    <p><b>모듈러 역수</b> - 유한 필드에서 "나눗셈"을 가능하게 하는 연산입니다.</p>
+    <p>MuHash는 분자와 분모로 구성된 단순한 구조로, 어떤 순서로든 집합의 요소를 처음부터 다시 계산할 필요 없이 빠르게 해시할 수 있게 해줍니다.</p>
+  </div>
+
+  <h3 class="section-title" id="h.focbph7aurgq">비트코인과 카스파</h3>
+  <p><b>비트코인</b> - 전체 노드는 오래된 사용된 트랜잭션을 포함한 모든 트랜잭션을 보관합니다. 가지치기는 어렵습니다. 왜냐하면 과거 데이터를 보관하지 않고 트랜잭션 상태(UTXO 세트)를 간결하고 검증 가능하게 요약할 효율적인 메커니즘이 없기 때문입니다.</p>
+  <div class="img-container"><img alt="비트코인 블록체인 전체 저장소" src="images/image42.png"></div>
+  <p><b>카스파</b> - 전체 노드는 오래된 데이터를 가지치기합니다. 오래된 데이터를 가지치기하는 이 기능은 각 블록에서 모든 트랜잭션 데이터를 제거하고 각 헤더에 암호화 방식으로 고정하는 방법을 필요로 합니다. 카스파는 MuHash를 사용하여 블록에서 트랜잭션 데이터를 제거하고(가지치기 지점 이후에는 DAG 헤더만 남도록) 각 헤더에 고정합니다. 이것은 가지치기의 필수 단계입니다. 카스파는 트랜잭션 데이터(UTXO)와 합의 데이터(헤더)를 분리합니다. 즉, 카스파는 지금까지 발생한 모든 트랜잭션 대신 사용되지 않은 트랜잭션만 저장합니다. 이는 비트코인에 비해 저장 요구 사항을 줄입니다.</p>
+  <div class="img-container"><img alt="MuHash로 가지치기된 카스파 저장소" src="images/image51.png"></div>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="h.oy0kgniero14">제5장: 카스파의 UTXO 모델</h2>
+  <div class="img-container"><img alt="UTXO 모델 그림" src="images/image74.png"></div>
+  <h3 class="section-title" id="h.8nqvw067oam1">UTXO란 무엇이며 카스파는 어떻게 사용하나요?</h3>
+  <p>누가 어떤 카스파를 쓸 수 있는지 추적하기 위한 구조.</p>
+  <p>그것이 무엇을 의미합니까? 이 장은 사전 지식을 전제로 하지 않으므로, 계정 모델과 UTXO 모델부터 시작하겠습니다. 그 다음 UTXO가 무엇인지, 무엇을 포함하는지, 그리고 어떻게 사용되는지 설명합니다. 그런 다음, 비트코인과 카스파 모두에 어떻게 적용되는지 설명합니다.</p>
+  <p><b>계정 모델</b> - 계정 모델은 전통적인 은행 계좌처럼 작동하며, 잔액을 유지하고 익숙한 작업을 제공합니다. 은행 잔액을 확인하는 것처럼 계정의 현재 보유 자산을 조회할 수 있으며, 은행이 거래 내역을 추적하는 것과 유사하게 계정은 재정 상태를 관리합니다. 시스템은 입금 수령 및 송금과 같은 표준 계정 작업을 제공하며, 각 계정은 쉬운 관리를 위해 고유한 식별자와 이름을 가집니다. 은행이 다양한 목적을 위해 다양한 유형의 계정을 제공하는 것처럼, 다양한 요구를 충족시키기 위해 여러 유형의 계정을 사용할 수 있습니다.</p>
+  <div class="img-container"><img alt="계정 모델" src="images/image52.png"></div>
+  <p><b>UTXO 모델</b> - UTXO 모델은 지갑에 있는 실제 현금이나 동전처럼 작동하며, 각 동전은 특정 가치를 가지며 한 번만 사용할 수 있습니다. 실제 지갑에 다양한 액면가의 여러 지폐와 동전이 있는 것처럼, 디지털 지갑에는 다양한 금액의 여러 UTXO가 포함되어 있으며, 이는 당신의 사용 가능한 잔액을 나타냅니다. 거래를 할 때, 특정 UTXO가 입력으로 소비되고(정확한 지폐를 사용하는 것처럼), 수신자와 당신에게 반환될 잔돈을 위해 새로운 UTXO가 출력으로 생성됩니다. 이는 계산원이 더 큰 지폐로 지불할 때 잔돈을 주는 것과 유사합니다. 시스템은 모든 거래를 통해 이러한 개별 "동전"을 추적하여, 어떤 UTXO가 존재하고 사용할 수 있는지에 대한 완전한 기록을 유지합니다. 이는 실제 돈이 개별적인 정체성을 유지하면서 사람에서 사람으로 이동하는 것과 유사합니다.</p>
+  <div class="img-container"><img alt="UTXO 모델" src="images/image22.png"></div>
+  <p><b>UTXO 구조</b> - UTXO(사용되지 않은 트랜잭션 출력)는 수표가 금액, 수령인 세부 정보 및 승인 정보를 포함하는 것과 유사하게, 이를 사용하기 위해 필요한 모든 필수 정보를 포함하는 디지털 영수증으로 구성됩니다. 각 UTXO는 보유하고 있는 가치를 포함하며 사용 조건을 정의합니다. 실제 동전이 액면가가 새겨져 있고 진위 여부를 확인할 수 있는 것처럼, 각 UTXO는 자체 가치와 암호화된 소유권 증명을 가지므로, 독립적으로 검증하고 사용할 수 있는 자체 포함된 가치 단위가 됩니다. 시스템은 각 UTXO를 고유한 식별자를 가진 개별 객체로 처리하여, 네트워크를 통해 이동하는 개별 가치 단위를 정확하게 추적할 수 있습니다.</p>
+  <div class="img-container"><img alt="UTXO 구조" src="images/image17.png"></div>
+  <p><b>UTXO 사용</b> - UTXO를 사용하는 것은 현금을 사용하는 것과 유사합니다. 구매를 하려면 정확한 지폐나 동전을 제시해야 하며, 일단 사용되면 다시 사용할 수 없습니다. 이 과정은 사용하려는 특정 UTXO를 찾아 UTXO 세트에 존재하는지 확인하는 것부터 시작됩니다. 이는 지갑에 있는 지폐가 위조되지 않고 사용되지 않았는지 확인하는 것과 유사합니다. 거래를 생성할 때, 고유 식별자를 통해 UTXO를 참조하고, 이를 사용할 권리가 있음을 증명하는 서명 스크립트를 제공합니다. 시스템은 UTXO가 아직 사용되지 않았는지(이중 지불 방지), 사용 조건을 충족하는지 확인한 다음, 사용 가능한 세트에서 UTXO를 제거하고, 수신자와 당신에게 반환될 잔돈을 위해 새로운 UTXO를 출력으로 생성하여, 한 당사자에서 다른 당사자로의 가치 이전을 완료합니다.</p>
+  <div class="img-container"><img alt="UTXO 사용 과정" src="images/image31.png"></div>
+
+  <div class="simplified-def">
+    <h3 class="section-title">간략화된 정의</h3>
+    <p><b>계정 모델</b> - 계정별 단일 잔액을 유지하는 시스템입니다.</p>
+    <p><b>UTXO 모델</b> - 개별 가치 "코인"을 추적하는 시스템입니다.</p>
+    <p><b>UTXO</b> - 특정 금액의 돈을 나타내는 사용되지 않은 트랜잭션 출력입니다.</p>
+    <p><b>UTXO 사용</b> - 새로운 UTXO를 생성하기 위해 UTXO를 소비하는 과정입니다.</p>
+    <p>UTXO는 누가 무엇을 사용할 수 있는지 추적하기 위한 단순한 구조입니다.</p>
+  </div>
+
+  <h3 class="section-title" id="h.5v09d76siagw">비트코인과 카스파</h3>
+  <p><b>비트코인</b> - 은 UTXO 모델을 사용합니다. 트랜잭션은 사용된 UTXO와 생성된 UTXO의 모음이며, 각 블록의 바디에 저장됩니다.</p>
+  <div class="img-container"><img alt="비트코인의 UTXO 모델" src="images/image27.png"></div>
+  <p><b>카스파</b> - 도 UTXO 모델을 사용합니다. 주요 차이점은 블록DAG 환경에서 이러한 UTXO가 어떻게 관리되고 검증되는지에 있으며, 이를 통해 병렬 처리 및 더 빠른 확인이 가능합니다.</p>
+  <div class="img-container"><img alt="카스파의 UTXO 모델" src="images/image44.png"></div>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="h.6x07cz5zmxim">제6장: 부모와 머지셋</h2>
+  <div class="img-container"><img alt="DAG에서 블록 간의 관계" src="images/image4.png"></div>
+  <h3 class="section-title" id="h.34xcaoqpznos">부모와 머지셋이란 무엇이며 카스파는 어떻게 사용하나요?</h3>
+  <p>카스파의 블록DAG 구조에서 블록 간의 관계를 설명하는 두 가지 다른 방법.</p>
+  <p><b>전통적인 블록체인 부모</b> - 비트코인과 같은 선형 블록체인에서는 각 블록이 정확히 하나의 부모(제네시스 제외)를 가지며, 단순한 체인 구조를 형성합니다. 부모-자식 관계는 직접적입니다. 각 새 블록은 이전 블록의 해시를 참조하여 제네시스부터 현재 팁까지 끊김 없는 시퀀스를 형성합니다.</p>
+  <div class="img-container"><img alt="비트코인의 부모 관계" src="images/image34.png"></div>
+  <p><b>DAG 부모의 복잡성</b> - 카스파의 블록DAG는 블록이 여러 부모를 가질 수 있도록 허용하여 더 복잡한 관계 네트워크를 만듭니다. 블록이 생성될 때, 여러 기존 블록을 부모로 참조할 수 있으며, 이를 통해 병렬 블록 생성이 가능하고 처리량이 높아집니다.</p>
+  <div class="img-container"><img alt="카스파의 다중 부모 관계" src="images/image36.png"></div>
+  <p><b>부모</b> - 부모는 새 블록이 헤더에서 직접 참조하는 블록입니다. 이는 블록 생성자가 선언하는 명시적 관계이며, 이 새 블록이 직접 기반으로 하는 블록입니다. 카스파 DAG 뷰어를 보면, 이 화살표들이 부모 관계를 나타냅니다.</p>
+  <div class="img-container"><img alt="새 블록이 부모를 가리킴" src="images/image11.png"></div>
+  <p><b>부모의 작동 방식</b> - 블록을 생성할 때, 채굴자들은 현재 DAG의 "팁"이라고 생각하는 것을 기반으로 기존 블록을 부모로 참조하도록 선택합니다. 시스템은 이러한 부모 관계를 검증하고 이를 사용하여 DAG 구조 내에서 블록의 위치를 결정합니다. 여기서는 새로운 블록이 생성되어 DAG의 "팁", 즉 다른 블록이 가리키지 않는 블록을 참조하는 것을 볼 수 있습니다.</p>
+  <div class="img-container"><img alt="새 블록 생성 및 팁 선택" src="images/image56.png"></div>
+  <p><b>머지셋</b> - 머지셋은 블록의 선택된 부모의 안티코인에 있지만, 여전히 블록의 합의 컨텍스트의 일부로 간주되는 블록 집합입니다. 여기서는 블록 C가 B의 안티코인에 있고, 블록 B가 C의 안티코인에 있습니다.</p>
+  <div class="img-container"><img alt="블록 머지셋 그림" src="images/image29.png"></div>
+  <p><b>머지셋 계산 방법</b> - 머지셋은 선택된 부모의 조상이 아니지만, 블록의 부모 집합을 통해 여전히 도달할 수 있는 모든 블록을 찾아 계산됩니다. 이는 합의 결정에 고려되어야 할 블록의 더 넓은 컨텍스트를 생성합니다. 이 예에서 블록 B가 선택된 부모인 경우, 생성되는 블록의 머지셋에는 블록 C와 블록 D가 모두 포함됩니다.</p>
+  <div class="img-container"><img alt="머지셋 계산" src="images/image47.png"></div>
+  <p><b>GHOSTDAG의 머지셋</b> - GHOSTDAG 프로토콜은 머지셋을 처리하여 어떤 블록을 "파란색"(합의에 기여) 또는 "빨간색"(유효하지만 기여하지 않음)으로 색칠할지 결정합니다. 이 색칠 과정은 병렬 블록 환경에서 합의를 유지하는 데 필수적입니다.</p>
+
+  <h3 class="section-title">부모와 머지셋이 함께 작동하는 방식</h3>
+  <p><b>선택된 부모 선택</b> - 모든 부모 중에서 시스템은 "선택된 부모"로 하나를 선택합니다. 즉, "파란색 작업량"이 가장 많은 부모입니다. 이는 DAG를 통해 메인 체인의 백본을 생성하면서 다른 부모 관계도 인식합니다. 여기서는 부모 체인이 강조 표시됩니다.</p>
+  <div class="img-container"><img alt="선택된 부모 선택 및 메인 체인" src="images/image75.png"></div>
+  <p><b>머지셋 처리</b> - 선택된 부모가 선택되면, 머지셋이 계산되고 처리되어 최종 GHOSTDAG 데이터를 결정합니다. 머지셋은 선택된 부모를 제외합니다. 왜냐하면 그것은 이미 메인 체인에 포함되어 있기 때문입니다. 여기서는 블록 C가 블록 B(선택된 부모)의 안티코인에 있기 때문에 머지셋에 포함됩니다. 비록 블록 C가 새 블록의 부모는 아니지만(부모에는 블록 B와 블록 D만 포함됩니다).</p>
+  <div class="img-container"><img alt="머지셋 처리" src="images/image26.png"></div>
+  <p><b>가상 부모 선택</b> - 가상 상태를 생성할 때, 시스템은 두 가지 개념을 모두 사용합니다. 후보 블록에서 가상 부모를 선택하고, 결과 머지셋이 크기 제한을 초과하지 않도록 보장합니다. 이는 많은 병렬 블록을 포함하는 것과 관리 가능한 합의 복잡성을 유지하는 것 사이의 균형을 이룹니다.</p>
+
+  <h3 class="section-title">실질적인 차이점</h3>
+  <p><b>저장 및 반복</b> - 부모는 블록 헤더에 직접 저장되는 반면, 머지셋 데이터는 GHOSTDAG 데이터 구조에 별도로 계산되어 저장됩니다. 시스템은 다양한 순서(합의 순서, "파란색 작업" 순서 등)로 머지셋 블록에 접근하기 위한 다양한 반복기를 제공합니다.</p>
+  <p><b>합의에 미치는 영향</b> - 부모는 DAG의 기본 구조를 결정하지만, 머지셋은 어떤 블록이 실제로 "파란색 점수" 및 "파란색 작업"과 같은 합의 계산에 기여하는지 결정합니다. 블록은 부모일 수 있지만, 머지셋에서 빨간색으로 표시될 수 있으며, 이는 메인 합의 체인에 기여하지 않음을 의미합니다.</p>
+
+  <div class="simplified-def">
+    <h3 class="section-title">간략화된 정의</h3>
+    <p><b>부모</b> - 새 블록이 헤더에서 직접 참조하여 DAG에서 명시적 관계를 설정하는 블록입니다.</p>
+    <p><b>머지셋</b> - 합의 처리를 위해 고려되는 블록의 안티코인에 있는 블록 집합으로, 선택된 부모는 제외됩니다.</p>
+    <p><b>선택된 부모</b> - 가장 "파란색 작업량"이 많은 부모로, 메인 체인의 백본을 형성합니다.</p>
+    <p><b>파란색/빨간색 머지셋</b> - 머지셋 내에서 합의에 기여하는(파란색) 또는 기여하지 않는(빨간색) 블록입니다.</p>
+    <p>부모는 DAG의 구조를 정의하고, 머지셋은 합의 참여를 결정합니다.</p>
+  </div>
+
+  <h3 class="section-title" id="h.tsab66lazd4a">비트코인 vs 카스파</h3>
+  <p><b>비트코인</b> - 은 블록당 하나의 부모만 가지므로(제네시스 제외), 부모와 머지셋의 구분이 없습니다. 유일한 부모는 구조적 관계이자 합의 관계입니다.</p>
+  <div class="img-container"><img alt="단순한 비트코인 구조" src="images/image55.png"></div>
+  <p><b>카스파</b> - 는 구조적 관계(부모)와 합의 관계(머지셋)를 분리합니다. 여러 부모가 DAG 구조를 생성하지만, 머지셋 처리는 어떤 블록이 실제로 합의 상태에 기여하는지 결정합니다.</p>
+  <div class="img-container"><img alt="부모와 머지셋을 가진 카스파의 복잡한 구조" src="images/image24.png"></div>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="h.x0nj4tecoh66">제7장: 2차 가지치기</h2>
+  <div class="img-container"><img alt="2차 가지치기 그림" src="images/image48.png"></div>
+  <h3 class="section-title" id="h.1wbq42gt63wc">2차 가지치기란 무엇이며 카스파는 어떻게 사용하나요?</h3>
+  <p>2차 가지치기는 카스파의 저장 공간 최적화에서 고급 단계로, 합의 관련 데이터를 삭제하면서도 새로운 블록을 검증하고 네트워크 합의에 참여할 수 있는 능력을 유지합니다. 이는 DAG 구조 데이터, 관계, 그리고 일부 헤더 자체를 선택적으로 삭제함으로써 1차 가지치기를 넘어섭니다.</p>
+  <p>왜 "2차"인가요? - 이 용어는 블록 바디 삭제(1차)가 시작에 불과하다는 점을 강조합니다. 1차 가지치기는 저장 공간 요구 사항을 크게 줄이고 노드 실행의 장벽을 낮추지만(분산화 향상), 더 많은 데이터를 삭제할 수 있는 추가 가지치기 단계(2차 가지치기)가 뒤따릅니다. 이 장은 특히 블록 바디 삭제, 즉 모든 후속 최적화를 가능하게 하는 기반에 초점을 맞춥니다.</p>
+  <p>그것이 무엇을 의미합니까? 이 장은 1차 가지치기에 대한 지식을 전제로 하므로, 1차 가지치기 이후에 존재하는 합의 데이터부터 시작하여, 2차 가지치기가 합의 구조를 선택적으로 제거하는 방법, 무엇이 유지되고 무엇이 제거되는지, 그리고 합의 데이터가 줄어든 상태에서 검증이 어떻게 계속 작동하는지 설명합니다.</p>
+
+  <h3 class="section-title">1차 가지치기 vs 2차 가지치기</h3>
+  <p><b>1차 가지치기의 기초</b> - 1차 가지치기 후, 노드는 모든 블록 헤더, GHOSTDAG 데이터, 접근성 관계 및 DAG 구조 정보를 유지합니다. 이는 완전한 합의 검증을 가능하게 하지만, 카스파가 유지하는 복잡한 DAG 관계를 위해서는 여전히 상당한 저장 공간이 필요합니다.</p>
+  <p><b>2차 가지치기의 과제</b> - 과제는 노드가 새로운 블록을 검증하는 능력을 손상시키지 않고 어떤 합의 데이터를 안전하게 제거할 수 있는지 결정하는 것입니다. 시스템은 중복 데이터를 제거하면서 합의를 유지하기에 충분한 구조 정보를 보존해야 합니다.</p>
+
+  <h3 class="section-title">다단계 증명 시스템</h3>
+  <p><b>증명 수준 분류</b> - 카스파의 가지치기 시스템은 각 블록의 중요도를 다양한 증명 수준에 따라 분류합니다. 더 높은 증명 수준에 속하는 블록은 더 낮은 수준에만 필요한 블록보다 더 많은 합의 데이터를 보존합니다.</p>
+  <p><b>수준별 데이터 보존</b> - 시스템은 각 블록이 속한 증명 수준에 따라 어떤 합의 데이터를 보존할지 결정합니다. 상위 수준 블록은 더 많은 관계와 합의 정보를 보존하는 반면, 하위 수준 블록은 합의 데이터를 안전하게 제거할 수 있습니다.</p>
+  <p><b>연속적인 DAG 영역</b> - 가지치기는 각 수준에서 남아있는 관계가 연속적인 DAG 영역을 나타내도록 보장하여, 합의 검증에 필요한 구조적 무결성을 유지합니다.</p>
+
+  <h3 class="section-title">2차 가지치기에서 제거되는 것</h3>
+  <p><b>관계 데이터 제거</b> - 2차 가지치기는 더 높은 증명 수준에만 속하는 블록에 대한 수준별 관계 데이터를 제거합니다. 이는 관계가 연속적인 DAG 영역을 나타낸다는 의미를 보존하면서 불필요한 하위 수준 데이터를 제거합니다.</p>
+  <p><b>GHOSTDAG 데이터 선택적 제거</b> - 시스템은 일부 블록의 GHOSTDAG 데이터를 제거하지만, 필수적인 합의 검증을 위해 이를 보존합니다. 부분적으로 가지치기된 블록의 경우, GHOSTDAG 데이터는 레벨 0에서 제거됩니다.</p>
+  <p><b>헤더 제거</b> - 2차 가지치기의 가장 적극적인 형태에서는 일부 블록 헤더 자체를 제거할 수 있지만, 과거 가지치기 지점은 보존됩니다. 가지치기 지점 쿼리에 필수적이지 않은 헤더만 제거됩니다.</p>
+
+  <h3 class="section-title">2차 가지치기에서 유지되는 것</h3>
+  <p><b>필수 합의 구조</b> - 가지치기 지점의 안티코인, DAA 윈도우 블록, 필수 검증을 위한 GHOSTDAG 블록과 같은 중요한 합의 데이터는 항상 유지됩니다. 이는 데이터 저장 공간이 줄어들더라도 합의 작업이 계속될 수 있도록 보장합니다.</p>
+  <p><b>증명 수준 소속</b> - 블록은 증명 수준의 중요도에 따라 분류를 유지하며, 어떤 데이터가 유지되는지 결정합니다. 시스템은 이러한 소속을 기반으로 합의 검증에 필요한 최소한의 데이터를 보존합니다.</p>
+  <p><b>과거 가지치기 지점</b> - 과거 가지치기 지점의 헤더는 가지치기 증명 시스템을 지원하고 가지치기 지점 쿼리에 응답할 수 있는 능력을 유지하기 위해 항상 유지됩니다.</p>
+
+  <h3 class="section-title">합의 검증이 계속되는 방식</h3>
+  <p><b>상태 전환</b> - 2차 가지치기를 거치는 블록은 유효한 상태를 가지고 증명 수준에 속하는 경우 "헤더만" 상태로 전환됩니다. 이는 유효한 상태가 필수적인 합의 데이터의 존재를 의미한다는 의미를 보존합니다.</p>
+  <p><b>감소된 데이터 검증</b> - 2차 가지치기를 하더라도 노드는 보존된 합의 데이터 구조와 남아있는 관계를 사용하여 새로운 블록을 검증할 수 있습니다. 시스템은 GHOSTDAG 규칙과 블록 간의 관계를 확인하기에 충분한 정보를 유지합니다.</p>
+  <p><b>증명 기반 검증</b> - 보존된 증명 수준 데이터는 노드가 완전한 과거 합의 데이터 대신 암호화 증명을 사용하여 블록을 검증할 수 있도록 하여, 저장 공간을 크게 줄이면서 합의에 참여할 수 있도록 합니다.</p>
+
+  <h3 class="section-title">아카이브 노드 vs 가지치기 노드</h3>
+  <p><b>아카이브 노드 동작</b> - 아카이브로 설정된 노드는 1차 및 2차 가지치기를 완전히 무시하고 모든 합의 데이터를 보존합니다. 이 노드들은 네트워크의 완전한 합의 원장 역할을 하지만, 최대 저장 공간을 필요로 합니다.</p>
+  <p><b>가지치기 노드 효율성</b> - 일반 가지치기 노드는 2차 가지치기를 사용하여 최대 저장 효율성을 달성하면서, 다단계 증명 시스템을 통해 완전한 합의 검증 능력을 유지합니다.</p>
+  <p>참고: 가지치기 노드가 어떻게 풀 노드로 유지되는지, 그리고 아카이브 노드가 네트워크 운영에 왜 선택적인지(비트코인의 무신뢰 모델을 유지하면서)에 대한 자세한 설명은 검증 능력, 암호화 증명 및 네트워크 지속 가능성을 다루는 확장 기사 "아카이브 노드 vs 풀 노드"를 참조하십시오.</p>
+
+  <div class="simplified-def">
+    <h3 class="section-title">간략화된 정의</h3>
+    <p><b>2차 가지치기</b> - 합의 관련 데이터를 제거하면서도 합의 규칙을 검증하기에 충분한 정보를 보존하는 것입니다.</p>
+    <p><b>증명 수준 소속</b> - 블록이 속한 증명 수준에 따라 블록을 분류하여 어떤 합의 데이터가 유지되는지 결정하는 것입니다.</p>
+    <p><b>"헤더만" 상태</b> - 합의 데이터가 가지치기되었지만, 필수적인 검증 정보를 유지하는 블록입니다.</p>
+    <p><b>연속적인 DAG 영역</b> - 가지치기 후에도 남아있는 합의 데이터에서 구조적 무결성을 유지하는 것입니다.</p>
+    <p>2차 가지치기는 지능적인 데이터 분류를 통해 합의 검증 능력을 보존하면서 최대 저장 효율성을 가능하게 합니다.</p>
+  </div>
+
+  <h3 class="section-title">비트코인 vs 카스파: 합의 데이터 가지치기</h3>
+  <p><b>비트코인</b> - 합의 정보는 검증에 필수적이므로 안전하게 제거할 수 없습니다.</p>
+  <p><b>카스파</b> - 복잡한 DAG 구조와 다단계 증명 시스템은 정교한 2차 가지치기를 가능하게 합니다. 이를 통해 합의 데이터의 다양한 수준을 검증에 대한 중요도에 따라 선택적으로 제거할 수 있습니다. 이는 합의 능력을 유지하면서 훨씬 더 공격적인 저장 공간 최적화를 가능하게 합니다.</p>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="h.mz2dlkhrvwd2">제8장: 카스파 GHOSTDAG 간략화</h2>
+  <div class="img-container"><img alt="GHOSTDAG 그림" src="images/image43.png"></div>
+  <h3 class="section-title" id="h.hwkbrs8egi6p">GHOSTDAG란 무엇이며 카스파는 어떻게 사용하나요?</h3>
+  <p>DAG 구조에서 블록을 정렬하고 보안 속성을 유지하는 합의 프로토콜.</p>
+  <p>그것이 무엇을 의미합니까? 이 장은 전통적인 합의부터 시작하여 GHOSTDAG, 블록 분류 방법, 그리고 비트코인과 카스파 간의 차이점을 설명합니다.</p>
+
+  <h3 class="section-title">전통적인 합의 - 선형 체인 정렬</h3>
+  <p>전통적인 블록체인 합의는 블록이 단일 시퀀스를 형성하는 선형 체인에서 작동합니다. 각 블록은 정확히 하나의 부모(제네시스 제외)를 가지며, 단순한 정렬 메커니즘을 생성합니다. 충돌이 발생하면(동일한 높이에 여러 블록이 있는 경우), 네트워크는 하나의 블록을 선택하고 나머지는 고아 블록으로 거부합니다. 이 접근 방식은 명확한 정렬을 보장하지만, 각 레벨에서 하나의 블록만 수락될 수 있으므로 처리량을 제한합니다.</p>
+  <div class="img-container"><img alt="전통적인 합의" src="images/image32.png"></div>
+
+  <h3 class="section-title">GHOSTDAG 프로토콜 - DAG 합의</h3>
+  <p>GHOSTDAG는 블록이 여러 부모를 가질 수 있는 유향 비순환 그래프(DAG) 구조와 함께 작동하도록 합의를 확장합니다. 이 프로토콜은 먼저 "파란색 작업량"이 가장 높은 부모 블록을 선택한 다음, 머지셋의 모든 블록을 검사하여 "파란색"(정직한) 또는 "빨간색"(잠재적으로 충돌하는)으로 분류합니다. 이 분류는 보안 속성을 유지하기 위해 안티코인 크기를 제한하는 보안 매개변수 K를 포함하는 수학적 제약 조건에 기반합니다. 여기서 회색 블록은 현재 네트워크에 의해 검증되고 있으며, 블록 C는 그 선택된 부모입니다. k=0인 경우, 체인 블록 C는 이미 1개의 파란색 블록이므로 블록 B는 빨간색으로 분류됩니다. k=1(또는 그 이상)인 경우, 블록 B는 파란색으로 분류됩니다. 왜냐하면 그 안티코인에 1개의 파란색 블록(블록 C)만 있기 때문입니다.</p>
+  <div class="img-container"><img alt="블록 분류 규칙" src="images/image28.png"></div>
+
+  <h3 class="section-title">파란색 작업량 누적</h3>
+  <p>이 프로토콜은 파란색 블록에서만 작업 증명을 누적하여 "파란색 작업량"이라는 메트릭을 생성합니다. 파란색 블록은 계산 작업을 누적 보안 점수에 기여하는 반면, 빨간색 블록은 이 계산에서 제외됩니다. 이러한 선택적 누적은 합의에 유효한 블록만이 네트워크 보안에 기여하도록 보장하며, 악의적이거나 충돌하는 블록이 시스템을 약화시키는 것을 방지합니다. 이 예에서 블록 B가 빨간색(k=0)이라고 가정하면, 우리 회색 블록의 "파란색 작업량"은 블록 C로부터 상속된 "파란색 작업량"에 블록 C의 "파란색 작업량"을 더하여 계산됩니다. 블록 B가 파란색인 경우, 새 블록의 "파란색 작업량"은 선택된 부모(블록 C)의 "파란색 작업량"을 상속하고, 그 다음 선택된 부모(C)의 "파란색 작업량"과 머지셋(블록 B)에 있는 파란색 블록의 "파란색 작업량"을 더합니다.</p>
+  <div class="img-container"><img alt="파란색 작업량 누적" src="images/image62.png"></div>
+
+  <h3 class="section-title">부모 선택 및 정렬</h3>
+  <p>GHOSTDAG는 "파란색 작업량" 값을 기반으로 부모를 선택하여 블록의 순서를 결정합니다. 이 프로토콜은 가장 높은 누적 "파란색 작업량"을 가진 부모를 "선택된 부모"로 선택하여 DAG 구조 내에 백본 체인을 생성합니다. 블록 순서는 "파란색 작업량"을 주요 기준으로 사용하며, 블록 헤더 해시는 동점일 경우 결정론적 순서를 제공합니다. 이 예에서 블록 C가 선택된 부모이고 블록 B가 파란색이라고 가정합니다. 트랜잭션 처리 순서는 1. 선택된 부모(C) 2. 정렬된 머지셋(B)입니다.</p>
+  <div class="img-container"><img alt="부모 선택 및 정렬" src="images/image6.png"></div>
+
+  <h3 class="section-title">데이터 저장 및 관리</h3>
+  <p>프로토콜은 분류 결과를 파란색 및 빨간색 블록 목록을 포함하는 구조화된 데이터에 저장합니다. 파란색 블록은 향후 분류 결정을 위해 안티코인 크기 추적과 함께 추가되며, 빨간색 블록은 단순히 빨간색 목록에 추가됩니다. 이 조직은 합의 역할을 명확히 구분하면서 완전한 DAG 정보를 유지합니다.</p>
+
+  <div class="simplified-def">
+    <h3 class="section-title">간략화된 정의</h3>
+    <p><b>전통적인 합의</b> - 블록이 단일 시퀀스를 형성하고 블록당 하나의 부모를 가지는 선형 체인 정렬 시스템입니다.</p>
+    <p><b>GHOSTDAG 프로토콜</b> - 안티코인 크기 제약 조건에 따라 블록을 파란색 또는 빨간색으로 분류하는 DAG 합의 메커니즘입니다.</p>
+    <p><b>블록 분류</b> - 블록이 파란색(합의 유효)인지 빨간색(잠재적으로 충돌)인지 결정하는 과정입니다.</p>
+    <p><b>파란색 작업량 누적</b> - 파란색 블록에서만 작업 증명을 선택적으로 계산하는 것입니다.</p>
+    <p>GHOSTDAG는 블록체인의 보안 속성을 유지하면서 DAG 구조를 가능하게 하는 합의 프로토콜입니다.</p>
+  </div>
+
+  <h3 class="section-title">비트코인과 카스파</h3>
+  <p><b>비트코인</b> - 은 블록이 단일 시퀀스를 형성하는 전통적인 선형 체인 합의를 사용합니다. 충돌하는 블록은 고아 블록이 되어 보안에 기여하지 않습니다. 가장 긴 체인(가장 많은 누적 작업량)이 단순한 비교 메커니즘을 통해 합의를 결정합니다.</p>
+  <div class="img-container"><img alt="비트코인과 GHOSTDAG" src="images/image71.png"></div>
+  <p><b>카스파</b> - 는 여러 동시 블록을 가진 DAG 구조를 관리하기 위해 GHOSTDAG 프로토콜을 사용합니다. 파란색 블록은 "파란색 작업량" 누적을 통해 보안에 기여하는 반면, 빨간색 블록은 DAG에 남아 있지만 합의 결정에서는 제외됩니다. 이 프로토콜은 네트워크 상태를 포괄적으로 추적하기 위해 두 가지 유형의 블록을 모두 유지합니다.</p>
+  <div class="img-container"><img alt="카스파와 GHOSTDAG" src="images/image19.png"></div>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="h.drxg3f8wwuwc">제9장: DAG 용어</h2>
+  <div class="img-container"><img alt="DAG 용어" src="images/image8.png"></div>
+  <h3 class="section-title">과거, 미래, 안티코인, 머지셋, K 매개변수, 이 모든 것이 무엇을 의미합니까?</h3>
+  <p>과거, 미래, 안티코인은 DAG 용어이며, 머지셋과 K는 GHOSTDAG에서 사용됩니다.</p>
+  <p>DAG 용어는 블록DAG 구조의 관계를 설명하는 전문 용어입니다. 선형 체인, DAG, 그리고 GHOSTDAG에 대해 간략히 설명합니다.</p>
+
+  <h3 class="section-title">선형 체인 용어 - 전통적인 블록체인</h3>
+  <p>선형 체인 용어는 블록이 단일 시퀀스를 형성하는 간단한 개념을 사용합니다. 각 블록은 부모와 잠재적으로 자식을 가지며, 간단한 조상-자손 관계를 생성합니다. "높이", "이전 블록", "다음 블록"과 같은 용어는 선형적인 진행을 설명합니다. 충돌이 발생하면 블록은 메인 체인에 "수락"되거나 "고아"가 되어 폐기됩니다.</p>
+  <div class="img-container"><img alt="선형 체인 용어" src="images/image15.png"></div>
+
+  <h3 class="section-title">DAG 용어</h3>
+  <p>블록이 여러 부모를 가질 수 있도록 허용하면 DAG 내에 새로운 관계가 생성됩니다.</p>
+  <div class="img-container"><img alt="DAG 용어" src="images/image50.png"></div>
+
+  <h3 class="section-title">과거와 미래 관계 - DAG</h3>
+  <p>과거 관계는 주어진 블록에서 부모 링크를 따라 거슬러 올라가 도달할 수 있는 모든 블록을 정의합니다. 한 블록이 다른 블록의 과거에 있는 것은 그들을 연결하는 유향 경로가 존재할 때입니다. 미래 관계는 반대로 작동합니다. 블록 A가 블록 B의 과거에 있다면, 블록 B는 블록 A의 미래에 있습니다.</p>
+  <div class="img-container"><img alt="과거와 미래 관계 - DAG" src="images/image73.png"></div>
+
+  <h3 class="section-title">안티코인 관계 - DAG</h3>
+  <p>안티코인은 서로의 조상도 후손도 아닌 블록을 나타냅니다. 즉, DAG에서 동시에 존재합니다. 두 블록이 서로의 안티코인에 있다는 것은, 어느 블록도 유향 경로를 통해 다른 블록에 도달할 수 없을 때입니다. 이 관계는 GHOSTDAG의 보안 매개변수 K에 매우 중요하며, 합의 보안을 유지하기 위해 안티코인의 크기를 제한합니다. 여기서 블록 B와 블록 C는 서로의 안티코인에 있으며, 블록 B는 블록 C에서 도달할 수 없고, 블록 C는 블록 B에서 도달할 수 없습니다.</p>
+  <div class="img-container"><img alt="안티코인 관계 - DAG" src="images/image59.png"></div>
+
+  <h3 class="section-title">머지셋 및 파란색/빨간색 분류 - GHOSTDAG</h3>
+  <p>머지셋은 새 블록이 생성될 때 병합되는 블록의 모음을 나타냅니다. 머지셋에는 블록의 직접적인 부모가 포함되지만, 직접적인 부모가 아닌 블록도 포함될 수 있습니다. GHOSTDAG는 안티코인 크기 제약 조건에 따라 머지셋의 블록을 "파란색"(정직한) 또는 "빨간색"(잠재적으로 충돌하는)으로 분류합니다. 이 분류는 "파란색 작업량" 누적을 통해 어떤 블록이 네트워크 보안에 기여하는지 결정합니다. 다음은 안티코인 크기 제약 조건이 0일 때 블록 B가 머지셋을 파란색과 빨간색으로 분류하는 예시입니다.</p>
+  <div class="img-container"><img alt="머지셋 및 파란색/빨간색 분류 - GHOSTDAG" src="images/image46.png"></div>
+
+  <h3 class="section-title">K 매개변수 - GHOSTDAG</h3>
+  <p>K 매개변수는 파란색 블록의 안티코인에 허용되는 최대 크기를 제어합니다. 이 매개변수는 네트워크 지연 시간, 블록 생성 속도 및 원하는 보안 보장에 따라 계산됩니다. 이 예에서는 위 예시와 같이 k=0이 아니라 k=1이므로, 각 파란색 블록은 안티코인에 1개의 다른 파란색 블록을 가집니다.</p>
+  <div class="img-container"><img alt="K 매개변수 - GHOSTDAG" src="images/image61.png"></div>
+
+  <div class="simplified-def">
+    <h3 class="section-title">간략화된 정의</h3>
+    <p><b>과거 관계</b> - 주어진 블록에서 부모 링크를 따라 거슬러 올라가 도달할 수 있는 모든 블록입니다.</p>
+    <p><b>미래 관계</b> - 부모 링크를 따라 앞으로 나아가 주어진 블록에 도달할 수 있는 모든 블록입니다.</p>
+    <p><b>안티코인 관계</b> - 서로의 조상도 후손도 아닌 블록입니다.</p>
+    <p><b>머지셋</b> - 새 블록이 생성될 때 병합되는 GHOSTDAG 블록의 모음입니다.</p>
+    <p><b>파란색/빨간색 분류</b> - GHOSTDAG가 블록을 정직한(파란색) 또는 잠재적으로 충돌하는(빨간색) 블록으로 분류하는 것입니다.</p>
+    <p><b>보안 매개변수 K</b> - 합의 보안을 유지하기 위한 GHOSTDAG 안티코인의 최대 허용 크기입니다.</p>
+  </div>
+
+  <h3 class="section-title">비트코인과 카스파</h3>
+  <p><b>비트코인</b> - 은 "이전 블록", "다음 블록", "체인 높이", "가장 긴 체인"과 같은 단순한 선형 용어를 사용합니다. 관계는 단순한 조상-자손 연결입니다. 경쟁하는 블록은 중간 상태 없이 "고아 블록"이 됩니다.</p>
+  <div class="img-container"><img alt="비트코인과 용어" src="images/image54.png"></div>
+  <p><b>카스파</b> - 는 DAG의 과거/미래/안티코인 관계, GHOSTDAG의 머지셋, 머지셋의 파란색/빨간색 분류를 포함한 추가 용어를 사용합니다. 카스파는 여러 동시 블록을 유지하고, 그들의 관계를 관리하며, 일관된 순서를 제공합니다.</p>
+  <div class="img-container"><img alt="카스파와 용어" src="images/image49.png"></div>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="h.1uals18cttyl">제10장: 1차 가지치기</h2>
+  <div class="img-container"><img alt="1차 가지치기 그림" src="images/image41.png"></div>
+  <h3 class="section-title" id="h.3i8fyh1jrh8m">1차 가지치기란 무엇이며 카스파는 어떻게 사용하나요?</h3>
+  <p>1차 가지치기는 카스파의 다단계 저장 공간 최적화의 첫 번째 단계입니다. 이는 블록에서 오래된 트랜잭션 데이터를 제거하면서도, 가지치기 지점에서 UTXO 세트를 유지하여 상태 검증을 수행합니다. 그러나 중요한 것은 블록체인의 무결성을 유지하기 위해 모든 블록 헤더가 보존된다는 것입니다.</p>
+  <p>왜 "1차"인가요? - 이 용어는 블록 바디 삭제(1차)가 시작에 불과하다는 점을 강조합니다. 1차 가지치기는 저장 공간 요구 사항을 크게 줄이고 노드 실행의 장벽을 낮추지만(분산화 향상), 더 많은 데이터를 삭제할 수 있는 추가 가지치기 단계(2차 가지치기)가 뒤따릅니다. 이 장은 특히 블록 바디 삭제, 즉 모든 후속 최적화를 가능하게 하는 기반에 초점을 맞춥니다.</p>
+  <p>그것이 무엇을 의미합니까? 이 장은 사전 지식을 전제로 하지 않으므로, 전통적인 블록체인 저장소의 과제부터 시작하여, 1차 가지치기가 UTXO 세트를 유지함으로써 어떻게 작동하는지, 무엇이 제거되고 무엇이 보존되는지, 가지치기 지점의 UTXO 세트가 어떻게 검증을 가능하게 하는지, 그리고 이것이 카스파의 확장 가능한 저장소 모델의 기반을 어떻게 구축하여 더 넓은 네트워크 참여를 가능하게 하는지 설명합니다.</p>
+
+  <h3 class="section-title">전통적인 저장 방식 vs 1차 가지치기</h3>
+  <p><b>전통적인 전체 저장</b> - 전통적인 블록체인 구현에서 노드는 제네시스부터 현재 팁까지 모든 트랜잭션 세부 정보를 포함한 완전한 블록 데이터를 저장합니다. 이는 모든 입력, 출력, 서명 및 트랜잭션 스크립트가 영구적으로 보존되어, 많은 사용자에게는 감당하기 어려울 수 있는 저장 공간 요구 사항이 지속적으로 증가한다는 것을 의미합니다.</p>
+  <p><b>1차 가지치기의 과제</b> - 과제는 새로운 트랜잭션을 검증할 수 있으면서도 오래된 트랜잭션 데이터를 제거하는 것입니다. 새로운 트랜잭션은 이전 출력(UTXO)을 참조해야 하므로, 시스템은 오래된 블록 바디가 가지치기된 후에도 이러한 참조를 검증하기에 충분한 정보를 유지해야 합니다.</p>
+
+  <h3 class="section-title">UTXO 세트를 기반으로</h3>
+  <p><b>UTXO 세트의 정의</b> - UTXO 세트는 블록체인의 특정 시점에서 사용되지 않은 모든 트랜잭션 출력을 나타냅니다. 이는 그 시점에 존재하고 사용할 수 있는 모든 "코인"의 스냅샷으로, 유통되는 모든 돈의 재고와 유사합니다.</p>
+  <p><b>가지치기 지점 UTXO 세트</b> - 카스파는 가지치기 지점에서 검증을 위한 기본 상태 역할을 하는 특별한 UTXO 세트를 유지합니다. 이 UTXO 세트는 가지치기 지점이 진행됨에 따라 업데이트되어, 항상 해당 체크포인트에서 올바른 사용 가능한 상태를 반영하도록 보장합니다.</p>
+  <p><b>UTXO 세트 진행</b> - 가지치기 지점이 진행될 때, 시스템은 체인의 블록에서 UTXO 차이를 적용하여 가지치기 지점 UTXO 세트를 업데이트합니다. 이 과정은 오래된 데이터가 가지치기되더라도 UTXO 세트가 정확하게 유지되도록 보장합니다.</p>
+
+  <h3 class="section-title">1차 가지치기에서 가지치기되는 것</h3>
+  <p><b>블록 바디 데이터 제거</b> - 1차 가지치기는 트랜잭션 입력, 출력, 서명 및 스크립트를 포함한 오래된 블록의 실제 트랜잭션 데이터를 제거합니다. 여기에는 UTXO 멀티셋, UTXO 차이, 승인 데이터 및 블록의 전체 트랜잭션 저장소가 포함됩니다.</p>
+  <p><b>헤더 보존</b> - 트랜잭션 데이터는 제거되지만, 블록체인의 구조적 무결성을 유지하기 위해 블록 헤더는 보존됩니다. 블록은 "헤더만" 상태로 전환되며, 이는 헤더는 존재하지만 바디는 가지치기되었음을 나타냅니다.</p>
+  <p><b>필수 데이터 보존</b> - 시스템은 가지치기 지점의 안티코인, DAA 윈도우 블록, GHOSTDAG 블록과 같은 합의 검증에 필요한 중요한 데이터를 보존합니다. 이는 가지치기 후에도 합의 작업이 계속될 수 있도록 보장합니다.</p>
+
+  <h3 class="section-title">UTXO 세트가 검증을 가능하게 하는 방법</h3>
+  <p><b>트랜잭션 검증 프로세스</b> - 새로운 트랜잭션은 가지치기 지점 UTXO 세트와 모든 후속 UTXO 변경 사항에 대해 검증될 수 있습니다. 시스템은 참조된 UTXO가 존재하고 이중 지불되지 않았음을 검증하며, 이는 원본 트랜잭션 데이터가 없어도 가능합니다.</p>
+  <p><b>상태 재구성</b> - 가지치기 지점의 UTXO 세트는 후속 블록의 UTXO 차이와 결합되어 현재 사용 가능한 상태를 재구성할 수 있습니다. 이를 통해 완전한 과거 트랜잭션 데이터 없이도 완전한 검증 기능이 가능합니다.</p>
+  <p><b>커밋먼트 검증</b> - 시스템은 블록 헤더에 있는 암호화 커밋먼트를 사용하여 UTXO 세트의 무결성을 검증할 수 있습니다. 이는 가지치기된 UTXO 세트가 블록체인 헤더가 선언하는 것과 일치함을 보장합니다.</p>
+
+  <h3 class="section-title">아카이브 노드 vs 가지치기 노드</h3>
+  <p><b>아카이브 노드 동작</b> - 아카이브로 설정된 노드는 1차 가지치기를 완전히 무시하고 모든 트랜잭션 데이터를 보존합니다. 이 노드들은 네트워크의 완전한 과거 원장 역할을 하지만, 훨씬 더 많은 저장 공간을 필요로 합니다.</p>
+  <p><b>가지치기 노드 효율성</b> - 일반 가지치기 노드는 1차 가지치기를 사용하여 관리 가능한 저장 공간을 유지하면서, 합의 검증에 완전히 참여합니다. UTXO 세트는 완전한 과거 데이터 없이도 새로운 트랜잭션을 검증하기에 충분한 정보를 제공합니다.</p>
+
+  <h4 class="subsection-title">가지치기 및 제네시스 증명에 대한 우려 해결</h4>
+  <p>가지치기로 인한 원장 기록의 공백이 체인 시작(제네시스 블록)부터의 검증 가능성, 특히 사전 채굴이 없었다는 증명을 손상시킬 수 있다는 우려가 반복적으로 제기되어 왔습니다.</p>
+  <p>이러한 우려는 근거가 없습니다. 그 이유는 다음과 같습니다.</p>
+  <ol>
+      <li><strong>제네시스 블록은 코드에 내장되어 있습니다:</strong> 제네시스 블록 자체는 카스파 노드 소프트웨어에 "하드코딩"되어 있습니다. 이 제네시스 블록에는 빈 UTXO 세트가 포함되어 있어 사전 채굴이 없었음을 증명합니다. 모든 사용자는 공개 소스 코드에서 이를 확인할 수 있습니다.</li>
+      <li><strong>제네시스 증명:</strong> 각 노드는 "제네시스 증명"을 유지합니다. 이는 원장의 현재 상태가 내장된 제네시스 블록에서 실제로 진화했음을 암호화 방식으로 증명하는 짧은 데이터 체인입니다. 이러한 증명을 위조하려면 전체 원장을 만드는 데 투자된 것과 동일한 양의 작업이 필요합니다. 다시 말해, 이 증명은 전체 기록을 소유하는 것만큼 강력합니다.</li>
+      <li><strong>재구성된 기록의 무결성:</strong> 연구 및 편의를 위해 전체 기록을 재구성하려는 노력이 이루어지고 있지만, 이 과정은 탈중앙화되어 있습니다. 데이터는 많은 사용자로부터 수집됩니다. 단일 행위자가 남은 "공백"을 제어할 수 없으므로, 기록의 일부를 선택적으로 "숨기는" 것은 불가능합니다.</li>
+  </ol>
+  <p>요약하자면, 카스파의 가지치기 메커니즘은 아카이브 노드가 없어도 네트워크가 안전하고 투명하게 유지되도록 설계되었습니다. 체인의 제네시스부터의 검증 가능성은 견고한 암호화 증명에 의해 보장되며, 점점 더 무거워지는 전체 기록을 저장할 필요성에 의해 보장되는 것이 아닙니다.</p>
+
+  <div class="simplified-def">
+    <h3 class="section-title">간략화된 정의</h3>
+    <p><b>1차 가지치기</b> - 검증을 위해 UTXO 세트를 유지하면서 오래된 블록 트랜잭션 데이터를 제거하는 것입니다.</p>
+    <p><b>가지치기 지점 UTXO 세트</b> - 가지치기 지점에서 모든 사용 가능한 출력의 스냅샷으로, 검증의 기본으로 사용됩니다.</p>
+    <p><b>"헤더만" 상태</b> - 트랜잭션 데이터가 가지치기되었지만 헤더를 유지하는 블록입니다.</p>
+    <p><b>UTXO 진행</b> - 가지치기 지점이 진행됨에 따라 가지치기 지점 UTXO 세트를 업데이트하는 과정입니다.</p>
+    <p>1차 가지치기는 UTXO 세트를 통해 검증 기능을 유지하면서 저장 효율성을 가능하게 합니다.</p>
+  </div>
+
+  <h3 class="section-title">비트코인 vs 카스파: 풀 노드 부트스트랩</h3>
+  <p><b>비트코인</b> - 풀 노드는 부트스트랩을 위해 제네시스부터 모든 블록 데이터를 다운로드하고 검증해야 하며, 이는 완전한 과거 트랜잭션 데이터를 필요로 합니다. 비트코인은 초기 동기화 후 간단한 가지치기를 지원하지만, 새로운 노드는 초기 상태를 확립하기 위해 여전히 완전한 블록체인 기록을 필요로 합니다. 선형 체인 구조는 이 과정을 간단하게 만들지만, 저장 공간을 많이 차지합니다.</p>
+  <p><b>카스파</b> - 풀 노드는 1차 가지치기와 합의 프로토콜의 통합 덕분에 완전한 과거 데이터를 다운로드하지 않고도 가지치기 증명을 사용하여 부트스트랩할 수 있습니다. 시스템은 가지치기 증명을 검증하고 암호화 방식으로 검증 가능한 데이터("신뢰할 수 있는 데이터")를 적용하여 초기 상태를 설정합니다. 이러한 "신뢰할 수 있는 데이터"는 어떤 당사자에 대한 신뢰도 요구하지 않습니다. 데이터가 합의 규칙을 준수함을 보장하는 암호화 증명에 의해 수학적으로 검증됩니다. 검증 프로세스는 가지치기 지점 증명이 유효한 합의 상태를 나타냄을 암호화 방식으로 증명하는 반면, 신뢰할 수 있는 데이터는 블록체인의 예상 상태와 일치하는지 확인하기 위해 엄격한 검증을 거칩니다. 이를 통해 새로운 노드는 외부 당사자를 신뢰하지 않고도 완전한 검증 능력을 유지하면서 효율적으로 동기화할 수 있습니다.</p>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="h.juf0jn9hl1ev">제11장: 아카이브 노드 vs 풀 노드</h2>
+  <div class="img-container"><img alt="아카이브 노드 vs 풀 노드" src="images/image76.png"></div>
+  <h3 class="section-title" id="h.knim47a94vo6">카스파 아카이브 노드 vs 가지치기 노드</h3>
+  <p><b>가지치기 노드는 풀 노드입니다</b> - 1차 및 2차 가지치기를 사용하는 가지치기 노드는 완전한 검증 능력을 유지하므로 여전히 풀 노드로 간주됩니다. 이 노드들은 모든 새 블록을 검증하고, 합의에 참여하며, 외부 당사자를 신뢰할 필요 없이 네트워크를 서비스할 수 있습니다. 가지치기 지점 증명 시스템은 데이터가 가지치기되었더라도 이 노드들이 블록체인 전체 상태의 암호화 검증을 유지하도록 보장합니다.</p>
+  <p><b>아카이브 노드는 선택 사항입니다</b> - 모든 과거 데이터를 보관하는 아카이브 노드는 카스파 네트워크가 무기한 작동하는 데 필요하지 않습니다. 가지치기 지점 증명이 가지치기된 상태에 대한 수학적으로 검증 가능한 보장을 제공하므로, 네트워크는 가지치기 노드만으로 완전히 작동할 수 있습니다. 이는 비트코인과 대조적입니다. 비트코인에서는 새로운 노드를 부트스트랩하기 위해 네트워크가 아카이브 노드(제네시스부터 전체 트랜잭션 기록을 저장하는 노드)를 필요로 합니다.</p>
+  <p><b>추가 신뢰 요구 사항 없음</b> - 가지치기 시스템은 신뢰할 수 있는 당사자 대신 암호화 증명을 사용하여 비트코인의 무신뢰 모델을 유지합니다. 새로운 노드는 가지치기 증명에서 부트스트랩하고 모든 과거 데이터를 다운로드하지 않고도 블록체인의 전체 상태를 검증할 수 있으며, 동시에 제네시스부터 모든 것을 저장하는 노드와 동일한 보안 보장을 유지합니다.</p>
+  <p><b>네트워크 지속 가능성</b> - 이 설계는 카스파 네트워크가 참여자로부터 지속적으로 증가하는 저장 공간 요구 사항 없이 지속 가능하게 확장될 수 있도록 보장합니다. 가지치기 노드는 아카이브 노드와 동일한 합의 보안을 제공하며, 하드웨어 요구 사항을 줄여 더 넓은 네트워크 참여를 가능하게 합니다.</p>
+  <p><b>아카이브 노드 동작</b> - 아카이브로 설정된 노드는 1차 및 2차 가지치기를 완전히 무시하고 모든 합의 데이터(및 과거 애플리케이션 데이터)를 보존합니다. 이 노드들은 네트워크의 완전한 합의 원장 역할을 하지만, 최대 저장 공간을 필요로 하며 네트워크 운영에는 순전히 선택 사항입니다.</p>
+  <p><b>가지치기 노드 효율성</b> - 일반 가지치기 노드(풀 노드)는 가지치기를 사용하여 최대 저장 효율성을 달성하면서, 다단계 증명 시스템을 통해 완전한 합의 검증 능력을 유지합니다. 이 노드들은 보안 및 검증 능력 면에서 아카이브 노드와 구별되지 않습니다.</p>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="h.xoj5wjv6tg4b">제12장: 카스파: 에너지 효율적인 분산형 아키텍처의 진화</h2>
+  <h3 class="section-title" id="h.pfav0qmvzt92">서론: 돈과 효율성의 물리학</h3>
+  <p>분산형 네트워크의 세계에서 효율성은 단순한 사치가 아니라 생존의 특징입니다. 암호화폐는 실제 에너지가 안전하고 불변의 가치 기록으로 변환되는 화폐 에너지 시스템으로 기능합니다. 물리 시스템이 에너지 낭비와 엔트로피를 최소화하려고 노력하는 것처럼, 잘 설계된 암호화폐 네트워크도 낭비와 마찰을 최소화해야 합니다. 비트코인은 작업 증명의 에너지 소비에 화폐 가치를 연결함으로써 이 개념을 개척했으며, 열역학적 비용으로 보장되는 "디지털 금"의 형태를 만들었습니다. 그러나 비트코인의 아키텍처는 혁명적이지만, 처리량을 제한하고 채굴자들이 투입하는 에너지의 일부를 낭비하는 구조적 비효율성을 가지고 있습니다.</p>
+  <p>카스파가 등장합니다. 이는 분산형 합의 아키텍처를 재정의하는 차세대 작업 증명 네트워크입니다. 카스파는 단일 체인이 아닌 블록DAG(유향 비순환 그래프)를 기반으로 하여 여러 블록을 병렬로 생성하고 처리할 수 있습니다. 이 설계는 시스템 엔트로피와 비효율성을 최소화하는 것을 목표로 하며, 카스파를 경제적 가치를 저장하고 이동하는 "효율적인 엔진"과 같은 것으로 만듭니다.</p>
+
+  <h3 class="section-title">엔트로피, 에너지, 그리고 화폐 시스템</h3>
+  <p>카스파의 중요성을 이해하려면 먼저 에너지와 엔트로피가 화폐 시스템과 어떻게 관련되는지 파악해야 합니다. 물리학에서 한 곳에서 질서(낮은 엔트로피)를 생성하려면 에너지를 소비하고 다른 곳에서 엔트로피를 증가시켜야 합니다. 이 원리는 돈에도 적용됩니다. 금과 같은 단단한 돈은 역사적으로 그것을 얻는 데 필요한 막대한 에너지와 노동으로부터 가치를 얻었습니다. 비트코인은 블록을 추가하기 위해 채굴자들이 비용이 많이 드는 계산(해싱)을 수행하도록 요구함으로써 동일한 원리를 디지털 방식으로 적용하여, 각 코인과 블록이 소비된 에너지의 증거를 지니도록 보장했습니다. 그러나 작업의 상당 부분이 낭비되거나 시스템 설계가 불필요한 마찰을 유발한다면, "화폐 엔진"은 열의 형태로 에너지를 잃게 됩니다.</p>
+
+  <h3 class="section-title">경제 시스템의 마찰</h3>
+  <p>경제학에서 마찰이란 가치 이동에서 손실이나 비효율성을 야기하는 모든 것을 말합니다. 비트코인은 필요에 따라 어느 정도의 마찰을 도입했습니다. 즉, 속도를 보안과 맞바꾼 것입니다. 트랜잭션은 새 블록을 평균 약 10분 동안 기다리며, 높은 롤백 보장을 위해 6번의 확인(약 1시간)을 기다리는 것이 관례입니다. 이러한 지연과 낮은 처리량은 경제적 마찰을 생성합니다. 또한, 비트코인 채굴 과정에서는 고아 블록 형태로 작업이 낭비되는 경우가 있습니다(두 명의 채굴자가 거의 동시에 유효한 블록을 찾았을 때, 하나의 블록만 메인 체인의 일부가 되고 다른 하나는 폐기됩니다). 이러한 고아 블록은 채굴자가 소비한 실제 에너지를 나타내지만, 원장에 지속적으로 기여하지는 않습니다.</p>
+
+  <h3 class="section-title">비트코인의 단일 체인 병목 현상</h3>
+  <p>비트코인의 블록체인은 트랜잭션을 위한 단일 차선 도로로 볼 수 있습니다. 한 번에 하나의 블록만 수락될 수 있으며, 각 블록은 순차적으로 정렬되어야 합니다. 두 개의 블록이 동시에 도착하면, 하나는 양보해야 하며 사실상 고아 블록으로 폐기됩니다. 이 설계는 시스템을 질서 정연하게 유지하기 위해 의도적으로 선택되었지만, 심각한 성능 제한을 대가로 합니다. 이 단일 체인 아키텍처의 한계는 잘 알려져 있습니다. 확장성 부족, 블록 시간이 단축될 경우 이기적인 채굴 공격에 대한 취약성, 그리고 낭비되는 블록은 고유한 문제입니다. 결정적으로, 비트코인의 합의는 원장의 일부가 되지 못하는 블록에 채굴 작업의 작은 부분이지만 무시할 수 없는 부분을 낭비합니다. 이러한 고아 블록은 시스템의 엔트로피입니다. 즉, 무질서를 증가시키고 열의 형태로 소멸되었지만, 유용한 정보로 저장되지 않은 에너지입니다. 그 결과, 비트코인의 막대한 채굴 에너지는 미미한 처리량만 생성합니다.</p>
+
+  <h3 class="section-title" id="h.y2juit6511i3">카스파의 블록DAG: 낭비 없는 병렬 처리</h3>
+  <p>카스파는 "블록이 일렬로 정렬될 필요가 없다면 어떨까?"라는 질문으로 문제에 접근했습니다. 카스파는 단일 차선 도로 대신 블록을 위한 다중 차선 고속도로를 사용하며, 여러 블록을 병렬로 생성하고 처리할 수 있지만 여전히 단일 원장에 병합됩니다. 핵심 혁신은 카스파의 블록DAG(유향 비순환 그래프) 아키텍처와 GHOSTDAG 합의 프로토콜의 결합입니다. 블록DAG에서 블록은 비트코인처럼 단일 이전 블록("가장 긴 체인"의 팁)을 가리키지 않습니다. 대신 각 블록은 그래프의 다른 "팁"을 포함하여 여러 선행 블록을 참조할 수 있습니다. 비트코인에서 경쟁하거나 고아 블록으로 간주될 블록은 카스파에서 폐기되지 않습니다. 대신 원장 그래프에 통합됩니다. DAG 구조는 이러한 동시 블록이 공존하고 궁극적으로 GhostDAG 알고리즘에 의해 일관되게 정렬될 수 있도록 합니다. 모든 유효한 블록은 원장 기록에 기여합니다. 어떤 채굴자의 작업 증명도 낭비되지 않습니다.</p>
+  <p>이 설계가 효율성에 미치는 영향은 엄청납니다. 첫째, 고아 블록에 채굴 능력이 낭비되지 않습니다. 둘째, 카스파의 병렬 처리는 처리량을 크게 증가시킵니다. 카스파는 메인넷에서 초당 1블록의 기본 속도로 작동하며(최근에는 초당 10블록으로 업그레이드됨), 비트코인의 초당 0.1블록과 비교됩니다. 이는 설계상 블록 빈도가 10배 증가한 것이며, 더 많은 증가도 계획되어 있습니다. 또한, 각 카스파 블록은 더 작지만(노드 요구 사항을 낮게 유지하기 위해) 훨씬 더 자주 도착하므로, 트랜잭션은 많은 블록에 분산됩니다. 최종 결과는 초당 수천 트랜잭션의 잠재적 처리량입니다. 실제로 GHOSTDAG 알고리즘은 일반 하드웨어를 사용하여 테스트 네트워크에서 초당 10블록으로 약 3000트랜잭션/초를 지원할 수 있음을 입증했습니다. 이는 적당한 하드웨어 요구 사항을 유지하면서 달성되었습니다. 다시 말해, 카스파의 아키텍처는 확장성과 분산화 사이에 트레이드오프를 강요하지 않습니다. 노드의 진입 장벽을 높이지 않고 훨씬 더 많은 트랜잭션을 처리합니다. 각 참여자는 여전히 일반 컴퓨터에서 체인을 검증할 수 있으며, 이는 분산화에 매우 중요합니다. 강력한 데이터 센터 노드에 의존하거나 합의를 손상시키는 많은 고처리량 시스템과 달리, 카스파는 채굴 및 풀 노드가 광범위하게 분산된 순수한 작업 증명 시스템으로 남아 있습니다.</p>
+  <p>블록이 병렬로 도착하는 경우, 카스파는 어떻게 고유하고 합의된 기록(단일 진실의 원천)을 유지할까요? 답은 GhostDAG입니다. 이 합의 알고리즘은 비트코인처럼 "가장 긴 체인"뿐만 아니라 블록의 "가장 무거운 서브그래프"를 고려하여 DAG에서 블록을 정렬합니다. GhostDAG는 각 블록에 선행하는 검증된 기록의 양과 다른 블록을 참조하는 방식에 따라 일종의 점수 또는 순서를 할당합니다. 이는 k-클러스터라고 불리는 패턴(본질적으로 상호 인식하는 블록 집합)을 찾아 사용하며, 어떤 블록이 주요 정렬 구조의 일부인지("파란색"으로 색칠됨)를 결정하고, 어떤 블록이 주요 구조 외부에 있지만 여전히 포함되는지("빨간색")를 결정합니다. 이 알고리즘은 탐욕적이지만, 많은 블록이 진행 중일 때에도 나카모토 합의와 유사하게 고유한 기록으로 수렴됨이 입증되었습니다. 공식적인 보장은 블록이 축적됨에 따라 특정 블록의 순서가 변경될 확률(즉, 포크 롤백)이 비트코인의 확인과 마찬가지로 기하급수적으로 감소한다는 것입니다. 그러나 이 보안은 훨씬 더 높은 블록 속도에서 달성됩니다. 실제로 카스파 트랜잭션은 비트코인보다 훨씬 빠르게 많은 블록 아래에 깊이 묻히므로, 몇 초 만에 재구성으로부터 매우 안전합니다. 카스파 팀은 GhostDAG의 정렬이 높은 블록 생성 속도에서도 "시간이 지남에 따라 되돌리기가 기하급수적으로 어려워진다"고 지적합니다. 최종성은 빠릅니다. 네트워크는 인간 규모에서 트랜잭션의 열역학적 비가역성이라고 할 수 있는 것을 달성합니다.</p>
+  <p>모든 블록이 보존되기 때문에, 카스파의 채굴자들은 다른 블록을 고아 블록으로 만들기 위해 보류하거나 이기적으로 채굴할 인센티브가 없습니다. 이는 더 빠른 블록체인 환경에서는 합리적인 행동일 수 있습니다. 카스파의 최대 정보 공개 전략(각 블록은 자신이 아는 모든 팁을 참조함)은 네트워크가 모든 병렬 블록에 대해 신속하게 알림을 받는다는 것을 의미합니다. 이는 그래프에 지식을 넘치게 하여 불확실성을 줄입니다. 정보 이론의 관점에서 볼 때, 카스파는 보이지 않는 포크가 오랫동안 지속되지 않도록 보장함으로써 네트워크 상태의 엔트로피(불확실성)를 최소화합니다. 모든 것이 통합됩니다. "최대 공개 원칙"은 본질적으로 데이터를 가능한 한 효율적으로 공유함으로써 시스템 엔트로피(불확실성)를 줄이는 것을 목표로 합니다. 이는 물리적 원리와 다시 일치합니다. 질서를 유지하려면 정보(또는 에너지 신호)를 시스템 전체에 가능한 한 효율적으로 전파해야 합니다.</p>
+  <p>Kaspa가 보안이나 분산화를 손상시키지 않고 이를 달성한다는 점에 주목하는 것이 중요합니다. Kaspa는 여전히 작업 증명을 사용하며, 이는 각 블록의 유효성이 실제로 소비된 에너지에 의해 보장됨을 의미합니다. 그리고 블록이 더 작고 더 자주 생성되기 때문에, 노드 대역폭과 저장 공간은 신중하게 관리되어(가지치기 및 효율적인 UTXO 관리와 같은 기술 사용) 가정용 컴퓨터도 따라갈 수 있습니다. 그 결과, Kaspa는 "주요 지분 증명 네트워크에 필적하는 성능을 가진 작업 증명 등급의 보안 및 분산화"를 제공합니다. 강력한 데이터 센터 노드에 의존하거나 합의를 손상시키는 많은 고처리량 시스템과 달리, Kaspa는 채굴 및 풀 노드가 광범위하게 분산된 순수한 작업 증명 시스템으로 남아 있습니다.</p>
+  <p>간단히 말해, 카스파의 GhostDAG 프로토콜은 비트코인이 불가피하다고 여겼던 구조적 병목 현상을 제거합니다. 카스파에 따르면, 과거의 "보안 대 속도 대 분산화"라는 삼중고는 실제로 완전히 해결되었습니다. 선형 체인 모델에서 벗어남으로써 카스파는 나카모토의 보안을 희생하지 않고 처리량을 가능하게 합니다. 이는 많은 연구자들이 수년 동안 불가능하다고 생각했던 위업입니다. 이 모든 것은 블록이 잘 동기화된 분수에서 물방울처럼 지속적으로 도착하는 시스템으로 이어집니다. 비트코인 시계의 시간 엄수적이고 간헐적인 블록과는 다릅니다. 카스파의 트랜잭션은 몇 초 안에 확인되고, 일반적으로 수십 초 안에 최종 확정됩니다(재구성될 가능성은 무시할 수 있을 정도로 작습니다). 사실, 카스파의 설계 목표는 확인 시간이 네트워크 지연에 의해서만 제한되는 것이었습니다. 즉, 정보가 인터넷을 물리적으로 이동할 수 있는 한 가장 빠르게 말이죠. 네트워크는 이미 평균 약 10초 안에 완전히 확인된 트랜잭션을 제공하며, 이 수치는 블록 속도가 증가함에 따라 감소합니다. 사용자 관점에서 볼 때, 카스파를 통해 가치를 전송하는 것은 거의 신용 카드 결제나 현금 이체와 같은 느낌을 줍니다. 결제는 거의 즉각적이지만, 되돌릴 수 없고 신뢰가 필요 없다는 추가적인 이점이 있습니다.</p>
+
+  <h3 class="section-title" id="h.ttddfh4xlbpu">광속으로 처리량 달성</h3>
+  <p>카스파가 물리적 원리에 부합한다는 것을 이해하는 한 가지 방법은 지연 처리, 즉 세계의 한쪽 끝에서 다른 쪽 끝까지의 지연을 살펴보는 것입니다. 전 세계 인터넷의 왕복 시간(RTT)은 본질적으로 신호가 지구 반대편에 도달하고 돌아오는 데 걸리는 시간이며, 최상의 경우(광섬유 내의 빛의 속도 및 네트워크 홉에 의해 제한됨) 약 200밀리초(0.2초) 정도입니다. 비트코인과 같은 전통적인 블록체인은 이 한계보다 훨씬 느리게 작동하므로(블록당 600초), 네트워크 지연은 설계에 중요한 요소가 아닙니다. 그들은 편안하고 느린 평형 상태에 있습니다. 그러나 카스파는 블록 시간이 네트워크 지연과 비슷한 수준인 영역에 대담하게 진입했습니다. 현재 새로운 업데이트(10 BPS)에서는 블록당 100밀리초이며, 이는 실제로 지구 반대편으로의 단방향 전파보다 빠릅니다. 이것은 중요한 임계값입니다. 블록 시간을 1초에서 0.1초로 이동하는 것은 단순히 10배의 양적 개선이 아니라, 합의를 재고해야 하는 질적 도약입니다.</p>
+  <p>왜냐하면, 만약 당신이 글로벌 네트워크에서 100ms 블록으로 단일 체인(선형) 합의를 실행하려고 한다면, 완전한 혼란이 일어날 것입니다. 한 노드가 블록에 대해 듣기도 전에 이미 다른 5개의 블록이 발견될 것입니다. 전파 지연은 네트워크가 결코 동기화되지 않는다는 것을 의미할 것입니다. 포크가 확산되고 합의는 붕괴되거나 중앙 집중화될 것입니다(가장 빠른 연결만이 항상 승리할 것입니다). 카스파는 이 서브-RTT 영역에서 합의를 입증한 최초의 작업 증명 시스템이며, 그것이 가능한 이유는 바로 다중 리더 GhostDAG가 많은 동시 블록을 우아하게 처리할 수 있기 때문입니다. 카스파의 Crescendo 업그레이드(메인넷을 1BPS에서 10BPS로 전환) 동안 수석 개발자 마이클 서튼이 언급했듯이, "블록 속도를 초당 10개로 늘리는 것은 블록 시간을 100ms(<200ms ≈ 글로벌 RTT)로 줄임으로써 달성되는데, 이는 본질적으로 병렬 처리를 허용하는 합의 프로토콜에 의해서만 보장될 수 있습니다... 따라서 RTT 임계값을 넘어서는 것은 양적 도약이 아니라 질적 도약입니다." 다시 말해, 카스파의 설계는 정보 전송의 물리적 한계와 근본적으로 일치합니다. 즉, 물리 법칙(광속, 네트워크 대역폭)이 허용하는 최대 속도로 작동하도록 구조화되어 있습니다. 반면 선형 체인은 보안을 희생하거나 더 작은 네트워크 반경을 가정하지 않고는 이 임계값을 안전하게 넘을 수 없습니다.</p>
+  <p>분산 시스템의 맥락에서 이것이 얼마나 놀라운 일인지 강조할 가치가 있습니다. 카스파는 전 세계적인 통신 지연보다 짧은 블록 시간으로 글로벌하고 비동기적인 합의를 달성합니다. 그리고 네트워크를 축소하거나 특별한 신뢰 구성을 요구하지 않고도 이를 수행합니다. 네트워크는 여전히 광대하고 허가 없이 운영됩니다. 노드는 전 세계 어디에나 있을 수 있으며, 표준 인터넷 연결로 연결됩니다. 그럼에도 불구하고 카스파는 이러한 조건에서 어떤 단일 체인보다 빠르게 블록을 생성하고 확인합니다. GhostDAG 프로토콜은 본질적으로 고전적인 합의 이론이 엄격한 최장 체인 규칙 하에서는 불가능하다고 믿었을 것을 가능하게 합니다. 즉, 끊임없는 미니 포크(병렬 블록)에도 불구하고 모두가 동의하도록 유지하는 것입니다. 아이디어는 이러한 포크가 존재하도록 허용하고 확률적으로 정렬함으로써, 혼돈을 완전히 방지하려고 하기보다는 혼돈을 포용하고 조직화하는 것입니다. 그 결과는 최대 처리량입니다.</p>
+  <p>크레센도 하드포크 활성화 후, 카스파 개발자들은 10 BPS에서도 노드를 실행하는 데 슈퍼컴퓨터가 필요하지 않도록 시스템이 설계되었다고 언급했습니다. Rust 구현과 프로토콜 최적화는 일반 가정용 PC와 가정용 인터넷 연결로도 초당 10블록과 초당 수천 트랜잭션을 따라잡을 수 있도록 보장합니다. 이는 원시 처리량뿐만 아니라 컴퓨팅 자원과 대역폭의 효율적인 사용에도 초점을 맞춘 설계 윤리를 보여줍니다. 예를 들어, 블록은 작게 유지되며, DAG 구조는 관리 불가능해지지 않도록 가지치기되고 관리됩니다. 카스파는 네트워크 조건에 적응하고 상태 크기를 제한하기 위한 새로운 기술(예: 향후 DAGKnight 및 가지치기 전략)도 포함합니다. 이러한 모든 선택은 거의 물리적인 미니멀리즘을 반영합니다. 즉, 낭비되는 해시 파워, 낭비되는 시간, 낭비되는 저장 공간 등 모든 낭비를 제거하는 것입니다. 비트코인 채굴이 때때로 많은 열(트랜잭션당 에너지 낭비)을 발생시킨다고 비판받는다면, 카스파는 처리량을 늘리고 더 에너지 효율적인 해시 알고리즘(kHeavyHash)을 사용하여 트랜잭션당 에너지를 크게 줄입니다. 카스파 팀은 kHeavyHash가 광학 채굴 및 저자원 채굴과 호환되도록 명시적으로 설계했습니다. 이는 훨씬 적은 전기를 사용하는 특수 하드웨어에서 실행될 수 있음을 의미합니다. DAG의 "낭비되는 블록 없음" 정책과 결합하면, 카스파는 트랜잭션당 또는 전송된 가치당 다른 PoW 네트워크보다 에너지 집약도가 낮습니다. 간단히 말해, 카스파는 채굴자가 투입하는 모든 줄의 에너지로 더 많은 것을 할 수 있습니다. 이는 카스파의 우수한 엔지니어링을 증명합니다. 심지어 독립적인 관찰자들도 이러한 효율성을 지적합니다. "kHeavyHash 알고리즘은 에너지 소비를 최적화하도록 설계되어 [카스파]는... 비트코인보다 자원 집약도가 낮습니다." 우리는 이것을 시스템의 열역학적 효율성 향상으로 볼 수 있습니다. 즉, 입력 에너지의 더 많은 부분이 낭비되는 해시나 대기 시간이 아닌, 안전하고 최종적인 트랜잭션(유용한 작업)으로 변환됩니다.</p>
+  <p>물리적 한계를 책임감 있게 밀어붙임으로써, 카스파는 열역학적으로 매우 효율적인 화폐 네트워크로 자리매김합니다. 블록 생산의 주기를 가능한 한 빠른 통신과 일치시키고, 중복 작업을 제거하며, 모든 작업이 트랜잭션 정렬에 기여하도록 보장합니다. 비유하자면, 비트코인이 많은 폐열을 발생시키고 저속으로 작동하는 오래된 열기관이라면, 카스파는 이론적 효율성 한계에 가깝게 작동하는 현대적인 터빈과 같습니다. 즉, 각 연료 단위(해싱 에너지)에서 가능한 한 가장 유용한 움직임(트랜잭션 처리량)을 추출합니다. 물리 법칙은 엄격한 상한선을 설정하며, 카스파는 이 상한선에 도달하기로 결정했습니다. 이러한 기술 진화의 "방향성 흐름"(더 적은 입력으로 더 많은 출력)과의 일치는 카스파가 우리가 다른 많은 시스템에서 관찰한 진화 궤적을 따르고 있음을 시사합니다. 단일 코어에서 멀티 코어 프로세서 및 병렬 처리로, 다이얼업에서 광대역 인터넷으로, 마차에서 다중 차선 고속도로로. 병렬 처리를 활용하고 내부 저항을 줄이는 시스템은 필연적으로 단일 순차 프로세스에 갇혀 있는 시스템을 능가합니다.</p>
+
+  <h3 class="section-title" id="h.uttpgy92hgk">마찰 감소, 가치 보존 향상</h3>
+  <p>카스파 설계의 기술적 장점은 경제적으로 심오한 의미를 가집니다. 화폐 시스템에서 엔트로피와 마찰을 줄이면, 가치가 존재하고 유통될 수 있는 더 좋은 환경을 만듭니다. 경제를 살아있는 생태계, 또는 어쩌면 전력망처럼 생각해 봅시다. 에너지(또는 돈)가 필요한 곳으로 최소한의 손실로 자유롭게 흐를 수 있다면, 시스템은 번성하고 성장합니다. 카스파의 낮은 지연 시간과 높은 처리량 네트워크는 누구나 어디서든 빠르고 저렴하게 가치를 교환할 수 있으며, 중간상인이나 높은 대기 비용으로 인해 가치가 침식되지 않는다는 것을 의미합니다. 이 속성은 자연스럽게 사용을 유도합니다. 사용자들은 보안이 비슷하다면, 1시간을 기다려야 하는 시스템보다 1초 만에 결제가 확인되는 시스템을 선호할 것입니다. 사용이 증가함에 따라 유동성과 자본이 네트워크로 유입되어 피드백 루프에서 유용성이 증가합니다. 경제학 101은 두 가지 선택지가 주어졌을 때, 사람들은 거래 비용이 가장 낮은 것을 선택할 것이며(다른 모든 것이 동일하다면), 돈은 거래에 대한 저항이 가장 적은 채널을 통해 흐를 것이라고 말합니다. 카스파는 이러한 낮은 임피던스 채널로 자신을 제시합니다. 한 관찰자가 자본이 유입될 수렴점을 묘사했듯이, "최소한의 작업 손실, 최소한의 거래 임피던스, 최대한의 화폐 명확성"을 제공합니다. 카스파를 통해 전통적인 장벽(확인 지연, 처리량 제한, 혼잡 시 높은 수수료)이 크게 최소화되므로, 화폐 에너지의 "파이프"는 넓고 원활합니다.</p>
+  <p>플랜 K는 카스파의 경제성에 대한 인터뷰에서 효율적인 화폐가 에너지를 어떻게 유도하는지 설명하기 위해 생물학적 비유를 사용했습니다. 좋은 화폐는 식물의 혈관 시스템과 같아서, 영양분(에너지)을 광합성하는 잎(생산적 작업)으로 운반하여, 자원이 기생충이나 비활성 부분에 흡수되는 것을 방지합니다. 이 비유에서 카스파는 효율적인 에너지 흐름을 촉진하는 저엔트로피 화폐의 한 형태로 볼 수 있습니다. 그 속도와 용량은 경제적 에너지(가치)가 지연이나 계층 간 차익 거래로 낭비되는 대신 생산적인 용도(상품 및 서비스의 실제 이전)로 이동하도록 보장합니다. 한편, 그 작업 증명 기반은 "쉬운 돈"으로 발생하는 에너지 전환을 방지합니다. 예를 들어, 법정 화폐는 플랜 K의 비유에서 기생 덩굴에 비유되었습니다. 그것들은 중앙 당국에 의해 인플레이션되거나 복제될 수 있으며, 가치를 희석시켜 생산적인 경제에서 에너지를 효과적으로 빨아들입니다. 카스파는 비트코인과 마찬가지로 새로운 코인을 생성하기 위해 실제 작업을 요구하고 공급량 증가를 엄격하게 제한함으로써 그러한 희석으로부터 자신을 면역화합니다. 플랜 K가 언급했듯이, "금, 비트코인, 카스파는 복제할 수 없는 [호르몬]과 유사하여, 에너지 전환을 방지합니다." 간단히 말해, 이러한 강력한 화폐는 그것들을 생산하는 데 사용된 에너지를 고정시킵니다. 즉, 가치 하락으로 인한 손실 없이 경제적 가치를 위한 안전한 저장소를 제공합니다.</p>
+  <p>카스파는 이러한 강력한 화폐 원칙을 일상적인 사용성 영역으로 확장합니다. 비트코인은 분산형 네트워크가 가치를 안전하게 저장할 수 있음을 입증했지만(시간이 지남에 따라 낮은 엔트로피), 카스파는 가치를 효율적으로 이동시키는 것(트랜잭션에서 낮은 엔트로피)도 목표로 합니다. 비트코인의 위조 불가능한 비용과 마찰 없는 트랜잭션 레이어를 결합함으로써, 카스파는 돈을 위한 완전한 솔루션으로 자리매김합니다. 즉, 가치 저장소, 교환 수단, 회계 단위 모두를 일반적인 타협 없이 제공합니다. 역사적으로 금이 일상적인 거래에 대체품(지폐나 법정 화폐 등)을 필요로 했던 이유를 상기하는 것은 유익합니다. 금은 무겁고 이동이 느려 마찰을 일으켰기 때문입니다. 비트코인도 느리고 처리량이 제한되어 있어, 빠른 결제를 위한 격차를 메우기 위해 레이어2 네트워크나 경쟁 코인을 유사하게 끌어들여, 본질적으로 교환 수단의 역할을 "더 부드러운" 통화에 양보했습니다. 반면에 카스파는 볼륨을 처리하기에 충분히 빠르고 확장 가능하므로, 보조 화폐 네트워크가 필요하지 않습니다. 카스파는 높은 무결성 정산 레이어와 고속 트랜잭션 레이어 모두가 될 수 있습니다. 이는 경제 활동이 "가치 저장 네트워크"와 "결제 네트워크" 사이를 지속적으로 전환할 필요가 없는 미래를 시사합니다(그리고 그에 따른 모든 교환 마찰과 보안 타협도 없습니다). 대신, 단일 네트워크가 모든 것을 효율적으로 처리할 수 있습니다. 실제로 지지자들은 카스파가 트릴레마를 해결했기 때문에 "카스파가 채울 수 없는 화폐 시장의 공백은 더 이상 없다"고 주장하며, 비트코인과 같은 느린 기본 저장소나 더 빠르지만 약한 대안의 필요성을 없앤다고 말합니다. 비트코인이 고가치 정산 레이어로 남고 카스파가 더 많은 교환을 위한 것이 될지, 아니면 카스파가 궁극적으로 두 가지 역할을 모두 흡수할지는 시장이 결정할 것입니다. 그러나 한 가지는 분명합니다. 즉, 낭비가 적고 더 많은 것을 제공하는 시스템이 장기적으로 그렇지 않은 시스템을 이길 것입니다. 이것은 화폐 시스템에 적용되는 자연 선택입니다.</p>
+  <p>마찰이 적다는 것은 카스파 생태계에서 채굴자와 사용자가 더 잘 정렬된다는 것을 의미합니다. 비트코인에서는 사용자들이 혼잡 시 높은 수수료를 지불하는 것에 대해 불평하는 경우가 있으며(결국 채굴자에게 돌아감), 채굴자들은 고아 블록으로 인한 변동과 손실에 직면합니다. 카스파에서는 높은 처리량으로 인해 수수료가 낮게 유지되며(용량이 풍부하기 때문에), 고아 블록 없는 설계는 채굴자들이 네트워크 지연으로 인해 보상을 잃지 않는다는 것을 의미합니다. 채굴자들은 여전히 정당한 보상을 얻습니다. 사실, 카스파의 블록 보상은 단위 시간당 훨씬 더 많은 블록에 분산되므로, 역설적으로 채굴 과정이 더 세분화되고 공정해집니다(10분마다 한 명의 승자가 있는 것이 아니라, 초당 여러 채굴자가 보상을 얻을 수 있습니다. 이는 이점이 평균화되는 "다중 리더" 시스템입니다). 더 많은 채굴자들이 거의 동시에 블록을 포함할 수 있으므로, 단일 채굴자가 특정 시간 구간을 지배하려는 독점적 경향을 줄일 수 있습니다. "각 지연 라운드 내 경쟁 증가"는 MEV(채굴자 추출 가능 가치) 및 조작 감소에도 영향을 미칩니다. 왜냐하면 블록이 병렬일 때, 단일 행위자가 트랜잭션 순서를 제어하는 것이 훨씬 더 어렵기 때문입니다. 실제로 카스파의 병렬 처리는 공정성을 촉진하는 약간의 혼란을 더합니다. 즉, 순서에 대한 엄격한 제어를 요구하는 특정 익스플로잇을 적용하는 것이 불가능해져 시장 결과의 엔트로피(시장 가격 및 트랜잭션이 채굴자의 간섭이 아닌 실제 수요와 공급을 반영함)를 줄입니다. 이는 카스파의 접근 방식이 시스템 내에서 가치를 보존하는 경향이 있음을 보여주는 또 다른 예입니다. 즉, 시스템 동작을 열역학적으로 더 되돌릴 수 없게 만듭니다. 이는 어떤 행위자도 자신의 이익을 위해 트랜잭션을 쉽게 되돌리거나 재정렬할 수 없으며, 네트워크 상태 변경(실행된 트랜잭션)은 진정하고 영구적이라는 의미입니다.</p>
+  <p>거시적 관점에서 볼 때, 통화와 네트워크의 글로벌 경쟁을 진화적 풍경으로 본다면, 카스파와 같이 낮은 저항과 높은 무결성을 제공하는 시스템은 "화폐 질량"을 축적하는 경향이 있습니다. 시간이 지남에 따라 유동성은 유동성을 생성합니다. 사용자들은 다른 사용자들과 상인들이 있는 곳으로 이동합니다. 카스파가 비트코인과 유사한 보안을 제공하면서도 훨씬 더 나은 성능을 지속적으로 제공한다면, 더 많은 경제 활동이 카스파로 이동할 것이라고 생각하는 것이 합리적입니다. 우리는 이미 역사적으로 법정 화폐가 마찰이 적기 때문에 거래에서 금을 대체하는 것을 보아왔습니다. 금은 우수한 가치 저장 수단이지만, 이제 암호화폐는 강인함과 디지털 속도를 결합하여 법정 화폐에 도전하고 있습니다. 카스파는 다음 단계로 볼 수 있습니다. 즉, PoW 화폐의 궁극적인 강인함과 현대 네트워크의 궁극적인 속도를 결합하는 것입니다. 물리학의 언어로 말하면, 카스파는 화폐 에너지의 "중력 종점"이 될 수 있습니다. 즉, 최소 포텐셜 에너지 상태를 나타내기 때문에 자본을 끌어들이는 거대한 인력입니다(즉, 당신의 돈이 동시에 더 안전하고 사용하기 쉬운 시스템을 쉽게 찾을 수 없습니다). 가치 흐름에 더 쉬운 경로(더 낮은 에너지 상태)가 없을 때, 당신은 균형에 도달한 것이며, 카스파는 분산형 화폐의 그 균형점이 되는 것을 목표로 합니다.</p>
+
+  <h3 class="section-title">불가역성과 카스파 vs 비트코인의 시간의 화살</h3>
+  <p>작업 증명 시스템의 놀라운 측면은 시간의 화살을 설정하는 방식입니다. 각 블록은 되돌릴 수 없는 이벤트입니다. 작업이 완료되고 블록이 승인되면, 이를 되돌리려면 동등하거나 더 많은 에너지를 소비해야 합니다. 이 단방향 작업 기능은 블록체인에 시간적 방향을 부여합니다. 물리학의 엔트로피와 마찬가지로, 앞으로 나아가는 것(새로운 블록을 채굴하고 엔트로피를 증가시키는 것)은 쉽지만, 외부 개입 없이 뒤로 돌아가는 것(블록을 되돌리고 엔트로피를 감소시키는 것)은 극도로 어렵습니다. 에너지로 보호되는 비트코인 블록체인은 종종 시간의 화살에 비유됩니다. 즉, 점점 더 "확립된" 기록의 연속입니다. 카스파는 이 속성을 계승하지만, 이를 가속화합니다. 블록이 매우 빠르게 도착하고 GhostDAG가 원장 기록을 신속하게 심화시키기 때문에, 카스파의 트랜잭션 불가역성은 비트코인보다 빠르게 진행됩니다. 카스파에서 트랜잭션이 되돌려질 가능성은 새로운 블록이 순서를 확고히 할수록 매초 기하급수적으로 감소합니다. 비트코인에서는 높은 신뢰를 위해 일반적으로 6개의 블록(약 1시간)이 참조됩니다. 카스파에서는 비슷한 수준의 보안이 아마도 12개의 블록 정도로 달성될 수 있습니다. 이는 초당 1블록일 때 약 12초(초당 10블록일 때는 1초를 약간 넘는 시간)이지만, 다른 지연 요인도 작용합니다.</p>
+  <p>이는 카스파의 원장 최종성이 실시간 불가역성에 매우 가까워진다는 것을 의미합니다. 시스템의 동작은 매우 빠르게 되돌릴 수 없는 지점에 도달하는 비가역적 열역학적 과정을 반영합니다. 예를 들어, 두 개의 충돌하는 트랜잭션(이중 지불 시도)이 발행되면, 카스파의 빠른 블록 포함 및 정렬은 승자를 결정하고 몇 초 안에 그 위에 확인을 쌓아, 패자의 되돌리기 시도를 점점 더 헛되게 만듭니다. 비트코인에서는 이 불확실성(엔트로피) 기간이 수분 동안 지속될 수 있으며, 심지어 그 때에도 충분한 해시 파워를 가진 공격자가 낮은 엔트로피 상태(많은 확인이 축적되기 전)에서 악용할 수 있습니다. 카스파는 이 창을 줄여, 기록을 되돌리는 비용이 거의 즉시 극도로 높아지도록 합니다. 우리는 이것을 카스파가 공격자가 올라야 할 열역학적 기울기를 증가시키는 것으로 볼 수 있습니다. 즉, 더 가파른 언덕이 더 빠르게 가파르게 되는 것입니다. 이는 다시 효율성과 관련이 있습니다. 네트워크는 해시 파워를 보안(질서)으로 변환하는 데 시간을 낭비하지 않으므로, 공격자는 악용할 수 있는 긴 취약성 "사치"를 누리지 못합니다. 불확실성의 엔트로피는 시스템에서 빠르게 배출되어, 안정적인 매우 질서 있는 상태(확인된 트랜잭션)를 남깁니다.</p>
+  <p>또 다른 관점은 란다우어의 원리입니다. 이는 정보의 1비트를 삭제하는 데에는 피할 수 없는 에너지 비용(열 방출)이 발생한다는 물리학의 개념입니다. 블록체인에서 트랜잭션을 "삭제하는 것"(즉、確認されたトランザクションを履歴から削除する再編成を通じて)은、エネルギー的に非常にコストがかかります。これが、正直なマイナーがハッシュパワーの大部分を制御している場合、大規模な再編成が不可能である理由です。Kaspaは、トランザクションデータビットがほぼ瞬時に多くのブロック（情報ビット）に組み込まれることを保証し、情報が根付き、熱力学的に消去するのが高価になるようにします。本質的に、Kaspaは情報理論と熱力学を整合させています。つまり、情報（台帳の状態）は、作業量証明によって固定されたエントロピー耐性のある永続性を迅速に獲得します。そして、Kaspaは入力エネルギーをより効率的に使用するため（無駄なブロックがなく、単位時間あたりの確認数が多い）、ビットコインよりも高い「エネルギー単位あたりの不可逆性」を達成していると言えるでしょう。Kaspaでの各マイニングジュールは、多くのトランザクションの最終性に貢献しますが、ビットコインでは、各ジュールはより少ないトランザクションを保護します（そして、一部のジュールはカウントされない可能性のあるブロックに費やされます）。</p>
+  <p>시간의 화살이라는 비유는 적절합니다. 비트코인의 화살은 느리지만 확실하게 앞으로 나아가며, 역사를 확고히 하는 데 더 많은 시간이 걸리지만, 카스파의 화살은 고속으로 날아와 사건들을 시간 속에 빠르게 고정시킵니다. 두 화살 모두 같은 방향을 가리킵니다. 이는 열역학 제2법칙(에너지 소비)에 의해 부과된 것이지만, 카스파의 화살은 단위 시간당 더 많은 거리(원장 깊이)를 커버합니다. 이는 실용적인 이점(사용자 경험, 처리량)뿐만 아니라, 철학적으로도 카스파의 설계가 복잡한 시스템의 "자연스러운" 방향, 즉 에너지 소비를 통해 더 짧은 시간에 더 큰 질서를 달성하는 방향과 조화를 이룬다는 것을 시사합니다. 비트코인이 에너지 + 시간 = 보안임을 보여주었다면, 카스파는 더 나은 설계를 통해 내부 비효율성을 제거함으로써 훨씬 더 짧은 시간에 동일한 에너지로 동등한 보안을 달성할 수 있음을 보여줍니다. 이는 어떤 근본적인 법칙도 위반하지 않습니다. 단지 비트코인이 놓친 기회를 낭비하지 않을 뿐입니다.</p>
+
+  <h3 class="section-title">결론: 카스파는 화폐 네트워크의 효율성 프론티어</h3>
+  <p>물리학과 경제학이라는 이중 렌즈를 통해 카스파를 살펴보면, 시스템이 에너지와 정보 처리에서 최적의 효율성으로 진화한다는 주제가 떠오릅니다. 경제학에서 화폐는 번거로운 상품에서 금으로, 금에 의해 뒷받침되는 지폐로, 그리고 디지털 네트워크로 진화했습니다. 각 단계는 신뢰와 가치를 보존하면서 마찰을 줄이는 것을 목표로 했습니다. 컴퓨팅 및 네트워크 분야에서는 직렬 처리에서 병렬 처리로, 아날로그 지연에서 거의 광속 신호로 전환했습니다. 카스파는 분산형 화폐 영역에서 이러한 진화 경로의 융합을 나타냅니다. 카스파는 에너지 기반 작업 증명의 견고함과 최종성(비트코인을 "디지털 금"의 한 형태로 만드는 측면)을 취하고, 이 에너지를 사용하는 시스템의 효율성을 극대화합니다. 그 결과, 가치 엔진이라고 설명할 수 있는 네트워크가 탄생했습니다. 즉, 전기 에너지(해싱 작업)를 최소한의 낭비로 디지털 경제적 가치(안전한 트랜잭션 및 코인 발행)로 변환하고, 그 가치를 필요한 곳으로 신속하게 전달합니다.</p>
+    <p>카스파를 비트코인과 비교하는 것은 경쟁이 아니라 분산형 아키텍처의 발전에 관한 것입니다. 비트코인은 화폐에 대한 열역학적 접근 방식이 작동한다는 것을 입증한 원형이었습니다. 카스파는 낭비(엔트로피)를 최소화하고 처리량(유용한 작업)을 극대화하기 위해 아키텍처를 개선한 진화형이며, 비트코인을 위대하게 만든 본질(작업 증명을 통한 분산화 및 보안)을 잃지 않습니다. 우리는 카스파를 비트코인과 비교했습니다. 왜냐하면 둘 다 PoW의 근본적인 기반과 건전한 통화 정책을 공유하며, 주로 구조적 설계에서만 다르기 때문입니다. 그리고 그 차이점, 즉 블록DAG 대 블록체인이 모든 차이를 만들었습니다. 카스파의 블록DAG는 비트코인의 병목 현상에 대한 자연스러운 해결책이며, 나중에 생각해보면 거의 명백합니다. 한 차선이 너무 느리면 차선을 추가하고, 블록을 버리는 것이 에너지 낭비라면 모든 블록을 유지하는 방법을 찾고, 글로벌 동기화를 기다리는 것이 지연을 유발한다면 어느 정도의 비동기화를 허용하고 알고리즘적으로 해결합니다. 이러한 것들은 어떤 의미에서 기술이 구현을 가능하게 한 후에는 상식적인 최적화입니다. GhostDAG의 뛰어난 통찰력은 혼란 없이 여러 리더(채굴자)가 동시에 함께 작동하는 방법을 찾는 것이었습니다. 이는 솔로 공연이 아니라 잘 조율된 교향곡과 같습니다. 이는 올바른 규칙이 있다면 겉보기에는 혼란스러워 보이는 것에서 질서가 나올 수 있음을 보여주며, 물리 시스템이 제약 조건이 현명하게 적용될 때 어떻게 자체 조직되는지를 반영합니다.</p>
+    <p>카스파 설계 선택의 최종 결과는 일부 사람들에 따르면 효율적인 가치 계산의 자연스러운 정점을 구성하는 시스템입니다. 이는 물리학이 허용하는 한 빠르고, 작업 증명이 가능한 한 안전하며, 글로벌하게 포괄적인 네트워크가 그래야 할 만큼 분산되어 있습니다. 돈과 열역학 사이의 근본적인 연결을 끊지 않고 더 빠르거나 더 효율적일 수 있을까요? 아마도 크게는 아닐 것입니다. 새로운 물리학이나 신뢰를 손상시키지 않고서는 말이죠. 카스파는 이미 미래에 초당 100블록을 목표로 하고 있으며, 거의 연속적인 블록 스트림에 근접하고 있습니다. 그리고 개발자들은 조건에 따라 확인 속도를 조절하는 적응형 기능(DAGKnight 등)을 통합하고 있습니다. 우리는 분산형 맥락에서 온체인 확장성의 실질적인 한계에 접근하고 있습니다. 추가적인 의미 있는 이득은 아마도 근본적으로 다른 접근 방식(또는 중앙 집중화 수용)을 필요로 할 것입니다. 이러한 의미에서 카스파는 효율성의 최전선입니다. 카스파보다 더 많은 낭비나 위험을 감수하지 않고는 대규모로 훨씬 더 높은 처리량이나 낮은 지연 시간을 얻을 수 없습니다. 카스파는 자원을 최적으로 사용하는 균형을 찾았습니다.</p>
+    <p>숙련된 암호화폐 전문가와 연구자에게 카스파는 열역학, 정보 이론, 경제학 원리가 융합된 흥미로운 사례 연구를 제공합니다. 이는 분산형 금융 네트워크가 물리 시스템과 동일한 방식으로 분석될 수 있다는 아이디어를 검증합니다. 즉, 에너지 입력, 작업 출력, 그리고 엔트로피와 같은 비효율성이 존재한다는 것입니다. 이러한 비효율성을 줄임으로써 카스파는 더 나은 성능을 제공할 뿐만 아니라, 근본적으로 더 지속 가능하고 매력적인 경제 시스템을 만듭니다. 낭비가 적은 시스템은 채굴자의 작업이 더 효과적이고, 사용자의 수수료가 더 낮게 유지되며, 더 많은 가치가 오버헤드로 소모되지 않고 순환한다는 것을 의미합니다. 시간이 지남에 따라 이는 더 많은 참여와 투자를 유치하고 네트워크 효과를 강화합니다. 이는 효율적인 엔진이 연료를 절약할 뿐만 아니라 새로운 기능(더 긴 주행 거리, 더 무거운 하중)을 가능하게 하는 것과 유사합니다. 마찬가지로 효율적인 블록체인은 더 많은 경제 활동과 느린 체인에서는 질식할 수 있는 사용 사례를 가능하게 합니다.</p>
+    <p>결론적으로, 카스파는 나카모토의 발명품을 그 본질을 잃지 않고 확장하기 위한 10년 이상의 연구의 정점이라고 볼 수 있습니다. 이는 물리 법칙과 건전한 경제학이 분산화의 적이 아니라, 분산화를 개선하기 위한 지침임을 보여줍니다. 카스파의 성공은 최소 저항 경로와 최소 엔트로피 생성을 가장 충실하게 따르는 화폐 시스템이 승리할 것임을 의미하며, 이는 물리학과 매우 일치하는 결과입니다. 실질적으로 카스파는 고처리량, 저마찰, 안전한 네트워크를 나타내며, 광속과 다수의 정직함에 의해서만 제한되는 단일 프로토콜 내에서 국가의 가치를 운반할 수 있습니다. 비트코인이 열역학적 금융 시대를 열었다면, 카스파는 경제적 에너지의 흐름을 전자의 흐름만큼 효율적으로 만듦으로써 그 시대를 가속화합니다. 기술과 돈의 위대한 이야기에서 카스파는 효율성이 운명이라는 설득력 있는 증거로 두드러집니다. 즉, 두 시스템이 주어졌을 때, 낭비를 가장 잘 최소화하고 유용한 작업을 최대화하는 시스템이 미래를 이끌 것입니다. 그리고 카스파는 마찰이 없고 가치를 보존하며 궁극적으로 인간에게 더 부합하는 화폐 네트워크로의 진화적 도약이라는 설득력 있고 기술적으로 타당한 주장을 제시합니다.</p>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="h.e01avawvoirc">제13장: 카스파 vs 비트코인 정렬</h2>
+  <div class="img-container"><img alt="카스파 vs 비트코인 정렬" src="images/image33.png"></div>
+  <h3 class="section-title">블록 선택 및 정렬: 가장 무거운 체인 vs 파란색 작업량</h3>
+  <h4 class="subsection-title">비트코인의 가장 무거운 체인 규칙 - 순차적 선택</h4>
+  <p>비트코인의 합의 메커니즘은 네트워크가 단일 블록 체인을 유지하는 선형 원칙에 따라 작동합니다. 채굴자들이 동시에 새로운 블록을 생성하면, 네트워크는 경쟁하는 체인들 사이에서 선택에 직면하게 됩니다. 가장 무거운 체인 규칙은 가장 많은 누적 작업 증명을 가진 체인을 선택함으로써 이 문제를 해결하며, 따라서 가장 큰 계산 투자를 나타내는 경로를 선택합니다. 이 접근 방식은 승자 독식 시나리오를 만들어, 하나의 체인만 살아남고 모든 경쟁 블록은 고아 블록이 됩니다. 고아 블록은 유효한 트랜잭션을 포함하고 실제 계산 작업을 나타내지만, 네트워크 보안이나 트랜잭션 처리 능력에 전혀 기여하지 않습니다. 이 설계는 명확한 정렬을 보장하지만, 각 높이 수준에서 하나의 블록만 수락될 수 있으므로 본질적으로 처리량을 제한합니다. 이 예에서는 비트코인에 의해 블록이 어떻게 폐기되는지 볼 수 있습니다.</p>
+  <div class="img-container"><img alt="비트코인의 고아 블록" src="images/image38.png"></div>
+  
+  <h4 class="subsection-title">카스파의 파란색 작업량 선택 - 병렬 통합</h4>
+  <p>카스파의 GHOSTDAG 프로토콜은 여러 블록이 공존하고 네트워크 보안에 기여할 수 있는 유향 비순환 그래프(DAG) 구조 내에서 작동함으로써 이 접근 방식을 확장합니다. 경쟁하는 블록을 폐기하는 대신, GHOSTDAG는 이를 "파란색"(정직하고 합의에 기여) 또는 "빨간색"(잠재적으로 충돌하지만 여전히 유지됨)으로 분류합니다. "파란색 작업량" 메트릭은 DAG의 파란색 블록에서만 누적된 작업 증명을 나타냅니다. 이러한 선택적 누적은 합의에 유효한 블록만이 보안 계산에 기여하도록 보장하면서, 전체 구조 내에서 빨간색 블록의 작업과 트랜잭션을 보존합니다. 이 예에서는 비트코인에 의해 폐기된 블록이 k=0일 때에도 카스파의 DAG에 포함되는 것을 볼 수 있습니다.</p>
+  <div class="img-container"><img alt="카스파의 병렬 통합(파란색 및 빨간색 블록)" src="images/image20.png"></div>
+  
+  <h4 class="subsection-title">부모 선택 및 메인 체인 형성</h4>
+  <p>새로운 블록이 DAG에 들어오면, GHOSTDAG는 여러 가능한 부모 후보 중에서 "선택된 부모"를 선택해야 합니다. 이 선택 과정은 각 잠재적 부모의 "파란색 작업량" 값을 검사하고 정직한 블록에서 가장 높은 누적 "파란색 작업량" 값을 가진 것을 선택합니다. 여기 블록 B가 있으며, 그 부모들 중에서 가장 좋은 부모(가장 많은 작업량을 가진 부모)를 선택하고 있습니다.</p>
+  <div class="img-container"><img alt="부모 선택 및 메인 체인 형성" src="images/image39.png"></div>
+  <p>이 선택된 부모는 DAG 내에서 메인 체인을 설정하는 기초가 됩니다. 메인 체인은 비트코인의 선형 체인과 유사한 결정론적 정렬 메커니즘을 제공하지만, 더 복잡한 DAG 환경에서 작동합니다. 부모를 선택한 후, 우리는 DAG를 통해 선택된 부모들을 따라갈 수 있습니다. 이것은 이 이미지에서 볼 수 있는 체인을 생성합니다.</p>
+  <div class="img-container"><img alt="DAG를 통해 선택된 부모 따라가기" src="images/image10.png"></div>
+  
+  <h4 class="subsection-title">정렬 및 트랜잭션 처리</h4>
+  <p>"파란색 작업량" 선택에 의해 생성된 메인 체인은 트랜잭션 처리를 위한 주요 정렬 메커니즘 역할을 합니다. 트랜잭션은 먼저 선택된 부모에서 처리된 다음, 합의에 따라 정해진 순서로 머지셋 블록에서 처리됩니다. 이는 모든 노드가 재현할 수 있는 결정론적 시퀀스를 생성하여 네트워크 전체에서 일관된 트랜잭션 정렬을 보장합니다.</p>
+
+  <h3 class="section-title">근본적인 아키텍처 차이점</h3>
+  <p><b>비트코인의 접근 방식:</b> 각 블록이 정확히 하나의 부모를 가지는 단일 선형 시퀀스를 생성합니다. 충돌은 경쟁 블록의 영구적인 제외를 초래하며, 승리한 체인만이 네트워크 보안에 기여합니다.</p>
+  <p><b>카스파의 접근 방식:</b> 블록이 여러 부모와 자식을 가질 수 있는 DAG 구조를 유지합니다. 충돌은 제외가 아닌 분류를 통해 해결되어, 여러 블록이 네트워크 보안에 기여하면서 메인 체인을 통해 합의를 유지할 수 있도록 합니다.</p>
+
+  <h3 class="section-title">처리량 및 보안에 대한 시사점</h3>
+  <p>비트코인의 선형 접근 방식은 강력한 보안 보장을 제공하지만, 처리량을 약 10분당 하나의 블록으로 제한합니다. 경쟁 블록의 고아화는 계산 자원의 낭비와 트랜잭션 처리 능력의 손실을 의미합니다.</p>
+  <p>카스파의 "파란색 작업량" 시스템은 보안 속성을 유지하면서 훨씬 더 높은 처리량을 가능하게 합니다. DAG에 파란색과 빨간색 블록을 모두 보존함으로써, 시스템은 네트워크의 계산 작업과 트랜잭션 처리 능력의 더 큰 부분을 포착합니다. 메인 체인은 증가된 복잡성에도 불구하고 결정론적 정렬을 보장하여, 합의 신뢰성을 희생하지 않고 병렬 블록 생성을 가능하게 합니다.</p>
+
+  <h3 class="section-title">2013년 비트코인의 롤백: 최종성에 대한 교훈</h3>
+  <p>2013년 3월, 비트코인 네트워크는 "가장 긴 체인이 유효한 체인이다"라는 근본 원칙에 위배되는 중대한 사건을 경험했습니다.</p>
+  <ol>
+      <li><strong>체인 분할:</strong> 비트코인 코어 0.8 버전을 사용하던 한 채굴자가 이전 버전(0.7)과 호환되지 않는 블록을 생성했습니다. 이로 인해 체인 분할(포크)이 발생했습니다.</li>
+      <li><strong>프로토콜을 능가한 사회적 조정:</strong> 0.8 체인이 더 길어졌음에도 불구하고, 핵심 개발자들과 대형 채굴 풀들은 사회적으로 협력하여 이 체인을 버리고 더 짧지만 호환되는 0.7 체인으로 되돌아갔습니다.</li>
+      <li><strong>최종성이 깨졌습니다:</strong> 0.8 체인의 24개 블록이 고아가 되었습니다. 한때 유효하다고 간주되었던 그 안의 트랜잭션들은 비트코인의 정식 기록에서 지워졌습니다.</li>
+  </ol>
+  <p>이 사건은 비트코인의 합의가 순전히 결정론적이지 않으며 인간의 개입이 필요할 수 있음을 증명했습니다. 카스파에서는 이러한 분할이 불가능합니다. 모든 블록은 동시에 채굴되더라도 DAG에 포함되며, GHOSTDAG는 일관되고 알고리즘적으로 정렬된 기록을 선택합니다. 롤백이나 사회적 조정이 필요 없으며, 최종성은 결정론적입니다.</p>
+
+  <hr class="chapter-break">
+  
+  <h2 class="chapter-title" id="chapter14">제14장: 카스파의 레이어 2 비전: ZK 롤업 및 브리징</h2>
+  <h3 class="section-title">레이어 2 솔루션의 필요성</h3>
+  <p>카스파는 기본 레이어(레이어 1)에서 인상적인 확장성을 제공하지만, 복잡한 분산형 애플리케이션(DeFi, 게임 등)의 미래는 레이어 2 솔루션에 달려 있습니다. 이를 통해 복잡한 계산을 메인 체인 외부에서 실행하면서도 그 보안의 혜택을 누릴 수 있습니다. 카스파는 레이어 1(카스파)이 시퀀싱, 데이터 가용성 및 정산 레이어 역할을 하는 "기반 ZK-롤업"에 중점을 둡니다.</p>
+  
+  <h3 class="section-title">과제: 포함 시점의 증명 vs 실행 불확실성</h3>
+  <p>카스파와 같은 병렬화된 L1은 "실행 불확실성"을 도입합니다. 즉, 트랜잭션이 최종 글로벌 순서가 결정되기 전에 DAG에 포함됩니다. 이는 채굴자가 정확한 시퀀스를 예측하는 것을 방지하므로 MEV 저항에 유리합니다.</p>
+  <p>그러나 이는 이상적으로 "포함 시점의 증명"을 요구하는 ZK-롤업과 충돌을 일으킵니다. ZK 증명을 생성하려면 이전 상태가 알려져 있고 명확해야 합니다. 그러나 카스파에서는 병렬 처리로 인해 이 상태가 포함 시점에 정의되지 않습니다.</p>
+  <p>카스파의 해결책은 다중 리더 합의와 그 실행 불확실성을 선택하는 것입니다. 따라서 ZK 증명은 트랜잭션 순서가 수렴되고 명확한 상태가 확립된 후에만 L1에 제출되어야 합니다. 이는 새로운 과제를 제기합니다. 필요한 증명이 결코 도착하지 않으면 어떻게 될까요?</p>
+  
+  <h3 class="section-title">시간 제한 증명 정산</h3>
+  <p>제안된 모델은 "시간 제한 증명 정산"입니다.</p>
+  <ol>
+      <li>트랜잭션 데이터는 먼저 L1에 게시됩니다(데이터 가용성).</li>
+      <li>L1에 대한 그 효과의 최종 정산은 정의된 시간 창(T) 내에 ZK 증명을 제출하고 검증하는 것에 따라 달라집니다.</li>
+      <li>작업에 관련된 당사자가 이 시간 내에 증명을 제공하지 못하면 작업은 실패하며, 책임을 보장하기 위한 벌칙이 부과됩니다.</li>
+  </ol>
+  <p>이 모델은 각 롤업이 자신의 "활성"을 유지하기 위해 증명을 제출하는 데 직접적인 이해관계가 있으므로, L1에서의 최종 정산 훨씬 전에 사용자 측에서 빠른 낙관적 확인을 가능하게 합니다.</p>
+  
+  <h3 class="section-title">KIP-15 및 수락된 트랜잭션 아카이브 노드(ATANs)</h3>
+  <p>카스파의 L2에 대한 근본적인 문제는 가지치기입니다. L2가 L1에서 가지치기된 트랜잭션 데이터를 어떻게 참조할 수 있을까요? ZK 증명이 장기적인 해결책이지만, 임시 해결책이 필요합니다.</p>
+  <p>이것이 KIP-15의 목적입니다: <strong>수락된 트랜잭션 아카이브 노드(ATANs)</strong>를 도입하는 것입니다. ATAN은 가지치기된 풀 노드와 전체 아카이브 노드 사이에 위치합니다.</p>
+  <ul>
+      <li>전체 트랜잭션 데이터를 저장하지 않습니다.</li>
+      <li>선택된 체인의 헤더와 모든 트랜잭션의 <strong>해시</strong>를 저장합니다.</li>
+  </ul>
+  <p>트랜잭션 해시는 32바이트에 불과하며, 이는 트랜잭션 자체에 비해 엄청난 압축입니다. ATAN은 합리적인 저장 요구 사항(전체 용량에서 연간 약 3-5TB로 추정)으로 수년간의 트랜잭션 해시 기록을 저장할 수 있습니다. 이를 통해 L2는 전체 아카이브 노드 없이도 과거 트랜잭션의 존재와 순서를 증명할 수 있으므로, 가지치기된 환경에서 데이터 가용성 문제를 해결합니다.</p>
+  
+  <h3 class="section-title">정식 L1<>L2 브리지 설계</h3>
+  <p>L1과 L2 간에 자금(KAS)이 흐를 수 있도록 하려면 "정식 브리지"가 필요합니다.</p>
+  <ul>
+      <li><strong>인바운드(L1에서 L2로):</strong> 사용자는 L1의 정적 위임 주소로 KAS를 보냅니다. 이 작업은 L1에서 즉시 검증되며, 자금은 L2에서 거의 즉시 사용할 수 있습니다.</li>
+      <li><strong>아웃바운드(L2에서 L1로):</strong> 아웃바운드 트랜잭션은 L2에서 내부 승인이 필요합니다. 그 유효성은 ZK 증명을 제출하여 L1에서 확인되어야 합니다.</li>
+  </ul>
+  <p>이를 위해 카스파는 "위임" 스크립트를 사용합니다. 사용자는 롤업의 상태 주소(동적임)로 자금을 보내는 대신, 롤업이 제공하는 ZK 증명에 지출 권한을 위임하는 정적 주소로 보냅니다. 이는 사용자 경험과 브리지 자금 관리를 단순화합니다.</p>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="chapter15">제15장: 이그라 네트워크: 카스파의 EVM 호환 ZK 롤업 사례 연구</h2>
+  <h3 class="section-title">이그라 개요</h3>
+  <p>이그라 네트워크는 카스파의 레이어 2 비전에 대한 훌륭한 실제 사례입니다. 이는 카스파의 블록DAG를 분산형 시퀀서 및 정산 레이어로 독특하게 사용하는 <strong>EVM 호환 ZK 롤업</strong>입니다.</p>
+  <p>이 아키텍처는 비트코인과 같은 보안과 현대 프로그래밍 가능 체인의 속도 및 다용성을 결합하여 현재 레이어 2 솔루션의 중요한 한계를 해결하는 것을 목표로 합니다.</p>
+  
+  <h3 class="section-title">핵심 구성 요소</h3>
+  <ul>
+      <li><strong>기본 레이어(카스파):</strong> 분산형 시퀀서 역할을 합니다. 이그라의 트랜잭션 순서는 채굴 노드에 의해 카스파의 블록DAG에 고정됩니다.</li>
+      <li><strong>이그라 노드:</strong> L2의 전체 상태를 유지하고 EVM 트랜잭션을 실행합니다. L1에서 시퀀싱된 트랜잭션을 추출하여 실행합니다.</li>
+      <li><strong>이그라 릴레이 / RPC:</strong> 사용자와 네트워크 간의 브리지를 제공합니다. 표준 이더리움 RPC 인터페이스를 노출하여 사용자가 메타마스크와 같은 지갑을 사용하여 이그라와 상호 작용할 수 있도록 합니다.</li>
+  </ul>
+  
+  <h3 class="section-title">브리징 메커니즘 및 배포</h3>
+  <p>이그라는 KAS의 래핑 버전인 네이티브 토큰 $iKAS에 대해 다단계 브리징 접근 방식을 사용합니다.</p>
+  <ol>
+      <li><strong>1단계(커뮤니티 브리지):</strong> 처음에는 브리징이 커뮤니티에서 선택한 서명자가 제어하는 다중 서명(m-of-n) 지갑에 의존합니다. 이는 많은 암호화폐의 커뮤니티 자금에 사용되는 것과 유사한 신뢰 모델입니다. 자금을 인출하려면 서명자가 요청을 처리해야 하며, 신뢰 없는 시스템으로의 전환을 보장하기 위한 안전장치가 있습니다.</li>
+      <li><strong>2단계(MPC/ZK 브리지):</strong> 미래에는 이 브리지가 신뢰 없는 솔루션으로 대체될 것입니다.
+          <ul>
+              <li><strong>MPC(다자간 계산) 브리지:</strong> FROST와 같은 암호화 기술을 사용하여 검증자 집합이 전체 비밀 키를 보유하지 않고도 트랜잭션을 서명할 수 있도록 합니다. 이는 무허가 브리징을 가능하게 합니다.</li>
+              <li><strong>ZK 브리지:</strong> 궁극적인 해결책입니다. 사용자는 L2에서 $iKAS를 소각했음을 증명하는 ZK 증명을 L1에 제출할 수 있습니다. L1의 스크립트는 이 증명을 확인하고 해당 금액의 KAS를 잠금 해제합니다.</li>
+          </ul>
+      </li>
+  </ol>
+  
+  <h3 class="section-title">카라벨 테스트넷</h3>
+  <p>이그라의 배포는 "카라벨" 테스트넷부터 시작하여 여러 단계로 이루어집니다.</p>
+  <ol>
+      <li><strong>활성화:</strong> 네트워크가 카스파의 테스트넷에서 활성화됩니다.</li>
+      <li><strong>커뮤니티 테스터:</strong> 노드 소프트웨어가 제한된 테스터 그룹에 배포되어 점진적으로 네트워크 활동을 증가시킵니다.</li>
+      <li><strong>공개 접근:</strong> 소프트웨어가 공개되어 누구나 노드를 실행하고 참여할 수 있습니다.</li>
+  </ol>
+  <p>카라벨은 EVM 세계에서 아직 탐구되지 않은 속도로 작동하는 카스파의 합의에 전체 이더리움 프로토콜을 가져오기 때문에 이 신중한 배포 과정은 필수적입니다. 안정성과 성능을 보장하기 위해 집중적인 테스트와 여러 번의 반복이 필요합니다.</p>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="chapter16">제16장: 카스파 블록DAG의 트랜잭션 처리량 및 충돌</h2>
+  <h3 class="section-title">트랜잭션 충돌의 과제</h3>
+  <p>DAG를 엄청나게 빠르게 만드는 것은 병렬화 능력입니다. 병렬로 생성된 블록은 모두 유효한 것으로 간주되므로 병렬 블록의 속도를 높여도 보안에 해를 끼치지 않습니다. 그러나 한 가지 질문이 생깁니다. 초당 10개의 블록을 생성하면 트랜잭션 처리량이 정말 10배 더 높아질까요?</p>
+  <p>그렇지 않습니다. 미묘한 차이는 병렬 블록이 동일한 트랜잭션을 포함할 수 있다는 것이며, 동일한 트랜잭션을 여러 번 계산하는 것은 공정하지 않습니다. 우리는 <strong>유효 TPS</strong>, 즉 평균적으로 포함되는 고유 트랜잭션 수에 관심을 가져야 합니다.</p>
+  
+  <h3 class="section-title">무작위 선택 분석</h3>
+  <p>채굴자들이 포함할 트랜잭션을 무작위로 선택한다고 가정하면(이는 합리적인 근사치입니다), 유효 TPS를 분석할 수 있습니다.</p>
+  <p>수학적 분석에 따르면, 최악의 경우(블록 용량이 멤풀의 사용 가능한 트랜잭션 수와 정확히 일치하는 경우)에도 네트워크는 최소 <strong>(1 - 1/e) ≈ 62.3%</strong>의 고유 트랜잭션을 포함합니다. 이것은 최소치이며, 실제로는 멤풀이 블록 용량보다 클 때 효율성은 100%에 가까워집니다.</p>
+  <p>결과적으로 유효 TPS는 블록 속도와 거의 선형적으로 증가합니다. 블록 속도가 10배 증가하면 유효 TPS는 8-9배 증가하며, 이는 상당한 개선입니다.</p>
+  
+  <h3 class="section-title">부정직한 채굴자는 어떨까요?</h3>
+  <p>"탐욕스러운" 채굴자들이 이익을 극대화하기 위해 트랜잭션 선택을 조작하려고 할 수 있다는 우려가 있을 수 있습니다. 예를 들어, 모든 채굴자가 동일한 고수수료 트랜잭션을 선택하면 충돌이 증가하고 유효 TPS가 감소할 수 있습니다.</p>
+  <p>게임 이론은 이것이 최적의 전략이 아님을 보여줍니다. 무작위 선택은 "약한 균형"입니다. 이는 단일 채굴자가 이 전략에서 벗어나면 약간의 이점을 얻을 수 있음을 의미합니다. 그러나 많은 채굴자들이 벗어나 모두 동일한 고수수료 트랜잭션을 선택하면, 그들은 동일한 수수료를 놓고 직접 경쟁하게 되어 예상 이익이 감소합니다. 결국, (다른 사람들이 무엇을 할지 예측할 수 없는) 채굴자에게 가장 합리적인 전략은 선택을 다양화하는 것이며, 이는 무작위 선택에 근접합니다.</p>
+  
+  <h3 class="section-title">높은 충돌에 대한 잠재적 해결책</h3>
+  <p>실제로 높은 충돌률이 관찰된다면, 몇 가지 해결책을 구현할 수 있습니다.</p>
+  <ol>
+      <li><strong>트랜잭션 버킷팅:</strong> 블록은 해시가 블록 자체 해시의 특정 숫자와 일치하는 트랜잭션만 포함하도록 요구될 수 있습니다. 이는 트랜잭션을 "버킷"으로 나누고, 블록은 동일한 버킷의 트랜잭션에 대해서만 경쟁하게 됩니다.</li>
+      <li><strong>독점적 경매 메커니즘:</strong> 채굴자들이 원하는 모든 트랜잭션을 포함할 수 있지만, 블록의 모든 트랜잭션에 대한 수수료는 포함된 트랜잭션 중 가장 낮은 수수료 수준으로 설정되는 메커니즘입니다. 이는 채굴자들이 가장 많은 수수료를 지불하는 트랜잭션에만 집중하는 대신 더 많은 트랜잭션을 포함하도록(볼륨을 늘리기 위해) 장려하며, 이는 자연스럽게 다양화를 촉진합니다.</li>
+  </ol>
+  <p>결론적으로, 트랜잭션 충돌은 블록DAG에서 고려해야 할 사항이지만, 카스파의 아키텍처와 게임 이론 역학은 유효 처리량이 높게 유지되고 블록 속도에 따라 견고하게 확장되도록 보장합니다.</p>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="chapter17">제17장: 카스파의 수수료 시장: 게임 이론적 관점</h2>
+  <h3 class="section-title">수수료 시장의 중요성</h3>
+  <p>암호화폐의 수수료 시장은 장기적인 보안에 매우 중요합니다. 블록 보상이 무시할 수 있게 되면, 트랜잭션 수수료가 네트워크 보안의 주요 보조금으로 남게 됩니다. 따라서 프로토콜이 유도하는 수수료 시장의 역학을 이해하는 것이 중요합니다.</p>
+  
+  <h3 class="section-title">비트코인 수수료 시장의 세 가지 악</h3>
+  <p>비트코인의 수수료 시장은 "라운드당 단일 리더" 합의로 인해 "세 가지 악"으로 설명될 수 있는 속성을 나타냅니다.</p>
+  <ol>
+      <li><strong>바닥 경쟁:</strong> 네트워크가 혼잡하지 않을 때, 수요는 블록 공간의 공급보다 낮습니다. 사용자는 높은 수수료를 지불할 인센티브가 없습니다. 어차피 그들의 트랜잭션은 포함될 것이기 때문입니다. 수수료는 최소치로 향하는 경향이 있으며, 이는 채굴을 수익성 없게 만들고 네트워크 보안을 위협할 수 있습니다.</li>
+      <li><strong>가격 변칙:</strong> 네트워크가 혼잡할 때, 아주 작은 수수료 인상만으로도 트랜잭션이 "절대 포함되지 않음"에서 "다음 블록에 포함됨"으로 바뀔 수 있습니다. 가격은 점진적인 서비스를 반영하지 않습니다.</li>
+      <li><strong>기아 상태:</strong> 혼잡한 네트워크에서 낮은 수수료 트랜잭션은 높은 수수료 트랜잭션을 결코 이길 수 없기 때문에 영구적으로 제외될 수 있습니다. 이는 진입 장벽을 만들고 블록체인의 평등주의적 정신에 대한 의문을 제기합니다.</li>
+  </ol>
+  <p>이러한 역학은 매 라운드마다 단일 채굴자가 전체 팟을 차지하는 직접적인 결과입니다.</p>
+  
+  <h3 class="section-title">카스파의 다중 리더 블록DAG가 수수료 시장을 개선하는 방법</h3>
+  <p>카스파에서는 여러 채굴자가 매 라운드마다 병렬로 블록을 생성합니다(다중 리더). 여러 채굴자가 동일한 트랜잭션을 포함하면, 그들은 보상을 확률적으로 공유합니다. 이는 채굴자와 사용자의 게임 역학을 근본적으로 바꿉니다.</p>
+  <ul>
+      <li><strong>바닥 경쟁에 대항하여:</strong> 채굴자들이 경쟁 관계에 있기 때문에, 네트워크가 부분적으로만 활용되더라도 수익원을 다양화하고 직접적인 경쟁을 피하기 위해 트랜잭션을 포함하는 것이 합리적이 됩니다. 분석에 따르면, 수수료 시장은 비트코인의 100% 대신 네트워크가 용량의 <strong>1/k</strong>에 도달하자마자 활성화됩니다(여기서 k는 라운드당 리더의 수). 라운드당 10명의 리더가 있으면, 용량의 10%가 사용되자마자 시장이 활성화됩니다.</li>
+      <li><strong>기아 상태와 변칙에 대항하여:</strong> 채굴자들은 낮은 수수료 트랜잭션을 포함하여 트랜잭션 믹스를 포함할 인센티브가 있습니다. 가장 높은 보수를 주는 몇 안 되는 트랜잭션을 위해 싸우는 것이 항상 최선은 아닙니다. 왜냐하면 그 수수료를 받을 확률이 경쟁으로 인해 감소하기 때문입니다. 이는 훨씬 더 부드러운 서비스 곡선을 만듭니다. 수수료가 약간 증가하면 포함될 확률이 약간 증가하며, 갑작스러운 변화가 아닙니다. 낮은 수수료 트랜잭션도 포함될 가능성(비록 작지만)이 있어 기아 상태를 방지합니다. 한 라운드에서 포함될 확률이 낮다는 것은 무한한 대기가 아니라 합리적인 평균 대기 시간을 의미합니다.</li>
+  </ul>
+  <p>결론적으로, 카스파의 고주파 블록DAG의 직접적인 결과인 다중 리더 아키텍처는 본질적으로 더 건강하고, 안정적이며, 공정한 수수료 시장을 만듭니다. 단일 리더 블록체인의 극단적인 "전부 아니면 전무" 역학을 완화함으로써, 카스파는 장기적인 보안을 위한 더 견고한 경제적 기반을 구축합니다.</p>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="conclusion">결론</h2>
+  <div class="conclusion">
+    <p>카스파의 아키텍처와 철학을 통한 이 여정의 끝에서, 한 가지 결론이 두드러집니다: 우리는 분산 원장 기술 분야에서 진정한 진화를 목격하고 있습니다. 카스파는 단순히 또 다른 암호화폐가 아니라, 고속 디지털 시대를 위해 설계된, 비트코인이 확립한 원칙의 근본적인 재설계입니다.</p>
+    <p>우리는 GHOSTDAG 합의 프로토콜에 의해 관리되는 블록DAG가 어떻게 선형 체인의 병목 현상을 해체하는지 보았습니다. 블록의 병렬 생성과 통합을 허용함으로써, 카스파는 고아 블록의 낭비를 제거하고, 작업 증명의 에너지 효율성을 극대화하며, 분산형 PoW 시스템에서는 불가능하다고 여겨졌던 트랜잭션 및 확인 속도를 달성합니다.</p>
+    <p>우리는 노드의 낮은 하드웨어 요구 사항을 유지함으로써 장기적인 분산화를 보장하는 다단계 가지치기 시스템을 통해 저장 공간에 대한 독창적인 해결책을 탐구했습니다. 또한, 베이스 레이어의 보안을 희생하지 않으면서 복잡한 프로그래밍 가능성과 상호 운용성을 가져올 것을 약속하는 ZK-롤업과 같은 레이어 2 솔루션을 통해 미래에 대한 비전을 탐구했습니다.</p>
+    <p>카스파는 블록체인 트릴레마, 즉 보안, 확장성, 분산화 중 하나를 선택해야 한다는 생각이 불변의 법칙이 아니라 1세대 아키텍처의 한계일 수 있음을 보여줍니다. 물리학과 경제학의 원리에서 영감을 얻어, 카스파는 최대 효율, 최소 마찰, 최적의 가치 보존을 지향하는 시스템을 설계했습니다.</p>
+    <p>카스파의 미래는 유망합니다. 최종성을 공식화할 DAGKnight와 같은 업그레이드와 MEV 저항 및 오라클에 대한 지속적인 연구를 통해, 이 프로젝트는 가능한 것의 경계를 계속해서 넓혀가고 있습니다. 카스파가 차세대 분산 애플리케이션의 중추가 되든, 다른 시스템과 공존하든, 한 가지는 확실합니다: 그것은 이미 화폐 시스템이 금처럼 견고하면서도 빛처럼 빠를 수 있음을 증명함으로써 암호화폐 역사에 지울 수 없는 족적을 남겼습니다.</p>
+    <p>이 책이 카스파의 깊이와 우아함을 이해하는 열쇠를 제공했기를 바랍니다. 여정은 이제 막 시작되었으며, 이를 계속하는 가장 좋은 방법은 참여하고, 질문하고, 계속 배우는 것입니다.</p>
+  </div>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="appendixA">부록 A: 추가 자료</h2>
+  <p>카스파에 대한 이해를 더 깊게 하고 싶은 분들을 위해, 입문 기사부터 기초 연구 논문까지 필수적인 자료 목록을 제공합니다.</p>
+  
+  <h4>시작하기 좋은 글</h4>
+  <ul>
+    <li><strong>카스파 101</strong>: GHOSTDAG가 어떻게 작동하는지 이해하기 위한 훌륭한 출발점입니다. <a href="https://michaelsutton.github.io/2022-04-23-kaspa-101-part1/">여기서 읽기</a></li>
+    <li><strong>블록DAG로 비트코인 확장하기</strong>: 블록DAG가 비트코인의 한계에 대한 실행 가능한 해결책인 이유를 설명합니다. <a href="https://someone235.medium.com/scaling-bitcoin-with-blockdag-d785174a3402">여기서 읽기</a></li>
+    <li><strong>카스파 가지치기 입문</strong>: 카스파의 가지치기 메커니즘에 대한 소개입니다. <a href="https://hashdag.medium.com/in-which-mayday-mayday-we-are-syncing-about-bf05ad58957a">여기서 읽기</a></li>
+    <li><strong>카스파 GhostDAG 101 (비디오)</strong>: 기술적 개념에 대한 포괄적인 비디오 개요입니다. <a href="https://www.youtube.com/watch?v=nhI2zo44dfc">여기서 보기</a></li>
+  </ul>
+
+  <h4>연구 논문 (심층 분석)</h4>
+  <ul>
+    <li><strong>PHANTOM 및 GHOSTDAG</strong>: 카스파 합의의 기초를 마련한 학술 논문입니다. <a href="https://eprint.iacr.org/2018/104.pdf">PDF 읽기</a></li>
+    <li><strong>DAGKnight 프로토콜</strong>: 빠른 최종성 및 공격 저항을 위해 설계된 카스파의 차세대 합의 프로토콜입니다. <a href="https://eprint.iacr.org/2022/1494.pdf">PDF 읽기</a></li>
+    <li><strong>Prunality</strong>: 카스파의 가지치기 메커니즘의 이론을 상세히 설명하는 논문입니다. <a href="https://github.com/kaspanet/docs/blob/main/Reference/prunality/Prunality.pdf">PDF 읽기</a></li>
+    <li><strong>비트코인 백서</strong>: 역사적 맥락을 위한 사토시 나카모토의 원본 논문입니다. <a href="https://bitcoin.org/bitcoin/bitcoin.pdf">PDF 읽기</a></li>
+  </ul>
+
+  <h4>코드 및 개발</h4>
+  <ul>
+    <li><strong>Rusty-Kaspa (메인 저장소)</strong>: Rust로 작성된 카스파 노드의 소스 코드입니다. <a href="https://github.com/kaspanet/rusty-kaspa">GitHub에서 보기</a></li>
+    <li><strong>카스파 개선 제안(KIPs)</strong>: 모든 카스파 개선 제안을 포함하는 저장소입니다. <a href="https://github.com/kaspanet/kips">GitHub에서 보기</a></li>
+  </ul>
+
+  <h4>커뮤니티 및 토론</h4>
+  <ul>
+    <li><strong>디스코드</strong>: 기술 및 커뮤니티 토론을 위한 주요 장소입니다. 추천 채널: <code>#research-general</code>, <code>#development</code>. <a href="https://discord.gg/kaspa">디스코드 참여하기</a></li>
+    <li><strong>텔레그램 (R&D)</strong>: 개발자와 연구자들이 협력하는 그룹입니다. <a href="https://t.me/kasparnd">텔레그램에서 참여하기</a></li>
+    <li><strong>연구 포럼</strong>: KIP 및 새로운 기술 개념에 대한 심도 있는 토론을 위한 곳입니다. <a href="https://research.kas.pa/">포럼 방문하기</a></li>
+  </ul>
+
+  <hr class="chapter-break">
+  
+  <h2 class="chapter-title" id="appendixB">부록 B: 트랜잭션 충돌의 수학적 분석 (간략화)</h2>
+  <p>이 부록에서는 블록DAG에서 유효 TPS(초당 트랜잭션 수) 문제를 탐구합니다. 여러 블록이 병렬로 생성될 때, 동일한 트랜잭션을 포함할 수 있어 고유 처리량이 감소합니다. 분석에 따르면 채굴자들이 무작위로 트랜잭션을 선택하더라도 유효 처리량은 높게 유지됩니다.</p>
+  <p>핵심 아이디어는 두 채굴자가 동일한 트랜잭션을 선택할 확률이 보류 중인 트랜잭션 풀(멤풀)이 증가함에 따라 감소한다는 것입니다. 수학적 분석(확률 이론 및 테일러 급수 사용)에 따르면, 블록 용량이 사용 가능한 트랜잭션 수와 정확히 일치하는 시나리오에서도 네트워크는 최소 <strong>(1 - 1/e) ≈ 62.3%</strong>의 고유 트랜잭션을 포함합니다. 이 수치는 최소치를 나타내며, 실제로는 효율성이 훨씬 더 높은 경우가 많습니다.</p>
+  <p>더 나아가, 게임 이론은 채굴자들이 이러한 준-무작위 선택에서 벗어날 큰 인센티브가 없음을 시사합니다. 모든 채굴자들이 가장 높은 보수를 주는 트랜잭션을 선택하려고 하면, 그들은 동일한 수수료를 놓고 경쟁하게 되어 예상 이익이 감소합니다. 따라서 다양화 전략(무작위 선택)이 안정적인 균형("약한 균형")입니다.</p>
+  <p>요약하자면, 카스파의 병렬 처리는 유효 처리량을 크게 해치지 않으며, 블록 속도에 따라 견고하게 확장됩니다.</p>
+
+  <hr class="chapter-break">
+
+  <h2 class="chapter-title" id="appendixC">부록 C: 수수료 시장의 수학적 분석 (간략화)</h2>
+  <p>이 부록에서는 게임 이론을 사용하여 수수료 시장의 역학을 분석하고, 비트코인의 "단일 리더" 모델과 카스파의 "다중 리더" 모델을 비교합니다.</p>
+  <h4>비트코인 수수료 시장의 세 가지 악:</h4>
+  <ol>
+    <li><strong>바닥 경쟁</strong>: 네트워크가 혼잡하지 않을 때, 사용자는 높은 수수료를 지불할 인센티브가 없습니다. 어차피 그들의 트랜잭션은 포함될 것이기 때문입니다. 수수료는 최소치로 향하는 경향이 있으며, 이는 네트워크의 장기적인 보안을 위협할 수 있습니다.</li>
+    <li><strong>가격 변칙</strong>: 네트워크가 혼잡할 때, 아주 작은 수수료 인상만으로도 트랜잭션이 "절대 포함되지 않음"에서 "다음 블록에 포함됨"으로 바뀔 수 있습니다. 가격은 점진적인 서비스를 반영하지 않습니다.</li>
+    <li><strong>기아 상태(Starvation)</strong>: 혼잡한 네트워크에서 낮은 수수료 트랜잭션은 영구적으로 제외될 수 있어, 덜 부유한 사용자에 대한 진입 장벽을 만듭니다.</li>
+  </ol>
+  <h4>카스파의 블록DAG가 이러한 문제를 해결하는 방법:</h4>
+  <p>카스파에서는 여러 채굴자가 병렬로 블록을 생성합니다(다중 리더). 여러 채굴자가 동일한 트랜잭션을 포함하면, 그들은 보상을 (확률적으로) 공유합니다. 이는 역학을 근본적으로 바꿉니다.</p>
+  <ul>
+    <li><strong>바닥 경쟁에 대항하여</strong>: 채굴자들이 경쟁 관계에 있기 때문에, 네트워크가 부분적으로만 활용되더라도 트랜잭션을 포함하는 것이 합리적이 됩니다. 분석에 따르면, 수수료 시장은 비트코인의 100% 대신 네트워크가 용량의 <strong>1/k</strong>에 도달하자마자 활성화됩니다(여기서 k는 라운드당 리더의 수). 라운드당 10명의 리더가 있으면, 용량의 10%가 사용되자마자 시장이 활성화됩니다.</li>
+    <li><strong>기아 상태와 변칙에 대항하여</strong>: 채굴자들은 낮은 수수료 트랜잭션을 포함하여 트랜잭션 믹스를 포함할 인센티브가 있습니다. 가장 높은 보수를 주는 몇 안 되는 트랜잭션을 위해 싸우는 것이 항상 최선은 아닙니다. 왜냐하면 그 수수료를 받을 확률이 경쟁으로 인해 감소하기 때문입니다. 이는 더 부드러운 서비스 곡선을 만듭니다. 수수료가 약간 증가하면 포함될 확률이 약간 증가하며, 갑작스러운 변화가 아닙니다. 낮은 수수료 트랜잭션도 포함될 가능성이 있어 기아 상태를 방지합니다.</li>
+  </ul>
+  <p>결론적으로, 카스파의 다중 리더 아키텍처는 프로토콜의 장기적인 보안과 생존 가능성에 필수적인 더 건강하고, 안정적이며, 공정한 수수료 시장을 만듭니다.</p>
+
+</div>
+</body>
+</html>
